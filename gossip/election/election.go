@@ -130,10 +130,14 @@ func noopCallback(_ bool) {
 }
 
 const (
-	DefStartupGracePeriod       = time.Second * 15
+	DefStartupGracePeriod = time.Second * 15
+	// DefStartupGracePeriod = time.Minute * 15
 	DefMembershipSampleInterval = time.Second
-	DefLeaderAliveThreshold     = time.Second * 10
-	DefLeaderElectionDuration   = time.Second * 5
+	// DefMembershipSampleInterval = time.Minute
+	DefLeaderAliveThreshold = time.Second * 10
+	// DefLeaderAliveThreshold = time.Minute * 10
+	DefLeaderElectionDuration = time.Second * 5
+	// DefLeaderElectionDuration = time.Minute * 5
 )
 
 type ElectionConfig struct {

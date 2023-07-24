@@ -21,6 +21,7 @@
 #   - docker-list - generates a list of docker images that 'make docker' produces
 #   - docker-tag-latest - re-tags the images made by 'make docker' with the :latest tag
 #   - docker-tag-stable - re-tags the images made by 'make docker' with the :stable tag
+#   - docker-tag-openssl - re-tags the images made by 'make docker' with the :openssl tag
 #   - docker-thirdparty - pulls thirdparty images (kafka,zookeeper,couchdb)
 #   - docs - builds the documentation in html format
 #   - gotools - installs go tools like golint
@@ -150,7 +151,7 @@ integration-test: integration-test-prereqs
 	./scripts/run-integration-tests.sh $(INTEGRATION_TEST_SUITE)
 
 .PHONY: integration-test-prereqs
-integration-test-prereqs: gotool.ginkgo baseos-docker ccenv-docker docker-thirdparty ccaasbuilder
+integration-test-prereqs: gotool.ginkgo baseos-docker ccenv-docker ccenv-docker-tag-latest docker-thirdparty ccaasbuilder
 
 .PHONY: unit-test
 unit-test: unit-test-clean docker-thirdparty-couchdb
@@ -253,7 +254,7 @@ $(BUILD_DIR)/images/%/$(DUMMY):
 		--build-arg TARGETARCH=$(ARCH) \
 		--build-arg TARGETOS=linux \
 		$(BUILD_ARGS) \
-		-t $(DOCKER_NS)/fabric-$* ./$(BUILD_CONTEXT)
+		-t $(DOCKER_NS)/fabric-$*:$(DOCKER_TAG) ./$(BUILD_CONTEXT)
 	@touch $@
 
 # builds release packages for the host platform
@@ -310,6 +311,11 @@ docker-tag-latest: $(RELEASE_IMAGES:%=%-docker-tag-latest)
 docker-tag-stable: $(RELEASE_IMAGES:%=%-docker-tag-stable)
 %-docker-tag-stable:
 	docker tag $(DOCKER_NS)/fabric-$*:$(DOCKER_TAG) $(DOCKER_NS)/fabric-$*:stable
+
+.PHONY: docker-tag-openssl
+docker-tag-openssl: $(RELEASE_IMAGES:%=%-docker-tag-openssl)
+%-docker-tag-openssl:
+	docker tag $(DOCKER_NS)/fabric-$*:$(DOCKER_TAG) $(DOCKER_NS)/fabric-$*:openssl
 
 .PHONY: publish-images
 publish-images: $(RELEASE_IMAGES:%=%-publish-images)

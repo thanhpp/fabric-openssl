@@ -16,10 +16,10 @@ limitations under the License.
 package sw
 
 import (
-	"crypto/sha256"
 	"errors"
 
 	"github.com/hyperledger/fabric/bccsp"
+	"github.com/hyperledger/fabric/pkg/openssl"
 )
 
 type aesPrivateKey struct {
@@ -39,10 +39,11 @@ func (k *aesPrivateKey) Bytes() (raw []byte, err error) {
 
 // SKI returns the subject key identifier of this key.
 func (k *aesPrivateKey) SKI() (ski []byte) {
-	hash := sha256.New()
+	hash, _ := openssl.NewSHA256Hash()
 	hash.Write([]byte{0x01})
 	hash.Write(k.privKey)
-	return hash.Sum(nil)
+	sum, _ := hash.Sum()
+	return sum[:]
 }
 
 // Symmetric returns true if this key is a symmetric key,

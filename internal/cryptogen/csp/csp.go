@@ -9,7 +9,6 @@ import (
 	"crypto"
 	"crypto/ecdsa"
 	"crypto/elliptic"
-	"crypto/rand"
 	"crypto/x509"
 	"encoding/asn1"
 	"encoding/pem"
@@ -20,6 +19,7 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/hyperledger/fabric/pkg/opensslw"
 	"github.com/pkg/errors"
 )
 
@@ -75,7 +75,7 @@ func parsePrivateKeyPEM(rawKey []byte) (*ecdsa.PrivateKey, error) {
 // GeneratePrivateKey creates an EC private key using a P-256 curve and stores
 // it in keystorePath.
 func GeneratePrivateKey(keystorePath string) (*ecdsa.PrivateKey, error) {
-	priv, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	priv, err := opensslw.ECDSAGenerateKey(elliptic.P256())
 	if err != nil {
 		return nil, errors.WithMessage(err, "failed to generate private key")
 	}

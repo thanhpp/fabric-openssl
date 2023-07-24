@@ -18,12 +18,12 @@ package sw
 import (
 	"crypto/ecdsa"
 	"crypto/elliptic"
-	"crypto/sha256"
 	"crypto/x509"
 	"errors"
 	"fmt"
 
 	"github.com/hyperledger/fabric/bccsp"
+	"github.com/hyperledger/fabric/pkg/openssl"
 )
 
 type ecdsaPrivateKey struct {
@@ -46,9 +46,10 @@ func (k *ecdsaPrivateKey) SKI() []byte {
 	raw := elliptic.Marshal(k.privKey.Curve, k.privKey.PublicKey.X, k.privKey.PublicKey.Y)
 
 	// Hash it
-	hash := sha256.New()
+	hash, _ := openssl.NewSHA256Hash()
 	hash.Write(raw)
-	return hash.Sum(nil)
+	sum, _ := hash.Sum()
+	return sum[:]
 }
 
 // Symmetric returns true if this key is a symmetric key,
@@ -93,9 +94,10 @@ func (k *ecdsaPublicKey) SKI() []byte {
 	raw := elliptic.Marshal(k.pubKey.Curve, k.pubKey.X, k.pubKey.Y)
 
 	// Hash it
-	hash := sha256.New()
+	hash, _ := openssl.NewSHA256Hash()
 	hash.Write(raw)
-	return hash.Sum(nil)
+	sum, _ := hash.Sum()
+	return sum[:]
 }
 
 // Symmetric returns true if this key is a symmetric key,

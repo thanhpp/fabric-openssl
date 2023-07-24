@@ -20,6 +20,7 @@ import (
 	"github.com/hyperledger/fabric-protos-go/msp"
 	"github.com/hyperledger/fabric/bccsp/utils"
 	"github.com/hyperledger/fabric/common/util"
+	"github.com/hyperledger/fabric/pkg/opensslw"
 	"github.com/hyperledger/fabric/protoutil"
 	"github.com/pkg/errors"
 )
@@ -37,7 +38,7 @@ type Config struct {
 // initialize an MSP without a CA cert that signs the signing identity,
 // this will do for now.
 type Signer struct {
-	key     *ecdsa.PrivateKey
+	key     *opensslw.ECDSAPrivateKey
 	Creator []byte
 }
 
@@ -55,9 +56,15 @@ func NewSigner(conf Config) (*Signer, error) {
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}
+
+	k, err := opensslw.ConvertECDSAPrivateKey(key)
+	if err != nil {
+		return nil, errors.WithStack(err)
+	}
+
 	return &Signer{
 		Creator: sId,
-		key:     key,
+		key:     k,
 	}, nil
 }
 
@@ -94,7 +101,7 @@ func validateEnrollmentCertificate(b []byte) error {
 
 func (si *Signer) Sign(msg []byte) ([]byte, error) {
 	digest := util.ComputeSHA256(msg)
-	return signECDSA(si.key, digest)
+	return si.key.Sign(digest)
 }
 
 func loadPrivateKey(file string) (*ecdsa.PrivateKey, error) {

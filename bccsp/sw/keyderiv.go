@@ -18,12 +18,12 @@ package sw
 
 import (
 	"crypto/ecdsa"
-	"crypto/hmac"
 	"errors"
 	"fmt"
 	"math/big"
 
 	"github.com/hyperledger/fabric/bccsp"
+	"github.com/hyperledger/fabric/pkg/opensslw"
 )
 
 type ecdsaPublicKeyKeyDeriver struct{}
@@ -135,14 +135,28 @@ func (kd *aesPrivateKeyKeyDeriver) KeyDeriv(k bccsp.Key, opts bccsp.KeyDerivOpts
 
 	switch hmacOpts := opts.(type) {
 	case *bccsp.HMACTruncated256AESDeriveKeyOpts:
-		mac := hmac.New(kd.conf.hashFunction, aesK.privKey)
+		mac, err := opensslw.NewHMAC(kd.conf.hashFunction, aesK.privKey)
+		if err != nil {
+			return nil, fmt.Errorf("new HMAC error: %w", err)
+		}
 		mac.Write(hmacOpts.Argument())
-		return &aesPrivateKey{mac.Sum(nil)[:kd.conf.aesBitLength], false}, nil
+		sum, err := mac.Final()
+		if err != nil {
+			return nil, fmt.Errorf("final HMAC error: %w", err)
+		}
+		return &aesPrivateKey{sum[:kd.conf.aesBitLength], false}, nil
 
 	case *bccsp.HMACDeriveKeyOpts:
-		mac := hmac.New(kd.conf.hashFunction, aesK.privKey)
+		mac, err := opensslw.NewHMAC(kd.conf.hashFunction, aesK.privKey)
+		if err != nil {
+			return nil, fmt.Errorf("new HMAC error: %w", err)
+		}
 		mac.Write(hmacOpts.Argument())
-		return &aesPrivateKey{mac.Sum(nil), true}, nil
+		sum, err := mac.Final()
+		if err != nil {
+			return nil, fmt.Errorf("final HMAC error: %w", err)
+		}
+		return &aesPrivateKey{sum, true}, nil
 
 	default:
 		return nil, fmt.Errorf("Unsupported 'KeyDerivOpts' provided [%v]", opts)

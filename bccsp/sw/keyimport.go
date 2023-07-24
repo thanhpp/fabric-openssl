@@ -15,6 +15,7 @@ import (
 	"reflect"
 
 	"github.com/hyperledger/fabric/bccsp"
+	"github.com/hyperledger/fabric/pkg/opensslw"
 )
 
 type aes256ImportKeyOptsKeyImporter struct{}
@@ -132,7 +133,11 @@ func (ki *x509PublicKeyImportOptsKeyImporter) KeyImport(raw interface{}, opts bc
 	case *rsa.PublicKey:
 		// This path only exists to support environments that use RSA certificate
 		// authorities to issue ECDSA certificates.
-		return &rsaPublicKey{pubKey: pk}, nil
+		oKey, err := opensslw.ConvertRSAPublicKey(pk)
+		if err != nil {
+			return nil, fmt.Errorf("import rsa pub key error: %w", err)
+		}
+		return &rsaPublicKey{pubKey: oKey}, nil
 	default:
 		return nil, errors.New("Certificate's public key type not recognized. Supported keys: [ECDSA, RSA]")
 	}

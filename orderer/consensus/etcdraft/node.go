@@ -8,7 +8,6 @@ package etcdraft
 
 import (
 	"context"
-	"crypto/sha256"
 	"sync"
 	"sync/atomic"
 	"time"
@@ -18,6 +17,7 @@ import (
 	"github.com/hyperledger/fabric-protos-go/orderer"
 	"github.com/hyperledger/fabric-protos-go/orderer/etcdraft"
 	"github.com/hyperledger/fabric/common/flogging"
+	"github.com/hyperledger/fabric/pkg/openssl"
 	"github.com/hyperledger/fabric/protoutil"
 	"github.com/pkg/errors"
 	"go.etcd.io/etcd/raft/v3"
@@ -73,7 +73,7 @@ func (n *node) start(fresh, join bool) {
 
 			// determine the node to start campaign by selecting the node with ID equals to:
 			//                hash(channelID) % cluster_size + 1
-			sha := sha256.Sum256([]byte(n.chainID))
+			sha, _ := openssl.SHA256([]byte(n.chainID))
 			number, _ := proto.DecodeVarint(sha[24:])
 			if n.config.ID == number%uint64(len(raftPeers))+1 {
 				campaign = true

@@ -17,12 +17,11 @@ limitations under the License.
 package sw
 
 import (
-	"crypto/ecdsa"
 	"crypto/elliptic"
-	"crypto/rand"
 	"fmt"
 
 	"github.com/hyperledger/fabric/bccsp"
+	"github.com/hyperledger/fabric/pkg/opensslw"
 )
 
 type ecdsaKeyGenerator struct {
@@ -30,7 +29,7 @@ type ecdsaKeyGenerator struct {
 }
 
 func (kg *ecdsaKeyGenerator) KeyGen(opts bccsp.KeyGenOpts) (bccsp.Key, error) {
-	privKey, err := ecdsa.GenerateKey(kg.curve, rand.Reader)
+	privKey, err := opensslw.ECDSAGenerateKey(kg.curve)
 	if err != nil {
 		return nil, fmt.Errorf("Failed generating ECDSA key for [%v]: [%s]", kg.curve, err)
 	}

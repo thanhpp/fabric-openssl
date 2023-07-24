@@ -16,12 +16,11 @@ limitations under the License.
 package pkcs11
 
 import (
-	"crypto/ecdsa"
-	"crypto/x509"
 	"errors"
 	"fmt"
 
 	"github.com/hyperledger/fabric/bccsp"
+	"github.com/hyperledger/fabric/pkg/opensslw"
 )
 
 type ecdsaPrivateKey struct {
@@ -60,13 +59,13 @@ func (k *ecdsaPrivateKey) PublicKey() (bccsp.Key, error) {
 
 type ecdsaPublicKey struct {
 	ski []byte
-	pub *ecdsa.PublicKey
+	pub *opensslw.ECDSAPublicKey
 }
 
 // Bytes converts this key to its byte representation,
 // if this operation is allowed.
 func (k *ecdsaPublicKey) Bytes() (raw []byte, err error) {
-	raw, err = x509.MarshalPKIXPublicKey(k.pub)
+	raw, err = k.pub.MarshalPKIXPublicKey()
 	if err != nil {
 		return nil, fmt.Errorf("Failed marshalling key [%s]", err)
 	}

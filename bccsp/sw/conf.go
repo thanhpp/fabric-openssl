@@ -8,11 +8,10 @@ package sw
 
 import (
 	"crypto/elliptic"
-	"crypto/sha256"
-	"crypto/sha512"
 	"fmt"
 	"hash"
 
+	"github.com/hyperledger/fabric/pkg/opensslw"
 	"golang.org/x/crypto/sha3"
 )
 
@@ -38,11 +37,11 @@ func (conf *config) setSecurityLevelSHA2(level int) (err error) {
 	switch level {
 	case 256:
 		conf.ellipticCurve = elliptic.P256()
-		conf.hashFunction = sha256.New
+		conf.hashFunction = opensslw.NewSHA256
 		conf.aesBitLength = 32
 	case 384:
 		conf.ellipticCurve = elliptic.P384()
-		conf.hashFunction = sha512.New384
+		conf.hashFunction = opensslw.NewSHA384
 		conf.aesBitLength = 32
 	default:
 		err = fmt.Errorf("Security level not supported [%d]", level)

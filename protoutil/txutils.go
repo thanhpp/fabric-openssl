@@ -8,12 +8,12 @@ package protoutil
 
 import (
 	"bytes"
-	"crypto/sha256"
 	b64 "encoding/base64"
 
 	"github.com/golang/protobuf/proto"
 	"github.com/hyperledger/fabric-protos-go/common"
 	"github.com/hyperledger/fabric-protos-go/peer"
+	"github.com/hyperledger/fabric/pkg/openssl"
 	"github.com/pkg/errors"
 )
 
@@ -455,14 +455,15 @@ func GetProposalHash2(header *common.Header, ccPropPayl []byte) ([]byte, error) 
 		return nil, errors.New("nil arguments")
 	}
 
-	hash := sha256.New()
+	hash, _ := openssl.NewSHA256Hash()
 	// hash the serialized Channel Header object
 	hash.Write(header.ChannelHeader)
 	// hash the serialized Signature Header object
 	hash.Write(header.SignatureHeader)
 	// hash the bytes of the chaincode proposal payload that we are given
 	hash.Write(ccPropPayl)
-	return hash.Sum(nil), nil
+	sum, _ := hash.Sum()
+	return sum[:], nil
 }
 
 // GetProposalHash1 gets the proposal hash bytes after sanitizing the
@@ -487,14 +488,15 @@ func GetProposalHash1(header *common.Header, ccPropPayl []byte) ([]byte, error) 
 		return nil, err
 	}
 
-	hash2 := sha256.New()
+	hash2, _ := openssl.NewSHA256Hash()
 	// hash the serialized Channel Header object
 	hash2.Write(header.ChannelHeader)
 	// hash the serialized Signature Header object
 	hash2.Write(header.SignatureHeader)
 	// hash of the part of the chaincode proposal payload that will go to the tx
 	hash2.Write(ppBytes)
-	return hash2.Sum(nil), nil
+	sum2, _ := hash2.Sum()
+	return sum2[:], nil
 }
 
 // GetOrComputeTxIDFromEnvelope gets the txID present in a given transaction

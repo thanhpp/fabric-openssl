@@ -8,11 +8,11 @@ package orderers
 
 import (
 	"bytes"
-	"crypto/sha256"
 	"math/rand"
 	"sync"
 
 	"github.com/hyperledger/fabric/common/flogging"
+	"github.com/hyperledger/fabric/pkg/openssl"
 
 	"github.com/pkg/errors"
 )
@@ -63,7 +63,7 @@ func (cs *ConnectionSource) Update(globalAddrs []string, orgs map[string]Orderer
 	anyChange := false
 	hasOrgEndpoints := false
 	for orgName, org := range orgs {
-		hasher := sha256.New()
+		hasher, _ := openssl.NewSHA256Hash()
 		for _, cert := range org.RootCerts {
 			hasher.Write(cert)
 		}
@@ -71,12 +71,12 @@ func (cs *ConnectionSource) Update(globalAddrs []string, orgs map[string]Orderer
 			hasOrgEndpoints = true
 			hasher.Write([]byte(address))
 		}
-		hash := hasher.Sum(nil)
+		hash, _ := hasher.Sum()
 
-		newOrgToEndpointsHash[orgName] = hash
+		newOrgToEndpointsHash[orgName] = hash[:]
 
 		lastHash, ok := cs.orgToEndpointsHash[orgName]
-		if ok && bytes.Equal(hash, lastHash) {
+		if ok && bytes.Equal(hash[:], lastHash) {
 			continue
 		}
 

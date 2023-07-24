@@ -22,6 +22,7 @@ import (
 
 	"github.com/hyperledger/fabric/bccsp"
 	"github.com/hyperledger/fabric/bccsp/utils"
+	"github.com/hyperledger/fabric/pkg/opensslw"
 )
 
 func signECDSA(k *ecdsa.PrivateKey, digest []byte, opts bccsp.SignerOpts) ([]byte, error) {
@@ -53,7 +54,7 @@ func verifyECDSA(k *ecdsa.PublicKey, signature, digest []byte, opts bccsp.Signer
 		return false, fmt.Errorf("Invalid S. Must be smaller than half the order [%s][%s].", s, utils.GetCurveHalfOrdersAt(k.Curve))
 	}
 
-	return ecdsa.Verify(k, digest, r, s), nil
+	return opensslw.ECDSAVerify(k, digest, r, s), nil
 }
 
 type ecdsaSigner struct{}

@@ -35,6 +35,7 @@ function filterExcludedAndGeneratedFiles {
         '(^|/)Pipfile$'
         '(^|/)Pipfile\.lock$'
         '(^|/)tox\.ini$'
+        '(^|/)pkg\/openssl\/'
     )
 
     local filter

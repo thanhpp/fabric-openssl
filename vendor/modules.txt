@@ -274,6 +274,12 @@ github.com/mattn/go-runewidth
 # github.com/matttproud/golang_protobuf_extensions v1.0.4
 ## explicit; go 1.9
 github.com/matttproud/golang_protobuf_extensions/pbutil
+# github.com/microsoft/go-crypto-openssl v0.2.8
+## explicit; go 1.17
+github.com/microsoft/go-crypto-openssl/openssl
+github.com/microsoft/go-crypto-openssl/openssl/bbig
+github.com/microsoft/go-crypto-openssl/openssl/bbig/bridge
+github.com/microsoft/go-crypto-openssl/openssl/internal/subtle
 # github.com/miekg/pkcs11 v1.1.1
 ## explicit; go 1.12
 github.com/miekg/pkcs11
@@ -395,6 +401,9 @@ github.com/rogpeppe/go-internal/fmtsort
 # github.com/sirupsen/logrus v1.9.0
 ## explicit; go 1.13
 github.com/sirupsen/logrus
+# github.com/spacemonkeygo/spacelog v0.0.0-20180420211403-2296661a0572
+## explicit
+github.com/spacemonkeygo/spacelog
 # github.com/spf13/afero v1.3.1
 ## explicit; go 1.13
 github.com/spf13/afero
