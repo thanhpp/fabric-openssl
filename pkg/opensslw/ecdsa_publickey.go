@@ -47,6 +47,20 @@ type ECDSAPublicKey struct {
 	X, Y  *big.Int
 }
 
+func NewECDSAPublicKey(curve elliptic.Curve, x, y *big.Int) (*ECDSAPublicKey, error) {
+	pub, err := bridge.NewPublicKeyECDSA(curve.Params().Name, x, y)
+	if err != nil {
+		return nil, fmt.Errorf("new public key ecdsa error: %w", err)
+	}
+
+	return &ECDSAPublicKey{
+		pub:   pub,
+		Curve: curve,
+		X:     x,
+		Y:     y,
+	}, nil
+}
+
 func (pub *ECDSAPublicKey) CurveBitSize() int {
 	return pub.Curve.Params().BitSize
 }

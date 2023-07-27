@@ -58,7 +58,7 @@ func TestECDSAKeyGenerator(t *testing.T) {
 	ecdsaK, ok := k.(*ecdsaPrivateKey)
 	require.True(t, ok)
 	require.NotNil(t, ecdsaK.privKey)
-	require.Equal(t, ecdsaK.privKey.Curve, elliptic.P256())
+	require.Equal(t, ecdsaK.privKey.Public.Curve, elliptic.P256())
 }
 
 func TestAESKeyGenerator(t *testing.T) {

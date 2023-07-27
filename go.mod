@@ -48,6 +48,7 @@ require (
 )
 
 require (
+	github.com/go-test/deep v1.1.0
 	github.com/hyperledger/fabric-chaincode-go v0.0.0-20220920210243-7bc6fa0dd58b
 	github.com/microsoft/go-crypto-openssl v0.2.8
 	github.com/spacemonkeygo/spacelog v0.0.0-20180420211403-2296661a0572

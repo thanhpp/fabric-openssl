@@ -8,6 +8,7 @@ package opensslw
 
 import (
 	"crypto/ecdsa"
+	"crypto/elliptic"
 	"encoding/asn1"
 	"fmt"
 	"math/big"
@@ -19,6 +20,25 @@ import (
 type ECDSAPrivateKey struct {
 	Public  *ECDSAPublicKey
 	private *openssl.PrivateKeyECDSA
+	D       *big.Int
+}
+
+func NewECDSAPrivateKey(curve elliptic.Curve, x, y, d *big.Int) (*ECDSAPrivateKey, error) {
+	priv, err := bridge.NewPrivateKeyECDSA(curve.Params().Name, x, y, d)
+	if err != nil {
+		return nil, fmt.Errorf("new ecdsa private key error: %w", err)
+	}
+
+	pub, err := NewECDSAPublicKey(curve, x, y)
+	if err != nil {
+		return nil, fmt.Errorf("new ecdsa public key error: %w", err)
+	}
+
+	return &ECDSAPrivateKey{
+		Public:  pub,
+		private: priv,
+		D:       d,
+	}, nil
 }
 
 func ConvertECDSAPrivateKey(key *ecdsa.PrivateKey) (*ECDSAPrivateKey, error) {
@@ -35,6 +55,7 @@ func ConvertECDSAPrivateKey(key *ecdsa.PrivateKey) (*ECDSAPrivateKey, error) {
 	return &ECDSAPrivateKey{
 		Public:  pub,
 		private: priv,
+		D:       key.D,
 	}, nil
 }
 
@@ -50,6 +71,10 @@ func (k *ECDSAPrivateKey) Sign(digest []byte) ([]byte, error) {
 	}
 
 	return marshalECDSASignature(r, s)
+}
+
+func (k *ECDSAPrivateKey) SignRS(digest []byte) (r, s *big.Int, err error) {
+	return bridge.SignECDSA(k.private, digest)
 }
 
 func (k *ECDSAPrivateKey) VerifyPublicKey(hash []byte, r, s *big.Int) bool {

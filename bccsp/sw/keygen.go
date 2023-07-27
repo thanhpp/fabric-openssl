@@ -29,7 +29,7 @@ type ecdsaKeyGenerator struct {
 }
 
 func (kg *ecdsaKeyGenerator) KeyGen(opts bccsp.KeyGenOpts) (bccsp.Key, error) {
-	privKey, err := opensslw.ECDSAGenerateKey(kg.curve)
+	privKey, err := opensslw.ECDSAGenerateOpenSSLKey(kg.curve)
 	if err != nil {
 		return nil, fmt.Errorf("Failed generating ECDSA key for [%v]: [%s]", kg.curve, err)
 	}

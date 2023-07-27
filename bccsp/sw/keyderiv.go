@@ -47,16 +47,15 @@ func (kd *ecdsaPublicKeyKeyDeriver) KeyDeriv(key bccsp.Key, opts bccsp.KeyDerivO
 		X:     new(big.Int),
 		Y:     new(big.Int),
 	}
-
 	k := new(big.Int).SetBytes(reRandOpts.ExpansionValue())
 	one := new(big.Int).SetInt64(1)
-	n := new(big.Int).Sub(ecdsaK.pubKey.Params().N, one)
+	n := new(big.Int).Sub(ecdsaK.pubKey.Curve.Params().N, one)
 	k.Mod(k, n)
 	k.Add(k, one)
 
 	// Compute temporary public key
-	tempX, tempY := ecdsaK.pubKey.ScalarBaseMult(k.Bytes())
-	tempSK.X, tempSK.Y = tempSK.Add(
+	tempX, tempY := ecdsaK.pubKey.Curve.ScalarBaseMult(k.Bytes())
+	tempSK.X, tempSK.Y = tempSK.Curve.Add(
 		ecdsaK.pubKey.X, ecdsaK.pubKey.Y,
 		tempX, tempY,
 	)
@@ -67,7 +66,12 @@ func (kd *ecdsaPublicKeyKeyDeriver) KeyDeriv(key bccsp.Key, opts bccsp.KeyDerivO
 		return nil, errors.New("Failed temporary public key IsOnCurve check.")
 	}
 
-	return &ecdsaPublicKey{tempSK}, nil
+	pubKey, err := opensslw.NewECDSAPublicKey(tempSK.Curve, tempSK.X, tempSK.Y)
+	if err != nil {
+		return nil, fmt.Errorf("new ecdsa public key error: %w", err)
+	}
+
+	return &ecdsaPublicKey{pubKey}, nil
 }
 
 type ecdsaPrivateKeyKeyDeriver struct{}
@@ -88,7 +92,7 @@ func (kd *ecdsaPrivateKeyKeyDeriver) KeyDeriv(key bccsp.Key, opts bccsp.KeyDeriv
 
 	tempSK := &ecdsa.PrivateKey{
 		PublicKey: ecdsa.PublicKey{
-			Curve: ecdsaK.privKey.Curve,
+			Curve: ecdsaK.privKey.Public.Curve,
 			X:     new(big.Int),
 			Y:     new(big.Int),
 		},
@@ -97,28 +101,33 @@ func (kd *ecdsaPrivateKeyKeyDeriver) KeyDeriv(key bccsp.Key, opts bccsp.KeyDeriv
 
 	k := new(big.Int).SetBytes(reRandOpts.ExpansionValue())
 	one := new(big.Int).SetInt64(1)
-	n := new(big.Int).Sub(ecdsaK.privKey.Params().N, one)
+	n := new(big.Int).Sub(ecdsaK.privKey.Public.Curve.Params().N, one)
 	k.Mod(k, n)
 	k.Add(k, one)
 
 	tempSK.D.Add(ecdsaK.privKey.D, k)
-	tempSK.D.Mod(tempSK.D, ecdsaK.privKey.PublicKey.Params().N)
+	tempSK.D.Mod(tempSK.D, ecdsaK.privKey.Public.Curve.Params().N)
 
 	// Compute temporary public key
-	tempX, tempY := ecdsaK.privKey.PublicKey.ScalarBaseMult(k.Bytes())
-	tempSK.PublicKey.X, tempSK.PublicKey.Y =
-		tempSK.PublicKey.Add(
-			ecdsaK.privKey.PublicKey.X, ecdsaK.privKey.PublicKey.Y,
+	tempX, tempY := ecdsaK.privKey.Public.Curve.ScalarBaseMult(k.Bytes())
+	tempSK.X, tempSK.Y =
+		tempSK.Curve.Add(
+			ecdsaK.privKey.Public.X, ecdsaK.privKey.Public.Y,
 			tempX, tempY,
 		)
 
 	// Verify temporary public key is a valid point on the reference curve
-	isOn := tempSK.Curve.IsOnCurve(tempSK.PublicKey.X, tempSK.PublicKey.Y)
+	isOn := tempSK.Curve.IsOnCurve(tempSK.X, tempSK.Y)
 	if !isOn {
 		return nil, errors.New("Failed temporary public key IsOnCurve check.")
 	}
 
-	return &ecdsaPrivateKey{tempSK}, nil
+	privK, err := opensslw.NewECDSAPrivateKey(tempSK.Curve, tempSK.X, tempSK.Y, tempSK.D)
+	if err != nil {
+		return nil, fmt.Errorf("new ecdsa private key error: %w", err)
+	}
+
+	return &ecdsaPrivateKey{privK}, nil
 }
 
 type aesPrivateKeyKeyDeriver struct {

@@ -22,10 +22,10 @@ import (
 	"math/big"
 	"os"
 	"path/filepath"
-	"reflect"
 	"testing"
 	"time"
 
+	"github.com/go-test/deep"
 	"github.com/golang/protobuf/proto"
 	"github.com/hyperledger/fabric-protos-go/msp"
 	"github.com/hyperledger/fabric/bccsp"
@@ -34,6 +34,7 @@ import (
 	"github.com/hyperledger/fabric/bccsp/utils"
 	"github.com/hyperledger/fabric/core/config/configtest"
 	"github.com/hyperledger/fabric/protoutil"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -279,8 +280,22 @@ func TestSerializeIdentities(t *testing.T) {
 		return
 	}
 
-	if !reflect.DeepEqual(id.GetPublicVersion(), idBack) {
-		t.Fatalf("Identities should be equal (%s) (%s)", id, idBack)
+	if diff := deep.Equal(id.GetPublicVersion(), idBack); diff != nil {
+		t.Log(diff)
+	}
+
+	/*
+		if !reflect.DeepEqual(id.GetPublicVersion(), idBack) {
+			t.Fatalf("Identities should be equal (%s) (%s)", id, idBack)
+			return
+	*/
+
+	idBytes, err := id.GetPublicVersion().Serialize()
+	require.NoError(t, err)
+	idBackBytes, err := idBack.Serialize()
+	require.NoError(t, err)
+	if b := assert.Equal(t, idBytes, idBackBytes, "serialized data should be equal"); !b {
+		t.Fatalf("Identities should be equal (%+v) (%+v)", string(idBytes), string(idBackBytes))
 		return
 	}
 }

@@ -74,7 +74,12 @@ func (*ecdsaPKIXPublicKeyImportOptsKeyImporter) KeyImport(raw interface{}, opts 
 		return nil, errors.New("Failed casting to ECDSA public key. Invalid raw material.")
 	}
 
-	return &ecdsaPublicKey{ecdsaPK}, nil
+	oPub, err := opensslw.ConvertECDSAPublicKey(ecdsaPK)
+	if err != nil {
+		return nil, fmt.Errorf("convert openssl ecdsa public key error: %w", err)
+	}
+
+	return &ecdsaPublicKey{oPub}, nil
 }
 
 type ecdsaPrivateKeyImportOptsKeyImporter struct{}
@@ -99,7 +104,12 @@ func (*ecdsaPrivateKeyImportOptsKeyImporter) KeyImport(raw interface{}, opts bcc
 		return nil, errors.New("Failed casting to ECDSA private key. Invalid raw material.")
 	}
 
-	return &ecdsaPrivateKey{ecdsaSK}, nil
+	oPriv, err := opensslw.ConvertECDSAPrivateKey(ecdsaSK)
+	if err != nil {
+		return nil, fmt.Errorf("convert openssl ecdsa public key error: %w", err)
+	}
+
+	return &ecdsaPrivateKey{oPriv}, nil
 }
 
 type ecdsaGoPublicKeyImportOptsKeyImporter struct{}
@@ -110,7 +120,12 @@ func (*ecdsaGoPublicKeyImportOptsKeyImporter) KeyImport(raw interface{}, opts bc
 		return nil, errors.New("Invalid raw material. Expected *ecdsa.PublicKey.")
 	}
 
-	return &ecdsaPublicKey{lowLevelKey}, nil
+	oPub, err := opensslw.ConvertECDSAPublicKey(lowLevelKey)
+	if err != nil {
+		return nil, fmt.Errorf("convert openssl ecdsa public key error: %w", err)
+	}
+
+	return &ecdsaPublicKey{oPub}, nil
 }
 
 type x509PublicKeyImportOptsKeyImporter struct {

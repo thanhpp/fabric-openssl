@@ -39,13 +39,13 @@ func signECDSA(k *ecdsa.PrivateKey, digest []byte, opts bccsp.SignerOpts) ([]byt
 	return utils.MarshalECDSASignature(r, s)
 }
 
-func verifyECDSA(k *ecdsa.PublicKey, signature, digest []byte, opts bccsp.SignerOpts) (bool, error) {
+func verifyECDSA(k *opensslw.ECDSAPublicKey, signature, digest []byte, opts bccsp.SignerOpts) (bool, error) {
 	r, s, err := utils.UnmarshalECDSASignature(signature)
 	if err != nil {
 		return false, fmt.Errorf("Failed unmashalling signature [%s]", err)
 	}
 
-	lowS, err := utils.IsLowS(k, s)
+	lowS, err := opensslw.ECDSAIsLowS(k, s)
 	if err != nil {
 		return false, err
 	}
@@ -54,23 +54,55 @@ func verifyECDSA(k *ecdsa.PublicKey, signature, digest []byte, opts bccsp.Signer
 		return false, fmt.Errorf("Invalid S. Must be smaller than half the order [%s][%s].", s, utils.GetCurveHalfOrdersAt(k.Curve))
 	}
 
-	return opensslw.ECDSAVerify(k, digest, r, s), nil
+	return k.Verify(digest, r, s), nil
 }
 
 type ecdsaSigner struct{}
 
 func (s *ecdsaSigner) Sign(k bccsp.Key, digest []byte, opts bccsp.SignerOpts) ([]byte, error) {
-	return signECDSA(k.(*ecdsaPrivateKey).privKey, digest, opts)
+	return k.(*ecdsaPrivateKey).privKey.Sign(digest)
 }
 
 type ecdsaPrivateKeyVerifier struct{}
 
 func (v *ecdsaPrivateKeyVerifier) Verify(k bccsp.Key, signature, digest []byte, opts bccsp.SignerOpts) (bool, error) {
-	return verifyECDSA(&(k.(*ecdsaPrivateKey).privKey.PublicKey), signature, digest, opts)
+	r, s, err := utils.UnmarshalECDSASignature(signature)
+	if err != nil {
+		return false, fmt.Errorf("Failed unmashalling signature [%s]", err)
+	}
+
+	key := k.(*ecdsaPrivateKey)
+
+	lowS, err := opensslw.ECDSAIsLowS(key.privKey.Public, s)
+	if err != nil {
+		return false, err
+	}
+
+	if !lowS {
+		return false, fmt.Errorf("Invalid S. Must be smaller than half the order [%s][%s].", s, utils.GetCurveHalfOrdersAt(key.privKey.Public.Curve))
+	}
+
+	return key.privKey.Public.Verify(digest, r, s), nil
 }
 
 type ecdsaPublicKeyKeyVerifier struct{}
 
 func (v *ecdsaPublicKeyKeyVerifier) Verify(k bccsp.Key, signature, digest []byte, opts bccsp.SignerOpts) (bool, error) {
-	return verifyECDSA(k.(*ecdsaPublicKey).pubKey, signature, digest, opts)
+	r, s, err := utils.UnmarshalECDSASignature(signature)
+	if err != nil {
+		return false, fmt.Errorf("Failed unmashalling signature [%s]", err)
+	}
+
+	key := k.(*ecdsaPublicKey)
+
+	lowS, err := opensslw.ECDSAIsLowS(key.pubKey, s)
+	if err != nil {
+		return false, err
+	}
+
+	if !lowS {
+		return false, fmt.Errorf("Invalid S. Must be smaller than half the order [%s][%s].", s, utils.GetCurveHalfOrdersAt(key.pubKey.Curve))
+	}
+
+	return key.pubKey.Verify(digest, r, s), nil
 }

@@ -7,15 +7,14 @@ SPDX-License-Identifier: Apache-2.0
 package sw
 
 import (
-	"crypto/ecdsa"
 	"crypto/elliptic"
-	"crypto/rand"
 	"fmt"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"testing"
 
+	"github.com/hyperledger/fabric/pkg/opensslw"
 	"github.com/stretchr/testify/require"
 )
 
@@ -66,7 +65,7 @@ func TestBigKeyFile(t *testing.T) {
 	require.NoError(t, err)
 
 	// Generate a key for keystore to find
-	privKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	privKey, err := opensslw.ECDSAGenerateOpenSSLKey(elliptic.P256())
 	require.NoError(t, err)
 
 	cspKey := &ecdsaPrivateKey{privKey}
