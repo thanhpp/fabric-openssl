@@ -17,9 +17,7 @@ const (
 	envUseStd = "USE_STD"
 )
 
-var (
-	useStd bool
-)
+var useStd bool
 
 func init() {
 	useStd, _ = strconv.ParseBool(os.Getenv(envUseStd))
