@@ -12,7 +12,7 @@ import (
 	"sync"
 
 	"github.com/hyperledger/fabric/common/flogging"
-	"github.com/hyperledger/fabric/pkg/openssl"
+	"github.com/hyperledger/fabric/pkg/cryptox"
 
 	"github.com/pkg/errors"
 )
@@ -63,7 +63,7 @@ func (cs *ConnectionSource) Update(globalAddrs []string, orgs map[string]Orderer
 	anyChange := false
 	hasOrgEndpoints := false
 	for orgName, org := range orgs {
-		hasher, _ := openssl.NewSHA256Hash()
+		hasher := cryptox.NewSHA256()
 		for _, cert := range org.RootCerts {
 			hasher.Write(cert)
 		}
@@ -71,7 +71,7 @@ func (cs *ConnectionSource) Update(globalAddrs []string, orgs map[string]Orderer
 			hasOrgEndpoints = true
 			hasher.Write([]byte(address))
 		}
-		hash, _ := hasher.Sum()
+		hash := hasher.Sum(nil)
 
 		newOrgToEndpointsHash[orgName] = hash[:]
 

@@ -21,12 +21,11 @@ import (
 	"fmt"
 
 	"github.com/hyperledger/fabric/bccsp"
-	"github.com/hyperledger/fabric/pkg/openssl"
-	"github.com/hyperledger/fabric/pkg/opensslw"
+	"github.com/hyperledger/fabric/pkg/cryptox"
 )
 
 type ecdsaPrivateKey struct {
-	privKey *opensslw.ECDSAPrivateKey
+	privKey cryptox.ECDSAPrivateKey
 }
 
 // Bytes converts this key to its byte representation,
@@ -42,12 +41,10 @@ func (k *ecdsaPrivateKey) SKI() []byte {
 	}
 
 	// Marshall the public key
-	raw := elliptic.Marshal(k.privKey.Public.Curve, k.privKey.Public.X, k.privKey.Public.Y)
+	raw := elliptic.Marshal(k.privKey.Curve(), k.privKey.X(), k.privKey.Y())
 
 	// Hash it
-	hash, _ := openssl.NewSHA256Hash()
-	hash.Write(raw)
-	sum, _ := hash.Sum()
+	sum := cryptox.SHA256(raw)
 	return sum[:]
 }
 
@@ -66,11 +63,11 @@ func (k *ecdsaPrivateKey) Private() bool {
 // PublicKey returns the corresponding public key part of an asymmetric public/private key pair.
 // This method returns an error in symmetric key schemes.
 func (k *ecdsaPrivateKey) PublicKey() (bccsp.Key, error) {
-	return &ecdsaPublicKey{k.privKey.Public}, nil
+	return &ecdsaPublicKey{k.privKey.Public()}, nil
 }
 
 type ecdsaPublicKey struct {
-	pubKey *opensslw.ECDSAPublicKey
+	pubKey cryptox.ECDSAPublicKey
 }
 
 // Bytes converts this key to its byte representation,
@@ -90,12 +87,10 @@ func (k *ecdsaPublicKey) SKI() []byte {
 	}
 
 	// Marshall the public key
-	raw := elliptic.Marshal(k.pubKey.Curve, k.pubKey.X, k.pubKey.Y)
+	raw := elliptic.Marshal(k.pubKey.Curve(), k.pubKey.X(), k.pubKey.Y())
 
 	// Hash it
-	hash, _ := openssl.NewSHA256Hash()
-	hash.Write(raw)
-	sum, _ := hash.Sum()
+	sum := cryptox.SHA256(raw)
 	return sum[:]
 }
 

@@ -19,7 +19,7 @@ import (
 	"errors"
 
 	"github.com/hyperledger/fabric/bccsp"
-	"github.com/hyperledger/fabric/pkg/openssl"
+	"github.com/hyperledger/fabric/pkg/cryptox"
 )
 
 type aesPrivateKey struct {
@@ -39,10 +39,10 @@ func (k *aesPrivateKey) Bytes() (raw []byte, err error) {
 
 // SKI returns the subject key identifier of this key.
 func (k *aesPrivateKey) SKI() (ski []byte) {
-	hash, _ := openssl.NewSHA256Hash()
+	hash := cryptox.NewSHA256()
 	hash.Write([]byte{0x01})
 	hash.Write(k.privKey)
-	sum, _ := hash.Sum()
+	sum := hash.Sum(nil)
 	return sum[:]
 }
 

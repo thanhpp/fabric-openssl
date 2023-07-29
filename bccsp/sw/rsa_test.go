@@ -12,7 +12,7 @@ import (
 	"math/big"
 	"testing"
 
-	"github.com/hyperledger/fabric/pkg/opensslw"
+	"github.com/hyperledger/fabric/pkg/cryptox"
 	"github.com/stretchr/testify/require"
 )
 
@@ -22,9 +22,9 @@ type rsaPublicKeyASN struct {
 }
 
 func TestRSAPublicKey(t *testing.T) {
-	lowLevelKey, err := opensslw.GenerateCryptoRSAKey(2048)
+	lowLevelKey, err := cryptox.GenerateRSAKeyStd(2048)
 	require.NoError(t, err)
-	oKey, err := opensslw.ConvertRSAPublicKey(&lowLevelKey.PublicKey)
+	oKey, err := cryptox.ConvertRSAPublicKey(&lowLevelKey.PublicKey)
 	require.NoError(t, err)
 	k := &rsaPublicKey{oKey}
 
@@ -37,7 +37,7 @@ func TestRSAPublicKey(t *testing.T) {
 
 	k.pubKey = oKey
 	ski = k.SKI()
-	raw, err := asn1.Marshal(rsaPublicKeyASN{N: k.pubKey.N, E: k.pubKey.E})
+	raw, err := asn1.Marshal(rsaPublicKeyASN{N: k.pubKey.N(), E: k.pubKey.E()})
 	require.NoError(t, err, "asn1 marshal failed")
 	hash := sha256.New()
 	hash.Write(raw)

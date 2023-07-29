@@ -20,7 +20,7 @@ import (
 	"github.com/hyperledger/fabric-protos-go/msp"
 	"github.com/hyperledger/fabric/bccsp/utils"
 	"github.com/hyperledger/fabric/common/util"
-	"github.com/hyperledger/fabric/pkg/opensslw"
+	"github.com/hyperledger/fabric/pkg/cryptox"
 	"github.com/hyperledger/fabric/protoutil"
 	"github.com/pkg/errors"
 )
@@ -38,7 +38,7 @@ type Config struct {
 // initialize an MSP without a CA cert that signs the signing identity,
 // this will do for now.
 type Signer struct {
-	key     *opensslw.ECDSAPrivateKey
+	key     cryptox.ECDSAPrivateKey
 	Creator []byte
 }
 
@@ -57,7 +57,7 @@ func NewSigner(conf Config) (*Signer, error) {
 		return nil, errors.WithStack(err)
 	}
 
-	k, err := opensslw.ConvertECDSAPrivateKey(key)
+	k, err := cryptox.ConvertECDSAPrivateKey(key)
 	if err != nil {
 		return nil, errors.WithStack(err)
 	}

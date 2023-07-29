@@ -22,8 +22,7 @@ import (
 	"github.com/hyperledger/fabric/bccsp/sw"
 	"github.com/hyperledger/fabric/bccsp/utils"
 	"github.com/hyperledger/fabric/common/flogging"
-	"github.com/hyperledger/fabric/pkg/openssl"
-	"github.com/hyperledger/fabric/pkg/opensslw"
+	"github.com/hyperledger/fabric/pkg/cryptox"
 	"github.com/miekg/pkcs11"
 	"github.com/pkg/errors"
 	"go.uber.org/zap/zapcore"
@@ -182,7 +181,7 @@ func (csp *Provider) KeyGen(opts bccsp.KeyGenOpts) (k bccsp.Key, err error) {
 		if err != nil {
 			return nil, errors.Wrapf(err, "Failed generating ECDSA key")
 		}
-		oPub, err := opensslw.ConvertECDSAPublicKey(pub)
+		oPub, err := cryptox.ConvertECDSAPublicKey(pub)
 		if err != nil {
 			return nil, errors.Wrapf(err, "convert openssl ecdsa key")
 		}
@@ -193,7 +192,7 @@ func (csp *Provider) KeyGen(opts bccsp.KeyGenOpts) (k bccsp.Key, err error) {
 		if err != nil {
 			return nil, errors.Wrapf(err, "Failed generating ECDSA P256 key")
 		}
-		oPub, err := opensslw.ConvertECDSAPublicKey(pub)
+		oPub, err := cryptox.ConvertECDSAPublicKey(pub)
 		if err != nil {
 			return nil, errors.Wrapf(err, "convert openssl ecdsa key")
 		}
@@ -204,7 +203,7 @@ func (csp *Provider) KeyGen(opts bccsp.KeyGenOpts) (k bccsp.Key, err error) {
 		if err != nil {
 			return nil, errors.Wrapf(err, "Failed generating ECDSA P384 key")
 		}
-		oPub, err := opensslw.ConvertECDSAPublicKey(pub)
+		oPub, err := cryptox.ConvertECDSAPublicKey(pub)
 		if err != nil {
 			return nil, errors.Wrapf(err, "convert openssl ecdsa key")
 		}
@@ -242,7 +241,7 @@ func (csp *Provider) GetKey(ski []byte) (bccsp.Key, error) {
 		logger.Debugf("Key not found using PKCS11: %v", err)
 		return csp.BCCSP.GetKey(ski)
 	}
-	oPub, err := opensslw.ConvertECDSAPublicKey(pubKey)
+	oPub, err := cryptox.ConvertECDSAPublicKey(pubKey)
 	if err != nil {
 		return nil, errors.Wrapf(err, "convert openssl ecdsa key")
 	}
@@ -286,7 +285,7 @@ func (csp *Provider) signECDSA(k ecdsaPrivateKey, digest []byte) ([]byte, error)
 		return nil, err
 	}
 
-	s, err = opensslw.ECDSAToLowS(k.pub.pub, s)
+	s, err = cryptox.ECDSAToLowS(k.pub.pub, s)
 	if err != nil {
 		return nil, err
 	}
@@ -323,7 +322,7 @@ func (csp *Provider) verifyECDSA(k ecdsaPublicKey, signature, digest []byte) (bo
 		return false, fmt.Errorf("Failed unmashalling signature [%s]", err)
 	}
 
-	lowS, err := opensslw.ECDSAIsLowS(k.pub, s)
+	lowS, err := cryptox.ECDSAIsLowS(k.pub, s)
 	if err != nil {
 		return false, err
 	}
@@ -551,7 +550,7 @@ func (csp *Provider) generateECKey(curve asn1.ObjectIdentifier, ephemeral bool) 
 	if err != nil {
 		return nil, nil, fmt.Errorf("Error querying EC-point: [%s]", err)
 	}
-	hash, _ := openssl.SHA256(ecpt)
+	hash := cryptox.SHA256(ecpt)
 	ski = hash[:]
 
 	// set CKA_ID of the both keys to SKI(public key) and CKA_LABEL to hex string of SKI

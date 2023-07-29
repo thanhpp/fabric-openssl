@@ -26,7 +26,7 @@ import (
 
 	mocks2 "github.com/hyperledger/fabric/bccsp/mocks"
 	"github.com/hyperledger/fabric/bccsp/sw/mocks"
-	"github.com/hyperledger/fabric/pkg/opensslw"
+	"github.com/hyperledger/fabric/pkg/cryptox"
 	"github.com/stretchr/testify/require"
 )
 
@@ -197,7 +197,7 @@ func TestX509PublicKeyImportOptsKeyImporter(t *testing.T) {
 }
 
 func TestX509RSAKeyImport(t *testing.T) {
-	pk, err := opensslw.GenerateCryptoRSAKey(2048)
+	pk, err := cryptox.GenerateRSAKeyStd(2048)
 	require.NoError(t, err, "key generation failed")
 
 	cert := &x509.Certificate{PublicKey: pk.Public()}
@@ -206,7 +206,7 @@ func TestX509RSAKeyImport(t *testing.T) {
 	require.NoError(t, err, "key import failed")
 	require.NotNil(t, key, "key must not be nil")
 
-	oKey, err := opensslw.ConvertRSAPublicKey(&pk.PublicKey)
+	oKey, err := cryptox.ConvertRSAPublicKey(&pk.PublicKey)
 	require.NoError(t, err)
 	importedBytes, err := key.Bytes()
 	require.NoError(t, err)

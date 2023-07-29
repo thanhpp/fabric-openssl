@@ -18,13 +18,12 @@ import (
 	"net"
 	"time"
 
-	"github.com/hyperledger/fabric/pkg/openssl"
-	"github.com/hyperledger/fabric/pkg/opensslw"
+	"github.com/hyperledger/fabric/pkg/cryptox"
 	"github.com/pkg/errors"
 )
 
 func newPrivKey() (*ecdsa.PrivateKey, []byte, error) {
-	privateKey, err := opensslw.ECDSAGenerateKey(elliptic.P256())
+	privateKey, err := cryptox.GenStdECDSAPrivateKey(elliptic.P256())
 	if err != nil {
 		return nil, nil, err
 	}
@@ -120,6 +119,6 @@ func encodePEM(keyType string, data []byte) []byte {
 // RFC 7093, Section 2, Method 4
 func computeSKI(key *ecdsa.PublicKey) []byte {
 	raw := elliptic.Marshal(key.Curve, key.X, key.Y)
-	hash, _ := openssl.SHA256(raw)
-	return hash[:]
+	sum := cryptox.SHA256(raw)
+	return sum[:]
 }

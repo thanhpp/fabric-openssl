@@ -10,8 +10,7 @@ import (
 	"errors"
 
 	"github.com/hyperledger/fabric/bccsp"
-	"github.com/hyperledger/fabric/pkg/openssl"
-	"github.com/hyperledger/fabric/pkg/opensslw"
+	"github.com/hyperledger/fabric/pkg/cryptox"
 )
 
 // An rsaPublicKey wraps the standard library implementation of an RSA public
@@ -19,7 +18,7 @@ import (
 //
 // NOTE: Fabric does not support RSA signing or verification. This code simply
 // allows MSPs to include RSA CAs in their certificate chains.
-type rsaPublicKey struct{ pubKey *opensslw.RSAPublicKey }
+type rsaPublicKey struct{ pubKey cryptox.RSAPublicKey }
 
 func (k *rsaPublicKey) Symmetric() bool               { return false }
 func (k *rsaPublicKey) Private() bool                 { return false }
@@ -42,6 +41,6 @@ func (k *rsaPublicKey) SKI() []byte {
 
 	// Marshal the public key and hash it
 	raw := k.pubKey.MarshalPKCS1PublicKey()
-	hash, _ := openssl.SHA256(raw)
+	hash := cryptox.SHA256(raw)
 	return hash[:]
 }

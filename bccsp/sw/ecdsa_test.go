@@ -25,7 +25,7 @@ import (
 	"testing"
 
 	"github.com/hyperledger/fabric/bccsp/utils"
-	"github.com/hyperledger/fabric/pkg/opensslw"
+	"github.com/hyperledger/fabric/pkg/cryptox"
 	"github.com/stretchr/testify/require"
 )
 
@@ -50,18 +50,18 @@ func TestVerifyECDSA(t *testing.T) {
 	// Generate a key
 	// lowLevelKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
 	// require.NoError(t, err)
-	lowLevelKey, err := opensslw.ECDSAGenerateOpenSSLKey(elliptic.P256())
+	lowLevelKey, err := cryptox.GenECDSAPrivateKey(elliptic.P256())
 	require.NoError(t, err)
 
 	msg := []byte("hello world")
 	sigma, err := lowLevelKey.Sign(msg)
 	require.NoError(t, err)
 
-	valid, err := verifyECDSA(lowLevelKey.Public, sigma, msg, nil)
+	valid, err := verifyECDSA(lowLevelKey.Public(), sigma, msg, nil)
 	require.NoError(t, err)
 	require.True(t, valid)
 
-	_, err = verifyECDSA(lowLevelKey.Public, nil, msg, nil)
+	_, err = verifyECDSA(lowLevelKey.Public(), nil, msg, nil)
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "Failed unmashalling signature [")
 
@@ -70,7 +70,7 @@ func TestVerifyECDSA(t *testing.T) {
 	S.Add(utils.GetCurveHalfOrdersAt(elliptic.P256()), big.NewInt(1))
 	sigmaWrongS, err := utils.MarshalECDSASignature(R, S)
 	require.NoError(t, err)
-	_, err = verifyECDSA(lowLevelKey.Public, sigmaWrongS, msg, nil)
+	_, err = verifyECDSA(lowLevelKey.Public(), sigmaWrongS, msg, nil)
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "Invalid S. Must be smaller than half the order [")
 }
@@ -85,7 +85,7 @@ func TestEcdsaSignerSign(t *testing.T) {
 	// Generate a key
 	// lowLevelKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
 	// require.NoError(t, err)
-	lowLevelKey, err := opensslw.ECDSAGenerateOpenSSLKey(elliptic.P256())
+	lowLevelKey, err := cryptox.GenECDSAPrivateKey(elliptic.P256())
 	require.NoError(t, err)
 	k := &ecdsaPrivateKey{lowLevelKey}
 	pk, err := k.PublicKey()
@@ -98,7 +98,7 @@ func TestEcdsaSignerSign(t *testing.T) {
 	require.NotNil(t, sigma)
 
 	// Verify
-	valid, err := verifyECDSA(lowLevelKey.Public, sigma, msg, nil)
+	valid, err := verifyECDSA(lowLevelKey.Public(), sigma, msg, nil)
 	require.NoError(t, err)
 	require.True(t, valid)
 
@@ -116,7 +116,7 @@ func TestEcdsaPrivateKey(t *testing.T) {
 
 	// lowLevelKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
 	// require.NoError(t, err)
-	lowLevelKey, err := opensslw.ECDSAGenerateOpenSSLKey(elliptic.P256())
+	lowLevelKey, err := cryptox.GenECDSAPrivateKey(elliptic.P256())
 	require.NoError(t, err)
 	k := &ecdsaPrivateKey{lowLevelKey}
 
@@ -133,7 +133,7 @@ func TestEcdsaPrivateKey(t *testing.T) {
 
 	k.privKey = lowLevelKey
 	ski = k.SKI()
-	raw := elliptic.Marshal(k.privKey.Public.Curve, k.privKey.Public.X, k.privKey.Public.Y)
+	raw := elliptic.Marshal(k.privKey.Curve(), k.privKey.X(), k.privKey.Y())
 	hash := sha256.New()
 	hash.Write(raw)
 	ski2 := hash.Sum(nil)
@@ -142,9 +142,10 @@ func TestEcdsaPrivateKey(t *testing.T) {
 	pk, err := k.PublicKey()
 	require.NoError(t, err)
 	require.NotNil(t, pk)
+
 	ecdsaPK, ok := pk.(*ecdsaPublicKey)
 	require.True(t, ok)
-	require.Equal(t, lowLevelKey.Public, ecdsaPK.pubKey)
+	require.Equal(t, lowLevelKey.Public(), ecdsaPK.pubKey)
 }
 
 func TestEcdsaPublicKey(t *testing.T) {
@@ -152,9 +153,9 @@ func TestEcdsaPublicKey(t *testing.T) {
 
 	// lowLevelKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
 	// require.NoError(t, err)
-	lowLevelKey, err := opensslw.ECDSAGenerateOpenSSLKey(elliptic.P256())
+	lowLevelKey, err := cryptox.GenECDSAPrivateKey(elliptic.P256())
 	require.NoError(t, err)
-	k := &ecdsaPublicKey{lowLevelKey.Public}
+	k := &ecdsaPublicKey{lowLevelKey.Public()}
 
 	require.False(t, k.Symmetric())
 	require.False(t, k.Private())
@@ -163,9 +164,9 @@ func TestEcdsaPublicKey(t *testing.T) {
 	ski := k.SKI()
 	require.Nil(t, ski)
 
-	k.pubKey = lowLevelKey.Public
+	k.pubKey = lowLevelKey.Public()
 	ski = k.SKI()
-	raw := elliptic.Marshal(k.pubKey.Curve, k.pubKey.X, k.pubKey.Y)
+	raw := elliptic.Marshal(k.pubKey.Curve(), k.pubKey.X(), k.pubKey.Y())
 	hash := sha256.New()
 	hash.Write(raw)
 	ski2 := hash.Sum(nil)
@@ -186,14 +187,16 @@ func TestEcdsaPublicKey(t *testing.T) {
 	invalidCurve.N = big.NewInt(1)
 	invalidCurve.B = big.NewInt(1)
 	invalidCurve.BitSize = 1024
-	k.pubKey = &opensslw.ECDSAPublicKey{Curve: invalidCurve, X: big.NewInt(1), Y: big.NewInt(1)}
-
-	defer func() {
-		if r := recover(); r != nil {
-			require.Contains(t, r, "crypto/elliptic: attempted operation on invalid point")
-		}
-	}()
-	_, err = k.Bytes()
+	// require error here because NewECDSAPublicKey don't accept invalid curve
+	_, err = cryptox.NewECDSAPublicKey(invalidCurve, big.NewInt(1), big.NewInt(1))
 	require.Error(t, err)
-	require.Contains(t, err.Error(), "Failed marshalling key [")
+
+	// defer func() {
+	// 	if r := recover(); r != nil {
+	// 		require.Contains(t, r, "crypto/elliptic: attempted operation on invalid point")
+	// 	}
+	// }()
+	// _, err = k.Bytes()
+	// require.Error(t, err)
+	// require.Contains(t, err.Error(), "Failed marshalling key [")
 }

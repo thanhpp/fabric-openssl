@@ -21,15 +21,15 @@ import (
 	"fmt"
 
 	"github.com/hyperledger/fabric/bccsp"
-	"github.com/hyperledger/fabric/pkg/opensslw"
+	"github.com/hyperledger/fabric/pkg/cryptox"
 )
 
 type ecdsaKeyGenerator struct {
 	curve elliptic.Curve
 }
 
-func (kg *ecdsaKeyGenerator) KeyGen(opts bccsp.KeyGenOpts) (bccsp.Key, error) {
-	privKey, err := opensslw.ECDSAGenerateOpenSSLKey(kg.curve)
+func (kg *ecdsaKeyGenerator) KeyGen(_ bccsp.KeyGenOpts) (bccsp.Key, error) {
+	privKey, err := cryptox.GenECDSAPrivateKey(kg.curve)
 	if err != nil {
 		return nil, fmt.Errorf("Failed generating ECDSA key for [%v]: [%s]", kg.curve, err)
 	}
@@ -41,7 +41,7 @@ type aesKeyGenerator struct {
 	length int
 }
 
-func (kg *aesKeyGenerator) KeyGen(opts bccsp.KeyGenOpts) (bccsp.Key, error) {
+func (kg *aesKeyGenerator) KeyGen(_ bccsp.KeyGenOpts) (bccsp.Key, error) {
 	lowLevelKey, err := GetRandomBytes(int(kg.length))
 	if err != nil {
 		return nil, fmt.Errorf("Failed generating AES %d key [%s]", kg.length, err)

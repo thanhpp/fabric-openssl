@@ -14,7 +14,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/hyperledger/fabric/pkg/opensslw"
+	"github.com/hyperledger/fabric/pkg/cryptox"
 	"github.com/stretchr/testify/require"
 )
 
@@ -65,7 +65,7 @@ func TestBigKeyFile(t *testing.T) {
 	require.NoError(t, err)
 
 	// Generate a key for keystore to find
-	privKey, err := opensslw.ECDSAGenerateOpenSSLKey(elliptic.P256())
+	privKey, err := cryptox.GenECDSAPrivateKey(elliptic.P256())
 	require.NoError(t, err)
 
 	cspKey := &ecdsaPrivateKey{privKey}

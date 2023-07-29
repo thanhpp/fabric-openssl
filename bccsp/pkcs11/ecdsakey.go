@@ -20,7 +20,7 @@ import (
 	"fmt"
 
 	"github.com/hyperledger/fabric/bccsp"
-	"github.com/hyperledger/fabric/pkg/opensslw"
+	"github.com/hyperledger/fabric/pkg/cryptox"
 )
 
 type ecdsaPrivateKey struct {
@@ -59,7 +59,7 @@ func (k *ecdsaPrivateKey) PublicKey() (bccsp.Key, error) {
 
 type ecdsaPublicKey struct {
 	ski []byte
-	pub *opensslw.ECDSAPublicKey
+	pub cryptox.ECDSAPublicKey
 }
 
 // Bytes converts this key to its byte representation,

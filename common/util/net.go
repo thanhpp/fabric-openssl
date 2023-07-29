@@ -10,7 +10,7 @@ import (
 	"context"
 	"crypto/x509"
 
-	"github.com/hyperledger/fabric/pkg/openssl"
+	"github.com/hyperledger/fabric/pkg/cryptox"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/peer"
 )
@@ -34,9 +34,9 @@ func ExtractCertificateHashFromContext(ctx context.Context) []byte {
 	if len(rawCert) == 0 {
 		return nil
 	}
-	h, _ := openssl.NewSHA256Hash()
-	h.Write(rawCert)
-	sum, _ := h.Sum()
+
+	sum := cryptox.SHA256(rawCert)
+
 	return sum[:]
 }
 

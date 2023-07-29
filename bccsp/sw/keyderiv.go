@@ -23,7 +23,7 @@ import (
 	"math/big"
 
 	"github.com/hyperledger/fabric/bccsp"
-	"github.com/hyperledger/fabric/pkg/opensslw"
+	"github.com/hyperledger/fabric/pkg/cryptox"
 )
 
 type ecdsaPublicKeyKeyDeriver struct{}
@@ -43,20 +43,20 @@ func (kd *ecdsaPublicKeyKeyDeriver) KeyDeriv(key bccsp.Key, opts bccsp.KeyDerivO
 	}
 
 	tempSK := &ecdsa.PublicKey{
-		Curve: ecdsaK.pubKey.Curve,
+		Curve: ecdsaK.pubKey.Curve(),
 		X:     new(big.Int),
 		Y:     new(big.Int),
 	}
 	k := new(big.Int).SetBytes(reRandOpts.ExpansionValue())
 	one := new(big.Int).SetInt64(1)
-	n := new(big.Int).Sub(ecdsaK.pubKey.Curve.Params().N, one)
+	n := new(big.Int).Sub(ecdsaK.pubKey.Curve().Params().N, one)
 	k.Mod(k, n)
 	k.Add(k, one)
 
 	// Compute temporary public key
-	tempX, tempY := ecdsaK.pubKey.Curve.ScalarBaseMult(k.Bytes())
+	tempX, tempY := ecdsaK.pubKey.Curve().ScalarBaseMult(k.Bytes())
 	tempSK.X, tempSK.Y = tempSK.Curve.Add(
-		ecdsaK.pubKey.X, ecdsaK.pubKey.Y,
+		ecdsaK.pubKey.X(), ecdsaK.pubKey.Y(),
 		tempX, tempY,
 	)
 
@@ -66,7 +66,7 @@ func (kd *ecdsaPublicKeyKeyDeriver) KeyDeriv(key bccsp.Key, opts bccsp.KeyDerivO
 		return nil, errors.New("Failed temporary public key IsOnCurve check.")
 	}
 
-	pubKey, err := opensslw.NewECDSAPublicKey(tempSK.Curve, tempSK.X, tempSK.Y)
+	pubKey, err := cryptox.NewECDSAPublicKey(tempSK.Curve, tempSK.X, tempSK.Y)
 	if err != nil {
 		return nil, fmt.Errorf("new ecdsa public key error: %w", err)
 	}
@@ -92,7 +92,7 @@ func (kd *ecdsaPrivateKeyKeyDeriver) KeyDeriv(key bccsp.Key, opts bccsp.KeyDeriv
 
 	tempSK := &ecdsa.PrivateKey{
 		PublicKey: ecdsa.PublicKey{
-			Curve: ecdsaK.privKey.Public.Curve,
+			Curve: ecdsaK.privKey.Curve(),
 			X:     new(big.Int),
 			Y:     new(big.Int),
 		},
@@ -101,18 +101,18 @@ func (kd *ecdsaPrivateKeyKeyDeriver) KeyDeriv(key bccsp.Key, opts bccsp.KeyDeriv
 
 	k := new(big.Int).SetBytes(reRandOpts.ExpansionValue())
 	one := new(big.Int).SetInt64(1)
-	n := new(big.Int).Sub(ecdsaK.privKey.Public.Curve.Params().N, one)
+	n := new(big.Int).Sub(ecdsaK.privKey.Curve().Params().N, one)
 	k.Mod(k, n)
 	k.Add(k, one)
 
-	tempSK.D.Add(ecdsaK.privKey.D, k)
-	tempSK.D.Mod(tempSK.D, ecdsaK.privKey.Public.Curve.Params().N)
+	tempSK.D.Add(ecdsaK.privKey.D(), k)
+	tempSK.D.Mod(tempSK.D, ecdsaK.privKey.Curve().Params().N)
 
 	// Compute temporary public key
-	tempX, tempY := ecdsaK.privKey.Public.Curve.ScalarBaseMult(k.Bytes())
+	tempX, tempY := ecdsaK.privKey.Curve().ScalarBaseMult(k.Bytes())
 	tempSK.X, tempSK.Y =
 		tempSK.Curve.Add(
-			ecdsaK.privKey.Public.X, ecdsaK.privKey.Public.Y,
+			ecdsaK.privKey.X(), ecdsaK.privKey.Y(),
 			tempX, tempY,
 		)
 
@@ -122,7 +122,7 @@ func (kd *ecdsaPrivateKeyKeyDeriver) KeyDeriv(key bccsp.Key, opts bccsp.KeyDeriv
 		return nil, errors.New("Failed temporary public key IsOnCurve check.")
 	}
 
-	privK, err := opensslw.NewECDSAPrivateKey(tempSK.Curve, tempSK.X, tempSK.Y, tempSK.D)
+	privK, err := cryptox.NewECDSAPrivateKey(tempSK.Curve, tempSK.X, tempSK.Y, tempSK.D)
 	if err != nil {
 		return nil, fmt.Errorf("new ecdsa private key error: %w", err)
 	}
@@ -144,27 +144,11 @@ func (kd *aesPrivateKeyKeyDeriver) KeyDeriv(k bccsp.Key, opts bccsp.KeyDerivOpts
 
 	switch hmacOpts := opts.(type) {
 	case *bccsp.HMACTruncated256AESDeriveKeyOpts:
-		mac, err := opensslw.NewHMAC(kd.conf.hashFunction, aesK.privKey)
-		if err != nil {
-			return nil, fmt.Errorf("new HMAC error: %w", err)
-		}
-		mac.Write(hmacOpts.Argument())
-		sum, err := mac.Final()
-		if err != nil {
-			return nil, fmt.Errorf("final HMAC error: %w", err)
-		}
+		sum := cryptox.HMACSum(kd.conf.hashFunction, aesK.privKey, hmacOpts.Argument())
 		return &aesPrivateKey{sum[:kd.conf.aesBitLength], false}, nil
 
 	case *bccsp.HMACDeriveKeyOpts:
-		mac, err := opensslw.NewHMAC(kd.conf.hashFunction, aesK.privKey)
-		if err != nil {
-			return nil, fmt.Errorf("new HMAC error: %w", err)
-		}
-		mac.Write(hmacOpts.Argument())
-		sum, err := mac.Final()
-		if err != nil {
-			return nil, fmt.Errorf("final HMAC error: %w", err)
-		}
+		sum := cryptox.HMACSum(kd.conf.hashFunction, aesK.privKey, hmacOpts.Argument())
 		return &aesPrivateKey{sum, true}, nil
 
 	default:

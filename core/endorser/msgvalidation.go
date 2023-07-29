@@ -12,7 +12,7 @@ import (
 	"github.com/hyperledger/fabric-protos-go/peer"
 	"github.com/hyperledger/fabric/core/common/ccprovider"
 	"github.com/hyperledger/fabric/msp"
-	"github.com/hyperledger/fabric/pkg/openssl"
+	"github.com/hyperledger/fabric/pkg/cryptox"
 	"github.com/hyperledger/fabric/protoutil"
 	"github.com/pkg/errors"
 )
@@ -103,11 +103,11 @@ func UnpackProposal(signedProp *peer.SignedProposal) (*UnpackedProposal, error) 
 	// 2) The serialized Signature Header object
 	// 3) The hash of the part of the chaincode proposal payload that will go to the tx
 	// (ie, the parts without the transient data)
-	propHash, _ := openssl.NewSHA256Hash()
+	propHash := cryptox.NewSHA256()
 	propHash.Write(hdr.ChannelHeader)
 	propHash.Write(hdr.SignatureHeader)
 	propHash.Write(ppBytes)
-	propSum, _ := propHash.Sum()
+	propSum := propHash.Sum(nil)
 
 	return &UnpackedProposal{
 		SignedProposal:  signedProp,

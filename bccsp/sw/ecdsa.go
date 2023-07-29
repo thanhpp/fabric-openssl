@@ -22,7 +22,7 @@ import (
 
 	"github.com/hyperledger/fabric/bccsp"
 	"github.com/hyperledger/fabric/bccsp/utils"
-	"github.com/hyperledger/fabric/pkg/opensslw"
+	"github.com/hyperledger/fabric/pkg/cryptox"
 )
 
 func signECDSA(k *ecdsa.PrivateKey, digest []byte, opts bccsp.SignerOpts) ([]byte, error) {
@@ -39,19 +39,19 @@ func signECDSA(k *ecdsa.PrivateKey, digest []byte, opts bccsp.SignerOpts) ([]byt
 	return utils.MarshalECDSASignature(r, s)
 }
 
-func verifyECDSA(k *opensslw.ECDSAPublicKey, signature, digest []byte, opts bccsp.SignerOpts) (bool, error) {
+func verifyECDSA(k cryptox.ECDSAPublicKey, signature, digest []byte, opts bccsp.SignerOpts) (bool, error) {
 	r, s, err := utils.UnmarshalECDSASignature(signature)
 	if err != nil {
 		return false, fmt.Errorf("Failed unmashalling signature [%s]", err)
 	}
 
-	lowS, err := opensslw.ECDSAIsLowS(k, s)
+	lowS, err := cryptox.ECDSAIsLowS(k, s)
 	if err != nil {
 		return false, err
 	}
 
 	if !lowS {
-		return false, fmt.Errorf("Invalid S. Must be smaller than half the order [%s][%s].", s, utils.GetCurveHalfOrdersAt(k.Curve))
+		return false, fmt.Errorf("Invalid S. Must be smaller than half the order [%s][%s].", s, utils.GetCurveHalfOrdersAt(k.Curve()))
 	}
 
 	return k.Verify(digest, r, s), nil
@@ -73,16 +73,16 @@ func (v *ecdsaPrivateKeyVerifier) Verify(k bccsp.Key, signature, digest []byte, 
 
 	key := k.(*ecdsaPrivateKey)
 
-	lowS, err := opensslw.ECDSAIsLowS(key.privKey.Public, s)
+	lowS, err := cryptox.ECDSAIsLowS(key.privKey.Public(), s)
 	if err != nil {
 		return false, err
 	}
 
 	if !lowS {
-		return false, fmt.Errorf("Invalid S. Must be smaller than half the order [%s][%s].", s, utils.GetCurveHalfOrdersAt(key.privKey.Public.Curve))
+		return false, fmt.Errorf("Invalid S. Must be smaller than half the order [%s][%s].", s, utils.GetCurveHalfOrdersAt(key.privKey.Curve()))
 	}
 
-	return key.privKey.Public.Verify(digest, r, s), nil
+	return key.privKey.VerifyPublicKey(digest, r, s), nil
 }
 
 type ecdsaPublicKeyKeyVerifier struct{}
@@ -95,13 +95,13 @@ func (v *ecdsaPublicKeyKeyVerifier) Verify(k bccsp.Key, signature, digest []byte
 
 	key := k.(*ecdsaPublicKey)
 
-	lowS, err := opensslw.ECDSAIsLowS(key.pubKey, s)
+	lowS, err := cryptox.ECDSAIsLowS(key.pubKey, s)
 	if err != nil {
 		return false, err
 	}
 
 	if !lowS {
-		return false, fmt.Errorf("Invalid S. Must be smaller than half the order [%s][%s].", s, utils.GetCurveHalfOrdersAt(key.pubKey.Curve))
+		return false, fmt.Errorf("Invalid S. Must be smaller than half the order [%s][%s].", s, utils.GetCurveHalfOrdersAt(key.pubKey.Curve()))
 	}
 
 	return key.pubKey.Verify(digest, r, s), nil

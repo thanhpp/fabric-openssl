@@ -13,7 +13,7 @@ import (
 	"github.com/golang/protobuf/proto"
 	"github.com/hyperledger/fabric-protos-go/common"
 	"github.com/hyperledger/fabric-protos-go/peer"
-	"github.com/hyperledger/fabric/pkg/openssl"
+	"github.com/hyperledger/fabric/pkg/cryptox"
 	"github.com/pkg/errors"
 )
 
@@ -455,14 +455,14 @@ func GetProposalHash2(header *common.Header, ccPropPayl []byte) ([]byte, error) 
 		return nil, errors.New("nil arguments")
 	}
 
-	hash, _ := openssl.NewSHA256Hash()
+	hash := cryptox.NewSHA256()
 	// hash the serialized Channel Header object
 	hash.Write(header.ChannelHeader)
 	// hash the serialized Signature Header object
 	hash.Write(header.SignatureHeader)
 	// hash the bytes of the chaincode proposal payload that we are given
 	hash.Write(ccPropPayl)
-	sum, _ := hash.Sum()
+	sum := hash.Sum(nil)
 	return sum[:], nil
 }
 
@@ -488,14 +488,14 @@ func GetProposalHash1(header *common.Header, ccPropPayl []byte) ([]byte, error) 
 		return nil, err
 	}
 
-	hash2, _ := openssl.NewSHA256Hash()
+	hash2 := cryptox.NewSHA256()
 	// hash the serialized Channel Header object
 	hash2.Write(header.ChannelHeader)
 	// hash the serialized Signature Header object
 	hash2.Write(header.SignatureHeader)
 	// hash of the part of the chaincode proposal payload that will go to the tx
 	hash2.Write(ppBytes)
-	sum2, _ := hash2.Sum()
+	sum2 := hash2.Sum(nil)
 	return sum2[:], nil
 }
 

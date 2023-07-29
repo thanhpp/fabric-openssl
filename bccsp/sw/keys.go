@@ -16,7 +16,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/hyperledger/fabric/pkg/opensslw"
+	"github.com/hyperledger/fabric/pkg/cryptox"
 )
 
 type pkcs8Info struct {
@@ -116,26 +116,26 @@ func privateKeyToPEM(privateKey interface{}, pwd []byte) ([]byte, error) {
 			},
 		), nil
 
-	case *opensslw.ECDSAPrivateKey:
+	case cryptox.ECDSAPrivateKey:
 		if k == nil {
 			return nil, errors.New("invalid ecdsa private key. It must be different from nil")
 		}
 
 		// get the oid for the curve
-		oidNamedCurve, ok := oidFromNamedCurve(k.Public.Curve)
+		oidNamedCurve, ok := oidFromNamedCurve(k.Curve())
 		if !ok {
 			return nil, errors.New("unknown elliptic curve")
 		}
 
 		// based on https://golang.org/src/crypto/x509/sec1.go
-		privateKeyBytes := k.D.Bytes()
-		paddedPrivateKey := make([]byte, (k.Public.Curve.Params().N.BitLen()+7)/8)
+		privateKeyBytes := k.D().Bytes()
+		paddedPrivateKey := make([]byte, (k.Curve().Params().N.BitLen()+7)/8)
 		copy(paddedPrivateKey[len(paddedPrivateKey)-len(privateKeyBytes):], privateKeyBytes)
 		// omit NamedCurveOID for compatibility as it's optional
 		asn1Bytes, err := asn1.Marshal(ecPrivateKey{
 			Version:    1,
 			PrivateKey: paddedPrivateKey,
-			PublicKey:  asn1.BitString{Bytes: elliptic.Marshal(k.Public.Curve, k.Public.X, k.Public.Y)},
+			PublicKey:  asn1.BitString{Bytes: elliptic.Marshal(k.Curve(), k.X(), k.Y())},
 		})
 		if err != nil {
 			return nil, fmt.Errorf("error marshaling EC key to asn1: [%s]", err)
@@ -324,7 +324,7 @@ func publicKeyToPEM(publicKey interface{}, pwd []byte) ([]byte, error) {
 			},
 		), nil
 
-	case *opensslw.ECDSAPublicKey:
+	case cryptox.ECDSAPublicKey:
 		if k == nil {
 			return nil, errors.New("invalid ecdsa public key. It must be different from nil")
 		}

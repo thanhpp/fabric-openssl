@@ -20,7 +20,7 @@ import (
 	"sync"
 
 	"github.com/hyperledger/fabric/bccsp"
-	"github.com/hyperledger/fabric/pkg/opensslw"
+	"github.com/hyperledger/fabric/pkg/cryptox"
 )
 
 // NewFileBasedKeyStore instantiated a file-based key store at a given position.
@@ -142,7 +142,7 @@ func (ks *fileBasedKeyStore) GetKey(ski []byte) (bccsp.Key, error) {
 
 		switch k := key.(type) {
 		case *ecdsa.PrivateKey:
-			priv, err := opensslw.ConvertECDSAPrivateKey(k)
+			priv, err := cryptox.ConvertECDSAPrivateKey(k)
 			if err != nil {
 				return nil, fmt.Errorf("convert ecdsa private key error: %w", err)
 			}
@@ -159,7 +159,7 @@ func (ks *fileBasedKeyStore) GetKey(ski []byte) (bccsp.Key, error) {
 
 		switch k := key.(type) {
 		case *ecdsa.PublicKey:
-			pub, err := opensslw.ConvertECDSAPublicKey(k)
+			pub, err := cryptox.ConvertECDSAPublicKey(k)
 			if err != nil {
 				return nil, fmt.Errorf("convert ecdsa public key error: %w", err)
 			}
@@ -231,7 +231,7 @@ func (ks *fileBasedKeyStore) searchKeystoreForSKI(ski []byte) (k bccsp.Key, err 
 
 		switch kk := key.(type) {
 		case *ecdsa.PrivateKey:
-			priv, err := opensslw.ConvertECDSAPrivateKey(kk)
+			priv, err := cryptox.ConvertECDSAPrivateKey(kk)
 			if err != nil {
 				return nil, fmt.Errorf("convert ecdsa private key error: %w", err)
 			}
