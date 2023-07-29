@@ -404,9 +404,6 @@ github.com/rogpeppe/go-internal/fmtsort
 # github.com/sirupsen/logrus v1.9.0
 ## explicit; go 1.13
 github.com/sirupsen/logrus
-# github.com/spacemonkeygo/spacelog v0.0.0-20180420211403-2296661a0572
-## explicit
-github.com/spacemonkeygo/spacelog
 # github.com/spf13/afero v1.3.1
 ## explicit; go 1.13
 github.com/spf13/afero

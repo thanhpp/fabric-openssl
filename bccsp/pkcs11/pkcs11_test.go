@@ -23,7 +23,7 @@ import (
 	"github.com/hyperledger/fabric/bccsp"
 	"github.com/hyperledger/fabric/bccsp/sw"
 	"github.com/hyperledger/fabric/bccsp/utils"
-	"github.com/hyperledger/fabric/pkg/opensslw"
+	"github.com/hyperledger/fabric/pkg/cryptox"
 	"github.com/miekg/pkcs11"
 	"github.com/stretchr/testify/require"
 )
@@ -843,7 +843,7 @@ func TestDelegation(t *testing.T) {
 	t.Run("GetHash", func(t *testing.T) {
 		h, err := csp.GetHash(&bccsp.SHA256Opts{})
 		require.NoError(t, err)
-		require.Equal(t, opensslw.NewSHA256(), h)
+		require.Equal(t, cryptox.NewSHA256(), h)
 	})
 
 	t.Run("Sign", func(t *testing.T) {
