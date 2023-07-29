@@ -26,7 +26,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/hyperledger/fabric/pkg/opensslw"
+	"github.com/hyperledger/fabric/pkg/cryptox"
 )
 
 // command line flags
@@ -69,7 +69,7 @@ func x509Template() (x509.Certificate, error) {
 
 // generate an EC private key (P256 curve)
 func genKeyECDSA(name string) (*ecdsa.PrivateKey, error) {
-	priv, err := opensslw.ECDSAGenerateKey(elliptic.P256())
+	priv, err := cryptox.GenStdECDSAPrivateKey(elliptic.P256())
 	if err != nil {
 		return nil, err
 	}

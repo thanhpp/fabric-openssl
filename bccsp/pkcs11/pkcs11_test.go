@@ -226,7 +226,7 @@ func TestKeyGenECDSAOpts(t *testing.T) {
 			require.False(t, k.Symmetric(), "key should be asymmetric")
 
 			ecdsaKey := k.(*ecdsaPrivateKey).pub
-			require.Equal(t, tt.curve, ecdsaKey.pub.Curve, "wrong curve")
+			require.Equal(t, tt.curve, ecdsaKey.pub.Curve(), "wrong curve")
 
 			raw, err := k.Bytes()
 			require.EqualError(t, err, "Not supported.")
@@ -527,7 +527,7 @@ func TestECDSALowS(t *testing.T) {
 		_, S, err := utils.UnmarshalECDSASignature(signature)
 		require.NoError(t, err)
 
-		if S.Cmp(utils.GetCurveHalfOrdersAt(k.(*ecdsaPrivateKey).pub.pub.Curve)) >= 0 {
+		if S.Cmp(utils.GetCurveHalfOrdersAt(k.(*ecdsaPrivateKey).pub.pub.Curve())) >= 0 {
 			t.Fatal("Invalid signature. It must have low-S")
 		}
 
@@ -544,7 +544,7 @@ func TestECDSALowS(t *testing.T) {
 		for {
 			R, S, err := csp.signP11ECDSA(k.SKI(), digest)
 			require.NoError(t, err)
-			if S.Cmp(utils.GetCurveHalfOrdersAt(k.(*ecdsaPrivateKey).pub.pub.Curve)) > 0 {
+			if S.Cmp(utils.GetCurveHalfOrdersAt(k.(*ecdsaPrivateKey).pub.pub.Curve())) > 0 {
 				sig, err := utils.MarshalECDSASignature(R, S)
 				require.NoError(t, err)
 
@@ -843,7 +843,7 @@ func TestDelegation(t *testing.T) {
 	t.Run("GetHash", func(t *testing.T) {
 		h, err := csp.GetHash(&bccsp.SHA256Opts{})
 		require.NoError(t, err)
-		require.Equal(t, cryptox.NewSHA256(), h)
+		require.Equal(t, cryptox.NewSHA256().Sum(nil), h.Sum(nil))
 	})
 
 	t.Run("Sign", func(t *testing.T) {
