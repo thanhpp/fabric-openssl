@@ -4,7 +4,7 @@
 //go:build linux && !android
 // +build linux,!android
 
-package openssl
+package mopenssl
 
 // #include "goopenssl.h"
 import "C"

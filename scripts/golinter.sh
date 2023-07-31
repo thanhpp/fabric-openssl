@@ -71,7 +71,7 @@ fi
 
 # staticcheck Fabric source files - ignore issues in vendored dependency projects
 echo "Checking with staticcheck"
-OUTPUT="$(staticcheck ./... | grep -v -E "vendor/|pkg/openssl/" || true)"
+OUTPUT="$(staticcheck ./... | grep -v -E "vendor/|pkg/mopenssl/|pkg/bbig" || true)"
 if [ -n "$OUTPUT" ]; then
     echo "The following staticcheck issues were flagged"
     echo "$OUTPUT"

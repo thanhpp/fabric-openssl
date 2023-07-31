@@ -12,7 +12,7 @@ import (
 	"crypto/rand"
 	"fmt"
 
-	"github.com/microsoft/go-crypto-openssl/openssl/bbig/bridge"
+	"github.com/hyperledger/fabric/pkg/bbig/bridge"
 )
 
 func GenStdECDSAPrivateKey(c elliptic.Curve) (*ecdsa.PrivateKey, error) {

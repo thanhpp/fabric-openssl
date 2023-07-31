@@ -4,7 +4,7 @@
 //go:build linux && !android
 // +build linux,!android
 
-package openssl
+package mopenssl
 
 // #include "goopenssl.h"
 import "C"
@@ -15,7 +15,7 @@ import (
 	"strconv"
 	"unsafe"
 
-	"github.com/microsoft/go-crypto-openssl/openssl/internal/subtle"
+	"github.com/hyperledger/fabric/pkg/mopenssl/internal/subtle"
 )
 
 type aesKeySizeError int

@@ -277,12 +277,6 @@ github.com/mattn/go-runewidth
 # github.com/matttproud/golang_protobuf_extensions v1.0.4
 ## explicit; go 1.9
 github.com/matttproud/golang_protobuf_extensions/pbutil
-# github.com/microsoft/go-crypto-openssl v0.2.8
-## explicit; go 1.17
-github.com/microsoft/go-crypto-openssl/openssl
-github.com/microsoft/go-crypto-openssl/openssl/bbig
-github.com/microsoft/go-crypto-openssl/openssl/bbig/bridge
-github.com/microsoft/go-crypto-openssl/openssl/internal/subtle
 # github.com/miekg/pkcs11 v1.1.1
 ## explicit; go 1.12
 github.com/miekg/pkcs11

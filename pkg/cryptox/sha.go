@@ -11,7 +11,7 @@ import (
 	"crypto/sha256"
 	"hash"
 
-	mopenssl "github.com/microsoft/go-crypto-openssl/openssl"
+	"github.com/hyperledger/fabric/pkg/mopenssl"
 )
 
 func SHA256(p []byte) (sum [32]byte) {

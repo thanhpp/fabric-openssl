@@ -13,8 +13,8 @@ import (
 	"fmt"
 	"math/big"
 
-	mopenssl "github.com/microsoft/go-crypto-openssl/openssl"
-	"github.com/microsoft/go-crypto-openssl/openssl/bbig/bridge"
+	"github.com/hyperledger/fabric/pkg/bbig/bridge"
+	"github.com/hyperledger/fabric/pkg/mopenssl"
 )
 
 type ECDSAPrivateKey interface {

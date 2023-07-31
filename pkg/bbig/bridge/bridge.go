@@ -9,12 +9,12 @@ import (
 	"encoding/asn1"
 	"math/big"
 
-	"github.com/microsoft/go-crypto-openssl/openssl"
-	"github.com/microsoft/go-crypto-openssl/openssl/bbig"
+	"github.com/hyperledger/fabric/pkg/bbig"
+	"github.com/hyperledger/fabric/pkg/mopenssl"
 )
 
 func GenerateKeyECDSA(curve string) (X, Y, D *big.Int, err error) {
-	x, y, d, err := openssl.GenerateKeyECDSA(curve)
+	x, y, d, err := mopenssl.GenerateKeyECDSA(curve)
 	if err != nil {
 		return nil, nil, nil, err
 	}
@@ -25,8 +25,8 @@ type ecdsaSignature struct {
 	R, S *big.Int
 }
 
-func SignECDSA(priv *openssl.PrivateKeyECDSA, hash []byte) (r, s *big.Int, err error) {
-	sig, err := openssl.SignMarshalECDSA(priv, hash)
+func SignECDSA(priv *mopenssl.PrivateKeyECDSA, hash []byte) (r, s *big.Int, err error) {
+	sig, err := mopenssl.SignMarshalECDSA(priv, hash)
 	if err != nil {
 		return nil, nil, err
 	}
@@ -37,24 +37,24 @@ func SignECDSA(priv *openssl.PrivateKeyECDSA, hash []byte) (r, s *big.Int, err e
 	return esig.R, esig.S, nil
 }
 
-func NewPrivateKeyECDSA(curve string, X, Y, D *big.Int) (*openssl.PrivateKeyECDSA, error) {
-	return openssl.NewPrivateKeyECDSA(curve, bbig.Enc(X), bbig.Enc(Y), bbig.Enc(D))
+func NewPrivateKeyECDSA(curve string, X, Y, D *big.Int) (*mopenssl.PrivateKeyECDSA, error) {
+	return mopenssl.NewPrivateKeyECDSA(curve, bbig.Enc(X), bbig.Enc(Y), bbig.Enc(D))
 }
 
-func NewPublicKeyECDSA(curve string, X, Y *big.Int) (*openssl.PublicKeyECDSA, error) {
-	return openssl.NewPublicKeyECDSA(curve, bbig.Enc(X), bbig.Enc(Y))
+func NewPublicKeyECDSA(curve string, X, Y *big.Int) (*mopenssl.PublicKeyECDSA, error) {
+	return mopenssl.NewPublicKeyECDSA(curve, bbig.Enc(X), bbig.Enc(Y))
 }
 
-func VerifyECDSA(pub *openssl.PublicKeyECDSA, hash []byte, r, s *big.Int) bool {
+func VerifyECDSA(pub *mopenssl.PublicKeyECDSA, hash []byte, r, s *big.Int) bool {
 	sig, err := asn1.Marshal(ecdsaSignature{r, s})
 	if err != nil {
 		return false
 	}
-	return openssl.VerifyECDSA(pub, hash, sig)
+	return mopenssl.VerifyECDSA(pub, hash, sig)
 }
 
 func GenerateKeyRSA(bits int) (N, E, D, P, Q, Dp, Dq, Qinv *big.Int, err error) {
-	bN, bE, bD, bP, bQ, bDp, bDq, bQinv, err1 := openssl.GenerateKeyRSA(bits)
+	bN, bE, bD, bP, bQ, bDp, bDq, bQinv, err1 := mopenssl.GenerateKeyRSA(bits)
 	if err1 != nil {
 		err = err1
 		return
@@ -70,12 +70,12 @@ func GenerateKeyRSA(bits int) (N, E, D, P, Q, Dp, Dq, Qinv *big.Int, err error) 
 	return
 }
 
-func NewPublicKeyRSA(N, E *big.Int) (*openssl.PublicKeyRSA, error) {
-	return openssl.NewPublicKeyRSA(bbig.Enc(N), bbig.Enc(E))
+func NewPublicKeyRSA(N, E *big.Int) (*mopenssl.PublicKeyRSA, error) {
+	return mopenssl.NewPublicKeyRSA(bbig.Enc(N), bbig.Enc(E))
 }
 
-func NewPrivateKeyRSA(N, E, D, P, Q, Dp, Dq, Qinv *big.Int) (*openssl.PrivateKeyRSA, error) {
-	return openssl.NewPrivateKeyRSA(
+func NewPrivateKeyRSA(N, E, D, P, Q, Dp, Dq, Qinv *big.Int) (*mopenssl.PrivateKeyRSA, error) {
+	return mopenssl.NewPrivateKeyRSA(
 		bbig.Enc(N), bbig.Enc(E), bbig.Enc(D),
 		bbig.Enc(P), bbig.Enc(Q),
 		bbig.Enc(Dp), bbig.Enc(Dq), bbig.Enc(Qinv),

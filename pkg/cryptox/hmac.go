@@ -10,7 +10,7 @@ import (
 	"crypto/hmac"
 	"hash"
 
-	mopenssl "github.com/microsoft/go-crypto-openssl/openssl"
+	"github.com/hyperledger/fabric/pkg/mopenssl"
 )
 
 func HMACSum(h func() hash.Hash, key []byte, data []byte) []byte {

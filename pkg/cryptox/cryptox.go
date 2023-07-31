@@ -10,7 +10,7 @@ import (
 	"os"
 	"strconv"
 
-	mopenssl "github.com/microsoft/go-crypto-openssl/openssl"
+	"github.com/hyperledger/fabric/pkg/mopenssl"
 )
 
 const (

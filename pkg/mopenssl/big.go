@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-package openssl
+package mopenssl
 
 // This file does not have build constraints to
 // facilitate using BigInt in Go crypto.

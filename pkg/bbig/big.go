@@ -10,22 +10,22 @@ import (
 	"math/big"
 	"unsafe"
 
-	"github.com/microsoft/go-crypto-openssl/openssl"
+	"github.com/hyperledger/fabric/pkg/mopenssl"
 )
 
-func Enc(b *big.Int) openssl.BigInt {
+func Enc(b *big.Int) mopenssl.BigInt {
 	if b == nil {
 		return nil
 	}
 	x := b.Bits()
 	if len(x) == 0 {
-		return openssl.BigInt{}
+		return mopenssl.BigInt{}
 	}
 	// TODO: Use unsafe.Slice((*uint)(&x[0]), len(x)) once go1.16 is no longer supported.
 	return (*(*[]uint)(unsafe.Pointer(&x)))[:len(x)]
 }
 
-func Dec(b openssl.BigInt) *big.Int {
+func Dec(b mopenssl.BigInt) *big.Int {
 	if b == nil {
 		return nil
 	}

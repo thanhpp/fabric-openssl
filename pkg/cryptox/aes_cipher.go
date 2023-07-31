@@ -10,7 +10,7 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 
-	mopenssl "github.com/microsoft/go-crypto-openssl/openssl"
+	"github.com/hyperledger/fabric/pkg/mopenssl"
 )
 
 func AESNewCipher(key []byte) (cipher.Block, error) {

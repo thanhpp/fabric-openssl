@@ -5,7 +5,7 @@
 // +build linux,!android
 
 // Package openssl provides access to OpenSSL cryptographic functions.
-package openssl
+package mopenssl
 
 // #include "goopenssl.h"
 // #include <dlfcn.h>
