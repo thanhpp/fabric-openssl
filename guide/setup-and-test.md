@@ -31,18 +31,33 @@
 - cd to the fabric folder
 - run `make dist-clean all`
 
+## Install support binaries
+
+> https://hyperledger-fabric.readthedocs.io/en/latest/install.html#download-fabric-samples-docker-images-and-binaries
+
+- Must run in the parent folder of the location where you clone the repo https://github.com/hyperledger/fabric-samples/
+
+```bash
+$ mkdir -p $HOME/go/src/github.com/<your_github_userid>
+$ cd $HOME/go/src/github.com/<your_github_userid>
+$ git clone https://github.com/hyperledger/fabric-samples
+$ ./install-fabric.sh binary
+```
+
+- Now you can see folders (bin, config,...) are added into the `$HOME/go/src/github.com/<your_github_userid>/fabric-samples`
+
 ## Test networks
 
 > https://github.com/hyperledger/fabric-samples/tree/main/test-network
 > https://hyperledger-fabric.readthedocs.io/en/latest/test_network.html#bring-up-the-test-network
 
-- clone the repo `https://github.com/hyperledger/fabric-samples/`
 - `cd fabric-samples/test-network`
 - update the docker image of these files
     - https://github.com/hyperledger/fabric-samples/blob/main/test-network/compose/docker/docker-compose-test-net.yaml
     - https://github.com/hyperledger/fabric-samples/blob/main/test-network/compose/compose-test-net.yaml#L21
-    - **TODO: give example files**
+    - Examples of docker images
+        - **docker.io/hyperledger/fabric-\<service\>-amd64-2.5.3-\<last-commit-hash\>**
 - brings down 
-    - `./network.sh down`
+    - `$ ./network.sh down`
 - creates a Fabric network that consists of two peer nodes, one ordering node
-    - `./network.sh up`
+    - `$ ./setOrgEnv.sh && ./network.sh up`
