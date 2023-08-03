@@ -22,7 +22,7 @@
         - `sudo apt install build-essential`
 - Install the development tools
     - By default, these tools will be installed into `$HOME/go/bin` (run `mkdir -p $HOME/go/bin`)
-    - update the ~/.bashrc (~/.zshrc)
+    - update the \~/.bashrc (\~/.zshrc)
         - add to the file: `export PATH=$PATH:$HOME/go/bin`
         - run `source ~/.bashrc`
 
@@ -33,23 +33,21 @@
 
 ## Install support binaries
 
-> https://hyperledger-fabric.readthedocs.io/en/latest/install.html#download-fabric-samples-docker-images-and-binaries
-
 - Must run in the parent folder of the location where you clone the repo https://github.com/hyperledger/fabric-samples/
 
 ```bash
 $ mkdir -p $HOME/go/src/github.com/<your_github_userid>
 $ cd $HOME/go/src/github.com/<your_github_userid>
+$ curl -sSLO https://raw.githubusercontent.com/hyperledger/fabric/main/scripts/install-fabric.sh && chmod +x install-fabric.sh
 $ git clone https://github.com/hyperledger/fabric-samples
 $ ./install-fabric.sh binary
 ```
 
 - Now you can see folders (bin, config,...) are added into the `$HOME/go/src/github.com/<your_github_userid>/fabric-samples`
 
-## Test networks
+> https://hyperledger-fabric.readthedocs.io/en/latest/install.html#download-fabric-samples-docker-images-and-binaries
 
-> https://github.com/hyperledger/fabric-samples/tree/main/test-network
-> https://hyperledger-fabric.readthedocs.io/en/latest/test_network.html#bring-up-the-test-network
+## Test networks
 
 - `cd fabric-samples/test-network`
 - update the docker image of these files
@@ -61,3 +59,7 @@ $ ./install-fabric.sh binary
     - `$ ./network.sh down`
 - creates a Fabric network that consists of two peer nodes, one ordering node
     - `$ ./setOrgEnv.sh && ./network.sh up`
+
+> https://github.com/hyperledger/fabric-samples/tree/main/test-network
+
+> https://hyperledger-fabric.readthedocs.io/en/latest/test_network.html#bring-up-the-test-network
