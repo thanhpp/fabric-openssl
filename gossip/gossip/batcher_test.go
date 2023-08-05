@@ -7,6 +7,7 @@ SPDX-License-Identifier: Apache-2.0
 package gossip
 
 import (
+	"log"
 	"sync"
 	"sync/atomic"
 	"testing"
@@ -75,6 +76,7 @@ func TestBatchingEmitterCounter(t *testing.T) {
 			} else {
 				counters[n]++
 			}
+			log.Println("counters[n]", "n", n, "counters[n]", counters[n])
 		}
 	}
 
@@ -83,6 +85,7 @@ func TestBatchingEmitterCounter(t *testing.T) {
 
 	for i := 1; i <= 5; i++ {
 		emitter.Add(i)
+		log.Println("emitted", i)
 		if i == 5 {
 			break
 		}
