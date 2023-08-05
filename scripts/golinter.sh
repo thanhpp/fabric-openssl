@@ -62,7 +62,7 @@ fi
 
 echo "Checking with go vet"
 PRINTFUNCS="Debug,Debugf,Print,Printf,Info,Infof,Warning,Warningf,Error,Errorf,Critical,Criticalf,Sprint,Sprintf,Log,Logf,Panic,Panicf,Fatal,Fatalf,Notice,Noticef,Wrap,Wrapf,WithMessage"
-OUTPUT="$(go vet -all -printfuncs "$PRINTFUNCS" ./... | grep -v pkg/openssl/ || true)"
+OUTPUT="$(go vet -all -printfuncs "$PRINTFUNCS" ./... | grep -v pkg/mopenssl/ || true)"
 if [ -n "$OUTPUT" ]; then
     echo "The following files contain go vet errors"
     echo "$OUTPUT"

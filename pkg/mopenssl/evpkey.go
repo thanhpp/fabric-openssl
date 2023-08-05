@@ -8,6 +8,7 @@ package mopenssl
 
 // #include "goopenssl.h"
 import "C"
+
 import (
 	"crypto"
 	"errors"
@@ -94,10 +95,12 @@ func generateEVPPKey(id C.int, bits int, curve string) (C.GO_EVP_PKEY_PTR, error
 	return pkey, nil
 }
 
-type withKeyFunc func(func(C.GO_EVP_PKEY_PTR) C.int) C.int
-type initFunc func(C.GO_EVP_PKEY_CTX_PTR) error
-type cryptFunc func(C.GO_EVP_PKEY_CTX_PTR, *C.uchar, *C.size_t, *C.uchar, C.size_t) error
-type verifyFunc func(C.GO_EVP_PKEY_CTX_PTR, *C.uchar, C.size_t, *C.uchar, C.size_t) error
+type (
+	withKeyFunc func(func(C.GO_EVP_PKEY_PTR) C.int) C.int
+	initFunc    func(C.GO_EVP_PKEY_CTX_PTR) error
+	cryptFunc   func(C.GO_EVP_PKEY_CTX_PTR, *C.uchar, *C.size_t, *C.uchar, C.size_t) error
+	verifyFunc  func(C.GO_EVP_PKEY_CTX_PTR, *C.uchar, C.size_t, *C.uchar, C.size_t) error
+)
 
 func setupEVP(withKey withKeyFunc, padding C.int,
 	h, mgfHash hash.Hash, label []byte, saltLen C.int, ch crypto.Hash,
@@ -225,7 +228,6 @@ func setupEVP(withKey withKeyFunc, padding C.int,
 func cryptEVP(withKey withKeyFunc, padding C.int,
 	h, mgfHash hash.Hash, label []byte, saltLen C.int, ch crypto.Hash,
 	init initFunc, crypt cryptFunc, in []byte) ([]byte, error) {
-
 	ctx, err := setupEVP(withKey, padding, h, mgfHash, label, saltLen, ch, init)
 	if err != nil {
 		return nil, err
@@ -248,7 +250,6 @@ func verifyEVP(withKey withKeyFunc, padding C.int,
 	h hash.Hash, label []byte, saltLen C.int, ch crypto.Hash,
 	init initFunc, verify verifyFunc,
 	sig, in []byte) error {
-
 	ctx, err := setupEVP(withKey, padding, h, nil, label, saltLen, ch, init)
 	if err != nil {
 		return err

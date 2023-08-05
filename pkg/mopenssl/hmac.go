@@ -8,6 +8,7 @@ package mopenssl
 
 // #include "goopenssl.h"
 import "C"
+
 import (
 	"hash"
 	"runtime"

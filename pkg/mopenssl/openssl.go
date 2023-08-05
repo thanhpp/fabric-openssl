@@ -11,6 +11,7 @@ package mopenssl
 // #include <dlfcn.h>
 // #cgo LDFLAGS: -ldl
 import "C"
+
 import (
 	"errors"
 	"math/bits"

@@ -8,6 +8,7 @@ package mopenssl
 
 // #include "goopenssl.h"
 import "C"
+
 import (
 	"crypto"
 	"crypto/subtle"
@@ -260,7 +261,7 @@ func bnSet(b1 *C.GO_BIGNUM_PTR, b2 BigInt) {
 func rsaSetKey(key C.GO_RSA_PTR, n, e, d BigInt) bool {
 	if vMajor == 1 && vMinor == 0 {
 		r := (*rsa_st_1_0_2)(unsafe.Pointer(key))
-		//r.d and d will be nil for public keys.
+		// r.d and d will be nil for public keys.
 		if (r.n == nil && n == nil) ||
 			(r.e == nil && e == nil) {
 			return false

@@ -8,6 +8,7 @@ package mopenssl
 
 // #include "goopenssl.h"
 import "C"
+
 import (
 	"errors"
 	"runtime"
@@ -41,8 +42,10 @@ func (k *PublicKeyECDSA) withKey(f func(C.GO_EVP_PKEY_PTR) C.int) C.int {
 	return f(k._pkey)
 }
 
-var errUnknownCurve = errors.New("openssl: unknown elliptic curve")
-var errUnsupportedCurve = errors.New("openssl: unsupported elliptic curve")
+var (
+	errUnknownCurve     = errors.New("openssl: unknown elliptic curve")
+	errUnsupportedCurve = errors.New("openssl: unsupported elliptic curve")
+)
 
 func curveNID(curve string) (C.int, error) {
 	switch curve {
