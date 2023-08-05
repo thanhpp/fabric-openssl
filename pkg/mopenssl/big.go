@@ -1,5 +1,9 @@
-// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT License.
+/*
+Copyright IBM Corp. All Rights Reserved.
+
+SPDX-License-Identifier: Apache-2.0
+*/
+
 package mopenssl
 
 // This file does not have build constraints to

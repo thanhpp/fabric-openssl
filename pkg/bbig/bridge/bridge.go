@@ -1,5 +1,8 @@
-// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT License.
+/*
+Copyright IBM Corp. All Rights Reserved.
+
+SPDX-License-Identifier: Apache-2.0
+*/
 
 // These wrappers only exist for code reuse in places where we need the old pre-go1.19 signature.
 

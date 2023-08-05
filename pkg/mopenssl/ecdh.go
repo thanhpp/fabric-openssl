@@ -1,8 +1,11 @@
-// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT License.
-
 //go:build linux && !android
 // +build linux,!android
+
+/*
+Copyright IBM Corp. All Rights Reserved.
+
+SPDX-License-Identifier: Apache-2.0
+*/
 
 package mopenssl
 
