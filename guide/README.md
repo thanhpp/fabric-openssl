@@ -4,25 +4,32 @@
 > https://hyperledger-fabric.readthedocs.io/en/release-2.5/prereqs.html#linux
 
 - Install dependencies
-    - Git
-    - cURL
+    - `sudo apt-get install -y git curl openssl libssl-dev jq build-essential`
     - [Docker](https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-20-04)
-    - openssl
-    - apt-get install libssl-dev
     - Go
         - https://go.dev/dl/go1.20.6.linux-amd64.tar.gz
         - https://go.dev/doc/install
-    - JQ: `sudo apt-get install jq.`
-    - build-essentials
     - SoftHSM (v2.5)
-        - https://dist.opendnssec.org/source/softhsm-2.5.0.tar.gz
-        - https://wiki.opendnssec.org/display/SoftHSMDOCS/SoftHSM+Documentation+v2
-            - ./configure --disable-gost     
-        - https://hyperledger-fabric.readthedocs.io/en/release-2.5/dev-setup/devenv.html#configure-softhsm
-        - SoftHSM configuration typically involves copying /etc/softhsm/softhsm2.conf to $HOME/.config/softhsm2/softhsm2.conf and changing directories.tokendir to an appropriate location. Please see the man page for softhsm2.conf for details.
-        - init token: `softhsm2-util --init-token --slot 0 --label ForFabric --so-pin 1234 --pin 98765432`
-    - gnu-make and C compiler
-        - `sudo apt install build-essential`
+        - Download: https://dist.opendnssec.org/source/softhsm-2.5.0.tar.gz
+        - ```
+              $ tar -xzf softhsm-<version>.tar.gz
+              $ cd softhsm-<version>.tar.gz
+              $ ./configure --disable-gost
+              $ make
+              $ sudo make install
+              $ mkdir -p $HOME/.config/softhsm2
+              $ cp /etc/softhsm2.conf $HOME/.config/softhsm2
+          ```
+        - update the ~/.bashrc: `export SOFTHSM2_CONF=/home/<username>/.config/softhsm2/softhsm2.conf`
+        - ```
+              $ source ~/.bashrc
+              $ softhsm2-util --init-token --slot 0 --label ForFabric --so-pin 1234 --pin 98765432
+          ```
+        - Ref:
+            - https://wiki.opendnssec.org/display/SoftHSMDOCS/SoftHSM+Documentation+v2
+            - https://hyperledger-fabric.readthedocs.io/en/release-2.5/dev-setup/devenv.html#configure-softhsm
+            - SoftHSM configuration typically involves copying /etc/softhsm/softhsm2.conf to $HOME/.config/softhsm2/softhsm2.conf and changing directories.tokendir to an appropriate location. Please see the man page for softhsm2.conf for details.
+            - init token: `softhsm2-util --init-token --slot 0 --label ForFabric --so-pin 1234 --pin 98765432`
 - Install the development tools
     - By default, these tools will be installed into `$HOME/go/bin` (run `mkdir -p $HOME/go/bin`)
     - update the \~/.bashrc (\~/.zshrc)
