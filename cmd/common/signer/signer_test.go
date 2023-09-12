@@ -8,6 +8,7 @@ package signer
 
 import (
 	"crypto/x509"
+	"encoding/hex"
 	"encoding/pem"
 	"io/ioutil"
 	"os"
@@ -32,6 +33,7 @@ func TestSigner(t *testing.T) {
 	msg := []byte("foo")
 	sig, err := signer.Sign(msg)
 	require.NoError(t, err)
+	t.Logf("TestSigner, msg: %s, signature: %+v, hexSignature: %s", msg, sig, hex.EncodeToString(sig))
 
 	r, s, err := utils.UnmarshalECDSASignature(sig)
 	require.NoError(t, err)

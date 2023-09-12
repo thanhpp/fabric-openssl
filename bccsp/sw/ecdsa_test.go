@@ -21,6 +21,7 @@ import (
 	"crypto/elliptic"
 	"crypto/rand"
 	"crypto/sha256"
+	"encoding/hex"
 	"math/big"
 	"testing"
 
@@ -96,6 +97,7 @@ func TestEcdsaSignerSign(t *testing.T) {
 	sigma, err := signer.Sign(k, msg, nil)
 	require.NoError(t, err)
 	require.NotNil(t, sigma)
+	t.Logf("TestEcdsaSignerSign, msg: %s, sigma: %+v, hexSigma: %s", string(msg), sigma, hex.EncodeToString(sigma))
 
 	// Verify
 	valid, err := verifyECDSA(lowLevelKey.Public(), sigma, msg, nil)

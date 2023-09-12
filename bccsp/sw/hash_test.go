@@ -18,6 +18,7 @@ package sw
 
 import (
 	"crypto/sha256"
+	"encoding/hex"
 	"errors"
 	"reflect"
 	"testing"
@@ -102,6 +103,7 @@ func TestHasher(t *testing.T) {
 	h.Write(msg)
 	out2 := h.Sum(nil)
 	require.Equal(t, out, out2)
+	t.Logf("TestHasher, msg: %s, out: %s, out2: %s", string(msg), hex.EncodeToString(out), hex.EncodeToString(out2))
 
 	hf, err := hasher.GetHash(nil)
 	require.NoError(t, err)
