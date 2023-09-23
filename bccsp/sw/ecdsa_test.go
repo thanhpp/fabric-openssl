@@ -62,12 +62,18 @@ func TestVerifyECDSA(t *testing.T) {
 	require.NoError(t, err)
 	require.True(t, valid)
 
+	R, S, err := utils.UnmarshalECDSASignature(sigma)
+	require.NoError(t, err)
+
+	t.Logf(
+		"TestVerifyECDSA\ninput: %v\nsigma %v\nsigma_R: %v\nsigma_s: %v\nverify_success: %t",
+		msg, sigma, R.Bytes(), S.Bytes(), valid,
+	)
+
 	_, err = verifyECDSA(lowLevelKey.Public(), nil, msg, nil)
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "Failed unmashalling signature [")
 
-	R, S, err := utils.UnmarshalECDSASignature(sigma)
-	require.NoError(t, err)
 	S.Add(utils.GetCurveHalfOrdersAt(elliptic.P256()), big.NewInt(1))
 	sigmaWrongS, err := utils.MarshalECDSASignature(R, S)
 	require.NoError(t, err)
