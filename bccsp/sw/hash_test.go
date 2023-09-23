@@ -99,11 +99,13 @@ func TestHasher(t *testing.T) {
 	msg := []byte("Hello World")
 	out, err := hasher.Hash(msg, nil)
 	require.NoError(t, err)
+
+	t.Logf("TestHasher, \ninput: [%s] \nhash: [%s]", string(msg), hex.EncodeToString(out))
+
 	h := sha256.New()
 	h.Write(msg)
 	out2 := h.Sum(nil)
 	require.Equal(t, out, out2)
-	t.Logf("TestHasher, msg: %s, out: %s, out2: %s", string(msg), hex.EncodeToString(out), hex.EncodeToString(out2))
 
 	hf, err := hasher.GetHash(nil)
 	require.NoError(t, err)
