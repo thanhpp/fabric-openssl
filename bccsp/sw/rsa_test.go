@@ -53,6 +53,9 @@ func TestRSAPublicKey(t *testing.T) {
 	bytes2 := k.pubKey.MarshalPKCS1PublicKey()
 	require.Equal(t, bytes2, bytes, "bytes are not computed in the right way.")
 
+	t.Logf("TestRSAPublicKey:\n Size: [%d bytes ~ %d bits] \nSKI: %+v\nBytes: %+v",
+		lowLevelKey.Size(), lowLevelKey.Size()*8, ski, bytes)
+
 	_, err = (&rsaPublicKey{}).Bytes()
 	require.EqualError(t, err, "Failed marshalling key. Key is nil.")
 }
