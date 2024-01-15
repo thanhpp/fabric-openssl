@@ -17,8 +17,10 @@ import (
 	"github.com/hyperledger/fabric/pkg/ccs-gm/sm3"
 )
 
-var EncryptionErr = errors.New("sm2: encryption error")
-var DecryptionErr = errors.New("sm2: decryption error")
+var (
+	EncryptionErr = errors.New("sm2: encryption error")
+	DecryptionErr = errors.New("sm2: decryption error")
+)
 
 type sm2Cipher struct {
 	XCoordinate *big.Int
@@ -32,7 +34,7 @@ func (key *PrivateKey) Decrypt(rand io.Reader, msg []byte, opts crypto.Decrypter
 }
 
 func keyDerivation(Z []byte, klen int) []byte {
-	var ct = 1
+	ct := 1
 	if klen%8 != 0 {
 		return nil
 	}
@@ -42,8 +44,8 @@ func keyDerivation(Z []byte, klen int) []byte {
 
 	l := int(math.Ceil(float64(klen) / float64(v)))
 
-	var m = make([]byte, len(Z)+4)
-	var vBytes = make([]byte, 4)
+	m := make([]byte, len(Z)+4)
+	vBytes := make([]byte, 4)
 	copy(m, Z)
 
 	for ; ct <= l; ct++ {
@@ -64,7 +66,7 @@ func Encrypt(rand io.Reader, key *PublicKey, msg []byte) (cipher []byte, err err
 
 	c1 := pointToBytes(x, y)
 
-	//c = c1||c3||c2,len(c1)=65,len(c3)=32
+	// c = c1||c3||c2,len(c1)=65,len(c3)=32
 	cipher = append(c1, c3...)
 	cipher = append(cipher, c2...)
 
@@ -97,7 +99,7 @@ regen:
 		yBuf = append(yPadding[:32-n], yBuf...)
 	}
 
-	//z=x2||y2
+	// z=x2||y2
 	Z := make([]byte, 64)
 	copy(Z, xBuf)
 	copy(Z[32:], yBuf)
@@ -115,7 +117,7 @@ regen:
 		}
 	}
 
-	//M^t
+	// M^t
 	for i, v := range t {
 		t[i] = v ^ msg[i]
 	}
@@ -133,7 +135,7 @@ regen:
 func Decrypt(c []byte, key *PrivateKey) ([]byte, error) {
 	x1, y1 := pointFromBytes(c[:65])
 
-	//dB*C1
+	// dB*C1
 	x2, y2 := key.Curve.ScalarMult(x1, y1, key.D.Bytes())
 
 	xBuf := x2.Bytes()
@@ -149,7 +151,7 @@ func Decrypt(c []byte, key *PrivateKey) ([]byte, error) {
 		yBuf = append(yPadding[:32-n], yBuf...)
 	}
 
-	//z=x2||y2
+	// z=x2||y2
 	Z := make([]byte, 64)
 	copy(Z, xBuf)
 	copy(Z[32:], yBuf)
@@ -173,7 +175,7 @@ func Decrypt(c []byte, key *PrivateKey) ([]byte, error) {
 		t[i] = v ^ c2[i]
 	}
 
-	//validate
+	// validate
 	_u := make([]byte, 64+len(t))
 	copy(_u, xBuf)
 	copy(_u[32:], t)
@@ -203,7 +205,7 @@ func pointToBytes(x, y *big.Int) []byte {
 		yBuf = append(yPadding[:32-n], yBuf...)
 	}
 
-	//s = 04||x||y
+	// s = 04||x||y
 	buf = append(buf, 0x4)
 	buf = append(buf, xBuf...)
 	buf = append(buf, yBuf...)
@@ -228,7 +230,7 @@ func EncryptAsn1(rand io.Reader, key *PublicKey, msg []byte) (cipher []byte, err
 		return nil, err
 	}
 
-	var C = sm2Cipher{x, y, c3, c2}
+	C := sm2Cipher{x, y, c3, c2}
 
 	return asn1.Marshal(C)
 }
@@ -243,7 +245,7 @@ func DecryptAsn1(priv *PrivateKey, cipher []byte) (plaintext []byte, err error) 
 
 	x1, y1 := C.XCoordinate, C.YCoordinate
 
-	//dB*C1
+	// dB*C1
 	x2, y2 := priv.Curve.ScalarMult(x1, y1, priv.D.Bytes())
 
 	xBuf := x2.Bytes()
@@ -259,7 +261,7 @@ func DecryptAsn1(priv *PrivateKey, cipher []byte) (plaintext []byte, err error) 
 		yBuf = append(yPadding[:32-n], yBuf...)
 	}
 
-	//z=x2||y2
+	// z=x2||y2
 	Z := make([]byte, 64)
 	copy(Z, xBuf)
 	copy(Z[32:], yBuf)
@@ -283,7 +285,7 @@ func DecryptAsn1(priv *PrivateKey, cipher []byte) (plaintext []byte, err error) 
 		t[i] = v ^ c2[i]
 	}
 
-	//validate
+	// validate
 	_u := make([]byte, 64+len(t))
 	copy(_u, xBuf)
 	copy(_u[32:], t)

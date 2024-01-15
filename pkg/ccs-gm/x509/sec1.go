@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 // Copyright 2012 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -60,7 +61,7 @@ func MarshalECPrivateKey(key interface{}) ([]byte, error) {
 		return nil, errors.New("x509: unknown elliptic curve (marshal ec private)")
 	}
 
-	//privateKeyBytes := key.D.Bytes()
+	// privateKeyBytes := key.D.Bytes()
 	paddedPrivateKey := make([]byte, (curve.Params().N.BitLen()+7)/8)
 	copy(paddedPrivateKey[len(paddedPrivateKey)-len(privateKeyBytes):], privateKeyBytes)
 

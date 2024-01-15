@@ -9,12 +9,13 @@ package cryptox
 import (
 	"crypto/ecdsa"
 	"crypto/elliptic"
-	"crypto/x509"
 	"crypto/x509/pkix"
 	"encoding/asn1"
 	"errors"
 	"fmt"
 	"math/big"
+
+	"github.com/hyperledger/fabric/pkg/ccs-gm/x509"
 
 	"github.com/hyperledger/fabric/pkg/bbig/bridge"
 	"github.com/hyperledger/fabric/pkg/mopenssl"

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 // Copyright 2012 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -42,7 +43,6 @@ const (
 /*
  * reference to RFC5959 and RFC2898
  */
-
 
 var (
 	oidPBES1  = asn1.ObjectIdentifier{1, 2, 840, 113549, 1, 5, 3}  // pbeWithMD5AndDES-CBC(PBES1)
@@ -114,37 +114,38 @@ type rfc1423Algo struct {
 
 // rfc1423Algos holds a slice of the possible ways to encrypt a PEM
 // block. The ivSize numbers were taken from the OpenSSL source.
-var rfc1423Algos = []rfc1423Algo{{
-	cipher:     PEMCipherDES,
-	name:       "DES-CBC",
-	cipherFunc: des.NewCipher,
-	keySize:    8,
-	blockSize:  des.BlockSize,
-}, {
-	cipher:     PEMCipher3DES,
-	name:       "DES-EDE3-CBC",
-	cipherFunc: des.NewTripleDESCipher,
-	keySize:    24,
-	blockSize:  des.BlockSize,
-}, {
-	cipher:     PEMCipherAES128,
-	name:       "AES-128-CBC",
-	cipherFunc: aes.NewCipher,
-	keySize:    16,
-	blockSize:  aes.BlockSize,
-}, {
-	cipher:     PEMCipherAES192,
-	name:       "AES-192-CBC",
-	cipherFunc: aes.NewCipher,
-	keySize:    24,
-	blockSize:  aes.BlockSize,
-}, {
-	cipher:     PEMCipherAES256,
-	name:       "AES-256-CBC",
-	cipherFunc: aes.NewCipher,
-	keySize:    32,
-	blockSize:  aes.BlockSize,
-},
+var rfc1423Algos = []rfc1423Algo{
+	{
+		cipher:     PEMCipherDES,
+		name:       "DES-CBC",
+		cipherFunc: des.NewCipher,
+		keySize:    8,
+		blockSize:  des.BlockSize,
+	}, {
+		cipher:     PEMCipher3DES,
+		name:       "DES-EDE3-CBC",
+		cipherFunc: des.NewTripleDESCipher,
+		keySize:    24,
+		blockSize:  des.BlockSize,
+	}, {
+		cipher:     PEMCipherAES128,
+		name:       "AES-128-CBC",
+		cipherFunc: aes.NewCipher,
+		keySize:    16,
+		blockSize:  aes.BlockSize,
+	}, {
+		cipher:     PEMCipherAES192,
+		name:       "AES-192-CBC",
+		cipherFunc: aes.NewCipher,
+		keySize:    24,
+		blockSize:  aes.BlockSize,
+	}, {
+		cipher:     PEMCipherAES256,
+		name:       "AES-256-CBC",
+		cipherFunc: aes.NewCipher,
+		keySize:    32,
+		blockSize:  aes.BlockSize,
+	},
 }
 
 // deriveKey uses a key derivation function to stretch the password into a key
@@ -231,16 +232,16 @@ func DecryptPEMBlock(b *pem.Block, password []byte) ([]byte, error) {
 	mode := cipher.NewCBCDecrypter(block, iv)
 	mode.CryptBlocks(encryptedKey, encryptedKey)
 
-	//un-padding
+	// un-padding
 	dataLen := len(encryptedKey)
-	padLen := int(encryptedKey[dataLen - 1])
+	padLen := int(encryptedKey[dataLen-1])
 	for i := 0; i < padLen; i++ {
-		if int(encryptedKey[dataLen - padLen + i]) != padLen {
+		if int(encryptedKey[dataLen-padLen+i]) != padLen {
 			return nil, errors.New("padding info incorrect")
 		}
 	}
 
-	return encryptedKey[:dataLen - padLen], nil
+	return encryptedKey[:dataLen-padLen], nil
 }
 
 // EncryptPEMBlock returns a PEM block of the specified type holding the

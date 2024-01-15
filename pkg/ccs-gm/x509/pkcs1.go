@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 // Copyright 2011 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -118,4 +119,15 @@ func MarshalPKCS1PrivateKey(key *rsa.PrivateKey) []byte {
 
 	b, _ := asn1.Marshal(priv)
 	return b
+}
+
+// MarshalPKCS1PublicKey converts an RSA public key to PKCS #1, ASN.1 DER form.
+//
+// This kind of key is commonly encoded in PEM blocks of type "RSA PUBLIC KEY".
+func MarshalPKCS1PublicKey(key *rsa.PublicKey) []byte {
+	derBytes, _ := asn1.Marshal(pkcs1PublicKey{
+		N: key.N,
+		E: key.E,
+	})
+	return derBytes
 }

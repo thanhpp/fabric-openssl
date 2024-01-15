@@ -8,10 +8,11 @@ package cryptox
 
 import (
 	"crypto/rsa"
-	"crypto/x509"
 	"encoding/asn1"
 	"fmt"
 	"math/big"
+
+	"github.com/hyperledger/fabric/pkg/ccs-gm/x509"
 
 	"github.com/hyperledger/fabric/pkg/bbig/bridge"
 	"github.com/hyperledger/fabric/pkg/mopenssl"

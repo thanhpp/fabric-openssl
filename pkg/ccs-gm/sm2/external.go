@@ -13,12 +13,12 @@ import (
 )
 
 type Sm2PrivateKey struct {
-	D *big.Int //sk
+	D *big.Int // sk
 }
 
 type Sm2PublicKey struct {
-	X *big.Int //pk.X
-	Y *big.Int //pk.Y
+	X *big.Int // pk.X
+	Y *big.Int // pk.Y
 }
 
 type sm2Signature struct {

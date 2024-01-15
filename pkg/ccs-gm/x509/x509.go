@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 // Copyright 2009 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -118,7 +119,6 @@ func marshalPublicKey(pub interface{}) (publicKeyBytes []byte, publicKeyAlgorith
 	}
 
 	return publicKeyBytes, publicKeyAlgorithm, nil
-
 }
 
 // MarshalPKIXPublicKey serialises a public key to DER-encoded PKIX format.
@@ -340,7 +340,7 @@ var (
 	// to produce certificates with this OID.
 	oidISOSignatureSHA1WithRSA = asn1.ObjectIdentifier{1, 3, 14, 3, 2, 29}
 
-	//oid gm
+	// oid gm
 	oidSignatureSM2WithSM3    = asn1.ObjectIdentifier{1, 2, 156, 10197, 1, 501}
 	oidSignatureSM2WithSHA1   = asn1.ObjectIdentifier{1, 2, 156, 10197, 1, 502}
 	oidSignatureSM2WithSHA256 = asn1.ObjectIdentifier{1, 2, 156, 10197, 1, 503}
@@ -500,7 +500,7 @@ var (
 	oidPublicKeyRSA   = asn1.ObjectIdentifier{1, 2, 840, 113549, 1, 1, 1}
 	oidPublicKeyDSA   = asn1.ObjectIdentifier{1, 2, 840, 10040, 4, 1}
 	oidPublicKeyECDSA = asn1.ObjectIdentifier{1, 2, 840, 10045, 2, 1}
-	oidPublicKeySM2   = asn1.ObjectIdentifier{1, 2, 840, 10045, 2, 1} //TODO this value is specified no where, need to confirm next
+	oidPublicKeySM2   = asn1.ObjectIdentifier{1, 2, 840, 10045, 2, 1} // TODO this value is specified no where, need to confirm next
 )
 
 func getPublicKeyAlgorithmFromOID(oid asn1.ObjectIdentifier) PublicKeyAlgorithm {
@@ -889,7 +889,7 @@ func checkSignature(algo SignatureAlgorithm, signed, signature []byte, publicKey
 
 	switch algo {
 	case SM2WithSM3:
-		//Do nothing here, just in case not go into default
+		// Do nothing here, just in case not go into default
 	case SHA1WithRSA, DSAWithSHA1, ECDSAWithSHA1, SM2WithSHA1:
 		hashType = crypto.SHA1
 	case SHA256WithRSA, SHA256WithRSAPSS, DSAWithSHA256, ECDSAWithSHA256, SM2WithSHA256:
@@ -1782,11 +1782,11 @@ func signingParamsForPublicKey(pub interface{}, requestedSigAlgo SignatureAlgori
 		pubType = SM2
 		switch pub.Curve {
 		case sm2.P256():
-			//hashFunc = tjSM3
+			// hashFunc = tjSM3
 			hashFunc = 255
 			sigAlgo.Algorithm = oidSignatureSM2WithSM3
-			//hashFunc = crypto.SHA256
-			//sigAlgo.Algorithm = oidSignatureSM2WithSHA256
+			// hashFunc = crypto.SHA256
+			// sigAlgo.Algorithm = oidSignatureSM2WithSHA256
 		default:
 			err = errors.New("x509: SM2 unknown elliptic curve")
 		}
@@ -2415,9 +2415,9 @@ func parseCertificateRequest(in *certificateRequest) (*CertificateRequest, error
 		RawSubject:               in.TBSCSR.Subject.FullBytes,
 
 		Signature: in.SignatureValue.RightAlign(),
-		//SignatureAlgorithm: getSignatureAlgorithmFromAI(in.SignatureAlgorithm),
+		// SignatureAlgorithm: getSignatureAlgorithmFromAI(in.SignatureAlgorithm),
 		SignatureAlgorithm: SignatureAlgorithm,
-		//PublicKeyAlgorithm: getPublicKeyAlgorithmFromOID(in.TBSCSR.PublicKey.Algorithm.Algorithm),
+		// PublicKeyAlgorithm: getPublicKeyAlgorithmFromOID(in.TBSCSR.PublicKey.Algorithm.Algorithm),
 		PublicKeyAlgorithm: PublicKeyAlgorithm,
 		Version:            in.TBSCSR.Version,
 		Attributes:         parseRawAttributes(in.TBSCSR.RawAttributes),

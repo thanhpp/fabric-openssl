@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 // Copyright 2011 The Go Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
@@ -12,7 +13,7 @@ import (
 var hashFunc func() hash.Hash
 
 func init() {
-	//crypto.RegisterHash(crypto.tjSM3, New)
+	// crypto.RegisterHash(crypto.tjSM3, New)
 	hashFunc = New
 }
 
@@ -55,7 +56,7 @@ func (d *digest) Reset() {
 	d.len = 0
 }
 
-func GetFunc() (func() hash.Hash){
+func GetFunc() func() hash.Hash {
 	return hashFunc
 }
 
@@ -74,7 +75,7 @@ func (d *digest) BlockSize() int { return BlockSize }
 func (d *digest) Write(p []byte) (nn int, err error) {
 	nn = len(p)
 	d.len += uint64(nn)
-	//var n int
+	// var n int
 	if d.nx > 0 {
 		n := copy(d.x[d.nx:], p)
 		d.nx += n
@@ -103,7 +104,7 @@ func (d0 *digest) Sum(in []byte) []byte {
 	return append(in, hash[:]...)
 }
 
-func (d0 *digest)ConstantTimeSum(b []byte) []byte {
+func (d0 *digest) ConstantTimeSum(b []byte) []byte {
 	return d0.Sum(b)
 }
 
