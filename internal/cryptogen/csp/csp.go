@@ -8,8 +8,6 @@ package csp
 import (
 	"crypto"
 	"crypto/ecdsa"
-	"crypto/elliptic"
-	"crypto/x509"
 	"encoding/asn1"
 	"encoding/pem"
 	"io"
@@ -18,6 +16,8 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/hyperledger/fabric/pkg/ccs-gm/x509"
 
 	"github.com/hyperledger/fabric/pkg/cryptox"
 	"github.com/pkg/errors"
@@ -75,12 +75,12 @@ func parsePrivateKeyPEM(rawKey []byte) (*ecdsa.PrivateKey, error) {
 // GeneratePrivateKey creates an EC private key using a P-256 curve and stores
 // it in keystorePath.
 func GeneratePrivateKey(keystorePath string) (*ecdsa.PrivateKey, error) {
-	priv, err := cryptox.GenStdECDSAPrivateKey(elliptic.P256())
+	priv, err := cryptox.GenCustomECDSAPrivateKey()
 	if err != nil {
 		return nil, errors.WithMessage(err, "failed to generate private key")
 	}
 
-	pkcs8Encoded, err := x509.MarshalPKCS8PrivateKey(priv)
+	pkcs8Encoded, err := x509.MarshalECPrivateKey(priv)
 	if err != nil {
 		return nil, errors.WithMessage(err, "failed to marshal private key")
 	}

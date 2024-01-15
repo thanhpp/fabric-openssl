@@ -10,6 +10,7 @@ import (
 	"os"
 	"strconv"
 
+	"github.com/hyperledger/fabric/pkg/bcy256"
 	"github.com/hyperledger/fabric/pkg/mopenssl"
 )
 
@@ -29,4 +30,6 @@ func init() {
 	if err := mopenssl.Init(); err != nil {
 		panic(err)
 	}
+
+	bcy256.Init()
 }

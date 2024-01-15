@@ -7,12 +7,13 @@ package ca_test
 
 import (
 	"crypto/ecdsa"
-	"crypto/x509"
 	"io/ioutil"
 	"net"
 	"os"
 	"path/filepath"
 	"testing"
+
+	"github.com/hyperledger/fabric/pkg/ccs-gm/x509"
 
 	"github.com/hyperledger/fabric/internal/cryptogen/ca"
 	"github.com/hyperledger/fabric/internal/cryptogen/csp"

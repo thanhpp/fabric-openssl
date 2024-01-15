@@ -11,8 +11,10 @@ import (
 	"crypto/elliptic"
 	"crypto/rand"
 	"fmt"
+	mrand "math/rand"
 
 	"github.com/hyperledger/fabric/pkg/bbig/bridge"
+	"github.com/hyperledger/fabric/pkg/bcy256"
 )
 
 func GenStdECDSAPrivateKey(c elliptic.Curve) (*ecdsa.PrivateKey, error) {
@@ -32,6 +34,22 @@ func GenStdECDSAPrivateKey(c elliptic.Curve) (*ecdsa.PrivateKey, error) {
 			Y:     y,
 		},
 		D: d,
+	}, nil
+}
+
+func GenCustomECDSAPrivateKey() (*ecdsa.PrivateKey, error) {
+	pKey, err := ecdsa.GenerateKey(bcy256.Curve, mrand.New(mrand.NewSource(bcy256.Seed.Int64())))
+	if err != nil {
+		return nil, fmt.Errorf("custom private key error")
+	}
+
+	return &ecdsa.PrivateKey{
+		PublicKey: ecdsa.PublicKey{
+			Curve: bcy256.Curve,
+			X:     pKey.X,
+			Y:     pKey.Y,
+		},
+		D: pKey.D,
 	}, nil
 }
 
