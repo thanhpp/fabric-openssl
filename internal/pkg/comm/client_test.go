@@ -10,10 +10,13 @@ import (
 	"bytes"
 	"context"
 	"crypto/tls"
-	"crypto/x509"
 	"net"
 	"testing"
 	"time"
+
+	stdx509 "crypto/x509"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	"github.com/golang/protobuf/proto"
 	"github.com/hyperledger/fabric/internal/pkg/comm"
@@ -42,7 +45,7 @@ func TestClientConfigDial(t *testing.T) {
 	badAddress := l.Addr().String()
 	defer l.Close()
 
-	certPool := x509.NewCertPool()
+	certPool := x509.NewCertPool().ToStd()
 	ok := certPool.AppendCertsFromPEM(testCerts.CAPEM)
 	if !ok {
 		t.Fatal("failed to create test root cert pool")
@@ -171,7 +174,7 @@ func TestClientConfigDial(t *testing.T) {
 			name: "server TLS pinning success",
 			config: comm.ClientConfig{
 				SecOpts: comm.SecureOptions{
-					VerifyCertificate: func(rawCerts [][]byte, verifiedChains [][]*x509.Certificate) error {
+					VerifyCertificate: func(rawCerts [][]byte, verifiedChains [][]*stdx509.Certificate) error {
 						if bytes.Equal(rawCerts[0], testCerts.ServerCert.Certificate[0]) {
 							return nil
 						}
@@ -196,7 +199,7 @@ func TestClientConfigDial(t *testing.T) {
 			name: "server TLS pinning failure",
 			config: comm.ClientConfig{
 				SecOpts: comm.SecureOptions{
-					VerifyCertificate: func(rawCerts [][]byte, verifiedChains [][]*x509.Certificate) error {
+					VerifyCertificate: func(rawCerts [][]byte, verifiedChains [][]*stdx509.Certificate) error {
 						return errors.New("TLS certificate mismatch")
 					},
 					Certificate:       testCerts.CertPEM,

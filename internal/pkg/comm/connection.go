@@ -8,8 +8,9 @@ package comm
 
 import (
 	"crypto/tls"
-	"crypto/x509"
 	"sync"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	"github.com/hyperledger/fabric/common/channelconfig"
 	"github.com/hyperledger/fabric/common/flogging"
@@ -71,7 +72,7 @@ func (cs *CredentialSupport) GetPeerCredentials() credentials.TransportCredentia
 
 	return credentials.NewTLS(&tls.Config{
 		Certificates: []tls.Certificate{cs.clientCert},
-		RootCAs:      certPool,
+		RootCAs:      certPool.ToStd(),
 	})
 }
 

@@ -8,12 +8,13 @@ package configtx
 
 import (
 	"crypto"
-	"crypto/x509"
 	"encoding/pem"
 	"io/ioutil"
 	"os"
 	"syscall"
 	"time"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	docker "github.com/fsouza/go-dockerclient"
 	"github.com/golang/protobuf/proto"
@@ -164,7 +165,7 @@ var _ = Describe("ConfigTx", func() {
 
 		By("creating a detached signature for the orderer")
 		signingIdentity := configtx.SigningIdentity{
-			Certificate: parseCertificate(network.OrdererUserCert(orderer, "Admin")),
+			Certificate: parseCertificate(network.OrdererUserCert(orderer, "Admin")).ToStd(),
 			PrivateKey:  parsePrivateKey(network.OrdererUserKey(orderer, "Admin")),
 			MSPID:       network.Organization(orderer.Organization).MSPID,
 		}
@@ -218,7 +219,7 @@ var _ = Describe("ConfigTx", func() {
 		signatures := make([]*common.ConfigSignature, len(testPeers))
 		for i, p := range testPeers {
 			signingIdentity := configtx.SigningIdentity{
-				Certificate: parseCertificate(network.PeerUserCert(p, "Admin")),
+				Certificate: parseCertificate(network.PeerUserCert(p, "Admin")).ToStd(),
 				PrivateKey:  parsePrivateKey(network.PeerUserKey(p, "Admin")),
 				MSPID:       network.Organization(p.Organization).MSPID,
 			}
@@ -266,7 +267,7 @@ var _ = Describe("ConfigTx", func() {
 
 			By("creating a detached signature")
 			signingIdentity := configtx.SigningIdentity{
-				Certificate: parseCertificate(network.PeerUserCert(peer, "Admin")),
+				Certificate: parseCertificate(network.PeerUserCert(peer, "Admin")).ToStd(),
 				PrivateKey:  parsePrivateKey(network.PeerUserKey(peer, "Admin")),
 				MSPID:       network.Organization(peer.Organization).MSPID,
 			}

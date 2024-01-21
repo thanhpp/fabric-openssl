@@ -8,12 +8,13 @@ package comm
 
 import (
 	"crypto/tls"
-	"crypto/x509"
 	"encoding/pem"
 	"net"
 	"sync"
 	"sync/atomic"
 	"time"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	"github.com/pkg/errors"
@@ -107,7 +108,7 @@ func NewGRPCServerFromListener(listener net.Listener, serverConfig ServerConfig)
 				grpcServer.tls.config.ClientAuth = tls.RequireAndVerifyClientCert
 				// if we have client root CAs, create a certPool
 				if len(secureConfig.ClientRootCAs) > 0 {
-					grpcServer.tls.config.ClientCAs = x509.NewCertPool()
+					grpcServer.tls.config.ClientCAs = x509.NewCertPool().ToStd()
 					for _, clientRootCA := range secureConfig.ClientRootCAs {
 						err = grpcServer.appendClientRootCA(clientRootCA)
 						if err != nil {

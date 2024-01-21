@@ -8,7 +8,7 @@ package raft
 
 import (
 	"crypto"
-	"crypto/x509"
+	stdx509 "crypto/x509"
 	"encoding/json"
 	"encoding/pem"
 	"fmt"
@@ -18,6 +18,8 @@ import (
 	"path/filepath"
 	"syscall"
 	"time"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	docker "github.com/fsouza/go-dockerclient"
 	"github.com/golang/protobuf/proto"
@@ -1515,9 +1517,9 @@ func ordererOrganizationsAndConsenters(n *nwo.Network, orderers []*nwo.Orderer) 
 			ordererOrgsMap[o.Organization] = &orgConfig
 		} else {
 			orgConfig.OrdererEndpoints = append(orgConfig.OrdererEndpoints, n.OrdererAddress(o, nwo.ListenPort))
-			orgConfig.MSP.RootCerts = append(orgConfig.MSP.RootCerts, rootCert)
-			orgConfig.MSP.Admins = append(orgConfig.MSP.Admins, adminCert)
-			orgConfig.MSP.TLSRootCerts = append(orgConfig.MSP.TLSRootCerts, tlsRootCert)
+			orgConfig.MSP.RootCerts = append(orgConfig.MSP.RootCerts, rootCert.ToStd())
+			orgConfig.MSP.Admins = append(orgConfig.MSP.Admins, adminCert.ToStd())
+			orgConfig.MSP.TLSRootCerts = append(orgConfig.MSP.TLSRootCerts, tlsRootCert.ToStd())
 		}
 
 		consenters[i] = consenterChannelConfig(n, o)
@@ -1565,9 +1567,9 @@ func configtxOrganization(org *nwo.Organization, rootCert, adminCert, tlsRootCer
 		},
 		MSP: configtx.MSP{
 			Name:         org.MSPID,
-			RootCerts:    []*x509.Certificate{rootCert},
-			Admins:       []*x509.Certificate{adminCert},
-			TLSRootCerts: []*x509.Certificate{tlsRootCert},
+			RootCerts:    []*stdx509.Certificate{rootCert.ToStd()},
+			Admins:       []*stdx509.Certificate{adminCert.ToStd()},
+			TLSRootCerts: []*stdx509.Certificate{tlsRootCert.ToStd()},
 		},
 	}
 }
@@ -1577,7 +1579,7 @@ func computeSignSubmitConfigUpdate(n *nwo.Network, o *nwo.Orderer, p *nwo.Peer, 
 	Expect(err).NotTo(HaveOccurred())
 
 	signingIdentity := configtx.SigningIdentity{
-		Certificate: parseCertificate(n.OrdererUserCert(o, "Admin")),
+		Certificate: parseCertificate(n.OrdererUserCert(o, "Admin")).ToStd(),
 		PrivateKey:  parsePrivateKey(n.OrdererUserKey(o, "Admin")),
 		MSPID:       n.Organization(o.Organization).MSPID,
 	}
@@ -1607,7 +1609,7 @@ func broadcastTransactionFunc(n *nwo.Network, o *nwo.Orderer, env *common.Envelo
 
 func consenterChannelConfig(n *nwo.Network, o *nwo.Orderer) orderer.Consenter {
 	host, port := conftx.OrdererClusterHostPort(n, o)
-	tlsCert := parseCertificate(filepath.Join(n.OrdererLocalTLSDir(o), "server.crt"))
+	tlsCert := parseCertificate(filepath.Join(n.OrdererLocalTLSDir(o), "server.crt")).ToStd()
 	return orderer.Consenter{
 		Address: orderer.EtcdAddress{
 			Host: host,

@@ -15,7 +15,7 @@ import (
 	"fmt"
 	"math/big"
 
-	"github.com/hyperledger/fabric/pkg/ccs-gm/x509"
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	"github.com/hyperledger/fabric/pkg/bbig/bridge"
 	"github.com/hyperledger/fabric/pkg/mopenssl"

@@ -8,9 +8,10 @@ package osnadmin
 
 import (
 	"crypto/tls"
-	"crypto/x509"
 	"fmt"
 	"net/http"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 )
 
 // Removes an OSN from an existing channel.

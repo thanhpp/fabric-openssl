@@ -48,7 +48,6 @@ require (
 )
 
 require (
-	github.com/dustinxie/ecc v0.0.0-20210511000915-959544187564
 	github.com/go-test/deep v1.1.0
 	github.com/hyperledger/fabric-chaincode-go v0.0.0-20220920210243-7bc6fa0dd58b
 	google.golang.org/protobuf v1.28.1

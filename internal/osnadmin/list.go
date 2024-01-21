@@ -8,9 +8,10 @@ package osnadmin
 
 import (
 	"crypto/tls"
-	"crypto/x509"
 	"fmt"
 	"net/http"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 )
 
 // Lists the channels an OSN is a member of.

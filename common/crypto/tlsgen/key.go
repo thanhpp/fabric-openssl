@@ -11,12 +11,13 @@ import (
 	"crypto/ecdsa"
 	"crypto/elliptic"
 	"crypto/rand"
-	"crypto/x509"
 	"crypto/x509/pkix"
 	"encoding/pem"
 	"math/big"
 	"net"
 	"time"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	"github.com/hyperledger/fabric/pkg/cryptox"
 	"github.com/pkg/errors"
@@ -27,7 +28,7 @@ func newPrivKey() (*ecdsa.PrivateKey, []byte, error) {
 	if err != nil {
 		return nil, nil, err
 	}
-	privBytes, err := x509.MarshalPKCS8PrivateKey(privateKey)
+	privBytes, err := x509.MarshalECPrivateKey(privateKey)
 	if err != nil {
 		return nil, nil, err
 	}

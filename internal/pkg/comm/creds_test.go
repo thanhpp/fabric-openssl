@@ -9,12 +9,13 @@ package comm_test
 import (
 	"context"
 	"crypto/tls"
-	"crypto/x509"
 	"io/ioutil"
 	"net"
 	"path/filepath"
 	"sync"
 	"testing"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	"github.com/hyperledger/fabric/common/flogging/floggingtest"
 	"github.com/hyperledger/fabric/internal/pkg/comm"
@@ -28,7 +29,7 @@ func TestCreds(t *testing.T) {
 	if err != nil {
 		t.Fatalf("failed to read root certificate: %v", err)
 	}
-	certPool := x509.NewCertPool()
+	certPool := x509.NewCertPool().ToStd()
 	ok := certPool.AppendCertsFromPEM(caPEM)
 	if !ok {
 		t.Fatalf("failed to create certPool")
@@ -134,7 +135,7 @@ func TestAddRootCA(t *testing.T) {
 	cert := &x509.Certificate{EmailAddresses: []string{"test@foobar.com"}}
 	expectedCertPool.AddCert(cert)
 
-	certPool := x509.NewCertPool()
+	certPool := x509.NewCertPool().ToStd()
 	ok = certPool.AppendCertsFromPEM(caPEM)
 	require.True(t, ok, "failed to create certPool")
 

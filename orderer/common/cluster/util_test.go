@@ -8,7 +8,7 @@ package cluster_test
 
 import (
 	"bytes"
-	"crypto/x509"
+	stdx509 "crypto/x509"
 	"encoding/pem"
 	"errors"
 	"fmt"
@@ -17,6 +17,8 @@ import (
 	"sync"
 	"testing"
 	"time"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	"github.com/golang/protobuf/proto"
 	"github.com/hyperledger/fabric-protos-go/common"
@@ -153,7 +155,7 @@ func TestDialerBadConfig(t *testing.T) {
 			},
 		},
 	}
-	_, err := dialer.Dial("127.0.0.1:8080", func(rawCerts [][]byte, verifiedChains [][]*x509.Certificate) error {
+	_, err := dialer.Dial("127.0.0.1:8080", func(rawCerts [][]byte, verifiedChains [][]*stdx509.Certificate) error {
 		return nil
 	})
 	require.ErrorContains(t, err, "error adding root certificate")

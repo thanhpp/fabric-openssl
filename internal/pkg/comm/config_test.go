@@ -8,11 +8,12 @@ package comm
 
 import (
 	"crypto/tls"
-	"crypto/x509"
 	"io/ioutil"
 	"path/filepath"
 	"testing"
 	"time"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	"github.com/hyperledger/fabric/common/crypto/tlsgen"
 	"github.com/stretchr/testify/require"
@@ -161,7 +162,7 @@ func TestSecureOptionsTLSConfig(t *testing.T) {
 		{
 			desc: "WithServerRootCAs",
 			so:   SecureOptions{UseTLS: true, ServerRootCAs: [][]byte{ca1.CertBytes(), ca2.CertBytes()}},
-			tc:   &tls.Config{MinVersion: tls.VersionTLS12, RootCAs: newCertPool(ca1, ca2)},
+			tc:   &tls.Config{MinVersion: tls.VersionTLS12, RootCAs: newCertPool(ca1, ca2).ToStd()},
 		},
 		{
 			desc: "BadServerRootCertificate",

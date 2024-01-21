@@ -8,15 +8,16 @@ package osnadmin
 
 import (
 	"crypto/tls"
-	"crypto/x509"
 	"net/http"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 )
 
 func httpClient(caCertPool *x509.CertPool, tlsClientCert tls.Certificate) *http.Client {
 	return &http.Client{
 		Transport: &http.Transport{
 			TLSClientConfig: &tls.Config{
-				RootCAs:      caCertPool,
+				RootCAs:      caCertPool.ToStd(),
 				Certificates: []tls.Certificate{tlsClientCert},
 			},
 		},

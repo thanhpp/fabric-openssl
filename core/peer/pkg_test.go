@@ -9,11 +9,12 @@ package peer_test
 import (
 	"context"
 	"crypto/tls"
-	"crypto/x509"
 	"errors"
 	"net"
 	"testing"
 	"time"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	cb "github.com/hyperledger/fabric-protos-go/common"
 	mspproto "github.com/hyperledger/fabric-protos-go/msp"
@@ -184,21 +185,21 @@ func TestUpdateRootsFromConfigBlock(t *testing.T) {
 
 	org1Creds := credentials.NewTLS(&tls.Config{
 		Certificates: []tls.Certificate{org1ClientCert},
-		RootCAs:      org1CertPool,
+		RootCAs:      org1CertPool.ToStd(),
 	})
 
 	org2ClientCert, err := tls.X509KeyPair(org2Server1KeyPair.Cert, org2Server1KeyPair.Key)
 	require.NoError(t, err)
 	org2Creds := credentials.NewTLS(&tls.Config{
 		Certificates: []tls.Certificate{org2ClientCert},
-		RootCAs:      org1CertPool,
+		RootCAs:      org1CertPool.ToStd(),
 	})
 
 	org2IntermediateClientCert, err := tls.X509KeyPair(org2IntermediateServer1KeyPair.Cert, org2IntermediateServer1KeyPair.Key)
 	require.NoError(t, err)
 	org2IntermediateCreds := credentials.NewTLS(&tls.Config{
 		Certificates: []tls.Certificate{org2IntermediateClientCert},
-		RootCAs:      org1CertPool,
+		RootCAs:      org1CertPool.ToStd(),
 	})
 
 	ordererOrgClientCert, err := tls.X509KeyPair(ordererOrgServer1KeyPair.Cert, ordererOrgServer1KeyPair.Key)
@@ -206,7 +207,7 @@ func TestUpdateRootsFromConfigBlock(t *testing.T) {
 
 	ordererOrgCreds := credentials.NewTLS(&tls.Config{
 		Certificates: []tls.Certificate{ordererOrgClientCert},
-		RootCAs:      org1CertPool,
+		RootCAs:      org1CertPool.ToStd(),
 	})
 
 	// basic function tests

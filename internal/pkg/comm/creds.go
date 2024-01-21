@@ -9,11 +9,12 @@ package comm
 import (
 	"context"
 	"crypto/tls"
-	"crypto/x509"
 	"errors"
 	"net"
 	"sync"
 	"time"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	"github.com/hyperledger/fabric/common/flogging"
 	"google.golang.org/grpc/credentials"
@@ -83,14 +84,14 @@ func (t *TLSConfig) AddClientRootCA(cert *x509.Certificate) {
 	t.lock.Lock()
 	defer t.lock.Unlock()
 
-	t.config.ClientCAs.AddCert(cert)
+	t.config.ClientCAs.AddCert(cert.ToStd())
 }
 
 func (t *TLSConfig) SetClientCAs(certPool *x509.CertPool) {
 	t.lock.Lock()
 	defer t.lock.Unlock()
 
-	t.config.ClientCAs = certPool
+	t.config.ClientCAs = certPool.ToStd()
 }
 
 // ClientHandShake is not implemented for `serverCreds`.

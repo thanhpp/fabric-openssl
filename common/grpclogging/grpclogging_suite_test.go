@@ -12,13 +12,16 @@ import (
 	"crypto/elliptic"
 	"crypto/rand"
 	"crypto/tls"
-	"crypto/x509"
 	"crypto/x509/pkix"
 	"encoding/pem"
 	"math/big"
 	"net"
 	"testing"
 	"time"
+
+	stdx509 "crypto/x509"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	"github.com/hyperledger/fabric/common/grpclogging/testpb"
 	. "github.com/onsi/ginkgo/v2"
@@ -36,7 +39,7 @@ var (
 	clientCertWithKey tls.Certificate
 	serverCertWithKey tls.Certificate
 
-	caCertPool      *x509.CertPool
+	caCertPool      *stdx509.CertPool
 	clientTLSConfig *tls.Config
 	serverTLSConfig *tls.Config
 )
@@ -51,7 +54,7 @@ var _ = BeforeSuite(func() {
 	serverCertWithKey, err = tls.X509KeyPair(serverCert, serverKey)
 	Expect(err).NotTo(HaveOccurred())
 
-	caCertPool = x509.NewCertPool()
+	caCertPool = x509.NewCertPool().ToStd()
 	added := caCertPool.AppendCertsFromPEM(caCert)
 	Expect(added).To(BeTrue())
 

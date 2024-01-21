@@ -9,11 +9,12 @@ package accesscontrol
 import (
 	"context"
 	"crypto/tls"
-	"crypto/x509"
 	"fmt"
 	"net"
 	"testing"
 	"time"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	"github.com/golang/protobuf/proto"
 	pb "github.com/hyperledger/fabric-protos-go/peer"
@@ -73,7 +74,7 @@ func createTLSService(t *testing.T, ca tlsgen.CA, host string) *grpc.Server {
 	tlsConf := &tls.Config{
 		Certificates: []tls.Certificate{cert},
 		ClientAuth:   tls.RequireAndVerifyClientCert,
-		ClientCAs:    x509.NewCertPool(),
+		ClientCAs:    x509.NewCertPool().ToStd(),
 	}
 	tlsConf.ClientCAs.AppendCertsFromPEM(ca.CertBytes())
 	return grpc.NewServer(grpc.Creds(credentials.NewTLS(tlsConf)))
@@ -104,7 +105,7 @@ type ccClient struct {
 
 func newClient(t *testing.T, port int, cert *tls.Certificate, peerCACert []byte) (*ccClient, error) {
 	tlsCfg := &tls.Config{
-		RootCAs: x509.NewCertPool(),
+		RootCAs: x509.NewCertPool().ToStd(),
 	}
 
 	tlsCfg.RootCAs.AppendCertsFromPEM(peerCACert)

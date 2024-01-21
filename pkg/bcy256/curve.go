@@ -1,10 +1,12 @@
+// SPDX-License-Identifier: Apache-2.0
+
 package bcy256
 
 import (
 	"encoding/asn1"
 	"math/big"
 
-	"github.com/dustinxie/ecc"
+	"github.com/hyperledger/fabric/pkg/ecc"
 )
 
 const (

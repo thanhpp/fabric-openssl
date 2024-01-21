@@ -9,10 +9,11 @@ package tlsgen
 import (
 	"context"
 	"crypto/tls"
-	"crypto/x509"
 	"net"
 	"testing"
 	"time"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	"github.com/stretchr/testify/require"
 	"google.golang.org/grpc"
@@ -27,7 +28,7 @@ func createTLSService(t *testing.T, ca CA, host string) *grpc.Server {
 	tlsConf := &tls.Config{
 		Certificates: []tls.Certificate{cert},
 		ClientAuth:   tls.RequireAndVerifyClientCert,
-		ClientCAs:    x509.NewCertPool(),
+		ClientCAs:    x509.NewCertPool().ToStd(),
 	}
 	tlsConf.ClientCAs.AppendCertsFromPEM(ca.CertBytes())
 	return grpc.NewServer(grpc.Creds(credentials.NewTLS(tlsConf)))
@@ -52,7 +53,7 @@ func TestTLSCA(t *testing.T) {
 		cert, err := tls.X509KeyPair(kp.Cert, kp.Key)
 		require.NoError(t, err)
 		tlsCfg := &tls.Config{
-			RootCAs:      x509.NewCertPool(),
+			RootCAs:      x509.NewCertPool().ToStd(),
 			Certificates: []tls.Certificate{cert},
 		}
 		tlsCfg.RootCAs.AppendCertsFromPEM(ca.CertBytes())

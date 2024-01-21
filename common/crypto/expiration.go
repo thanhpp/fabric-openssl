@@ -8,9 +8,10 @@ package crypto
 
 import (
 	"bytes"
-	"crypto/x509"
 	"encoding/pem"
 	"time"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	"github.com/golang/protobuf/proto"
 	"github.com/hyperledger/fabric-protos-go/msp"
