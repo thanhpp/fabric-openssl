@@ -28,11 +28,11 @@ type ECDSAPrivateKey interface {
 	VerifyPublicKey(hash []byte, r, s *big.Int) bool
 }
 
-func NewECDSAPrivateKey(curve elliptic.Curve, x, y, d *big.Int) (ECDSAPrivateKey, error) {
+func NewECDSAPrivateKey(_ elliptic.Curve, x, y, d *big.Int) (ECDSAPrivateKey, error) {
 	if useStd {
 		priv := &ecdsa.PrivateKey{
 			PublicKey: ecdsa.PublicKey{
-				Curve: curve,
+				Curve: Curve,
 				X:     x,
 				Y:     y,
 			},
@@ -44,12 +44,12 @@ func NewECDSAPrivateKey(curve elliptic.Curve, x, y, d *big.Int) (ECDSAPrivateKey
 		}, nil
 	}
 
-	priv, err := bridge.NewPrivateKeyECDSA(curve.Params().Name, x, y, d)
+	priv, err := bridge.NewPrivateKeyECDSA(Curve.Params().Name, x, y, d)
 	if err != nil {
 		return nil, fmt.Errorf("new ecdsa private key error: %w", err)
 	}
 
-	pub, err := NewECDSAPublicKey(curve, x, y)
+	pub, err := NewECDSAPublicKey(Curve, x, y)
 	if err != nil {
 		return nil, fmt.Errorf("new ecdsa public key error: %w", err)
 	}

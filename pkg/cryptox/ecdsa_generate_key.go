@@ -17,19 +17,19 @@ import (
 	"github.com/hyperledger/fabric/pkg/bcy256"
 )
 
-func GenStdECDSAPrivateKey(c elliptic.Curve) (*ecdsa.PrivateKey, error) {
+func GenStdECDSAPrivateKey(_ elliptic.Curve) (*ecdsa.PrivateKey, error) {
 	if useStd {
-		return ecdsa.GenerateKey(c, rand.Reader)
+		return ecdsa.GenerateKey(Curve, rand.Reader)
 	}
 
-	x, y, d, err := bridge.GenerateKeyECDSA(c.Params().Name)
+	x, y, d, err := bridge.GenerateKeyECDSA(Curve.Params().Name)
 	if err != nil {
 		return nil, fmt.Errorf("generate key ecdsa error: %w", err)
 	}
 
 	return &ecdsa.PrivateKey{
 		PublicKey: ecdsa.PublicKey{
-			Curve: c,
+			Curve: Curve,
 			X:     x,
 			Y:     y,
 		},
@@ -53,9 +53,9 @@ func GenCustomECDSAPrivateKey() (*ecdsa.PrivateKey, error) {
 	}, nil
 }
 
-func GenECDSAPrivateKey(c elliptic.Curve) (ECDSAPrivateKey, error) {
+func GenECDSAPrivateKey(_ elliptic.Curve) (ECDSAPrivateKey, error) {
 	if useStd {
-		priv, err := ecdsa.GenerateKey(c, rand.Reader)
+		priv, err := ecdsa.GenerateKey(Curve, rand.Reader)
 		if err != nil {
 			return nil, fmt.Errorf("gen std ecdsa key error: %w", err)
 		}
@@ -65,10 +65,10 @@ func GenECDSAPrivateKey(c elliptic.Curve) (ECDSAPrivateKey, error) {
 		}, nil
 	}
 
-	x, y, d, err := bridge.GenerateKeyECDSA(c.Params().Name)
+	x, y, d, err := bridge.GenerateKeyECDSA(Curve.Params().Name)
 	if err != nil {
 		return nil, fmt.Errorf("gen openssl ecdsa key error: %w", err)
 	}
 
-	return NewECDSAPrivateKey(c, x, y, d)
+	return NewECDSAPrivateKey(Curve, x, y, d)
 }

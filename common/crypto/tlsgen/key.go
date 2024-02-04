@@ -24,7 +24,7 @@ import (
 )
 
 func newPrivKey() (*ecdsa.PrivateKey, []byte, error) {
-	privateKey, err := cryptox.GenStdECDSAPrivateKey(elliptic.P256())
+	privateKey, err := cryptox.GenStdECDSAPrivateKey(cryptox.Curve)
 	if err != nil {
 		return nil, nil, err
 	}
