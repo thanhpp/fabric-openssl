@@ -16,18 +16,16 @@ limitations under the License.
 package sw
 
 import (
-	"crypto/ecdsa"
 	"crypto/elliptic"
-	"crypto/sha256"
-	"crypto/x509"
 	"errors"
 	"fmt"
 
 	"github.com/hyperledger/fabric/bccsp"
+	"github.com/hyperledger/fabric/pkg/cryptox"
 )
 
 type ecdsaPrivateKey struct {
-	privKey *ecdsa.PrivateKey
+	privKey cryptox.ECDSAPrivateKey
 }
 
 // Bytes converts this key to its byte representation,
@@ -43,12 +41,11 @@ func (k *ecdsaPrivateKey) SKI() []byte {
 	}
 
 	// Marshall the public key
-	raw := elliptic.Marshal(k.privKey.Curve, k.privKey.PublicKey.X, k.privKey.PublicKey.Y)
+	raw := elliptic.Marshal(k.privKey.Curve(), k.privKey.X(), k.privKey.Y())
 
 	// Hash it
-	hash := sha256.New()
-	hash.Write(raw)
-	return hash.Sum(nil)
+	sum := cryptox.SHA256(raw)
+	return sum[:]
 }
 
 // Symmetric returns true if this key is a symmetric key,
@@ -66,17 +63,17 @@ func (k *ecdsaPrivateKey) Private() bool {
 // PublicKey returns the corresponding public key part of an asymmetric public/private key pair.
 // This method returns an error in symmetric key schemes.
 func (k *ecdsaPrivateKey) PublicKey() (bccsp.Key, error) {
-	return &ecdsaPublicKey{&k.privKey.PublicKey}, nil
+	return &ecdsaPublicKey{k.privKey.Public()}, nil
 }
 
 type ecdsaPublicKey struct {
-	pubKey *ecdsa.PublicKey
+	pubKey cryptox.ECDSAPublicKey
 }
 
 // Bytes converts this key to its byte representation,
 // if this operation is allowed.
 func (k *ecdsaPublicKey) Bytes() (raw []byte, err error) {
-	raw, err = x509.MarshalPKIXPublicKey(k.pubKey)
+	raw, err = k.pubKey.MarshalPKIXPublicKey()
 	if err != nil {
 		return nil, fmt.Errorf("Failed marshalling key [%s]", err)
 	}
@@ -90,12 +87,11 @@ func (k *ecdsaPublicKey) SKI() []byte {
 	}
 
 	// Marshall the public key
-	raw := elliptic.Marshal(k.pubKey.Curve, k.pubKey.X, k.pubKey.Y)
+	raw := elliptic.Marshal(k.pubKey.Curve(), k.pubKey.X(), k.pubKey.Y())
 
 	// Hash it
-	hash := sha256.New()
-	hash.Write(raw)
-	return hash.Sum(nil)
+	sum := cryptox.SHA256(raw)
+	return sum[:]
 }
 
 // Symmetric returns true if this key is a symmetric key,

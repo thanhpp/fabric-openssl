@@ -8,9 +8,9 @@ package util
 
 import (
 	"context"
-	"crypto/sha256"
 	"crypto/x509"
 
+	"github.com/hyperledger/fabric/pkg/cryptox"
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/peer"
 )
@@ -34,9 +34,10 @@ func ExtractCertificateHashFromContext(ctx context.Context) []byte {
 	if len(rawCert) == 0 {
 		return nil
 	}
-	h := sha256.New()
-	h.Write(rawCert)
-	return h.Sum(nil)
+
+	sum := cryptox.SHA256(rawCert)
+
+	return sum[:]
 }
 
 // ExtractCertificateFromContext returns the TLS certificate (if applicable)

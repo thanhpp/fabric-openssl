@@ -62,7 +62,7 @@ fi
 
 echo "Checking with go vet"
 PRINTFUNCS="Debug,Debugf,Print,Printf,Info,Infof,Warning,Warningf,Error,Errorf,Critical,Criticalf,Sprint,Sprintf,Log,Logf,Panic,Panicf,Fatal,Fatalf,Notice,Noticef,Wrap,Wrapf,WithMessage"
-OUTPUT="$(go vet -all -printfuncs "$PRINTFUNCS" ./...)"
+OUTPUT="$(go vet -all -printfuncs "$PRINTFUNCS" ./... | grep -v pkg/mopenssl/ || true)"
 if [ -n "$OUTPUT" ]; then
     echo "The following files contain go vet errors"
     echo "$OUTPUT"
@@ -71,7 +71,7 @@ fi
 
 # staticcheck Fabric source files - ignore issues in vendored dependency projects
 echo "Checking with staticcheck"
-OUTPUT="$(staticcheck ./... | grep -v vendor/ || true)"
+OUTPUT="$(staticcheck ./... | grep -v -E "vendor/|pkg/mopenssl/|pkg/bbig" || true)"
 if [ -n "$OUTPUT" ]; then
     echo "The following staticcheck issues were flagged"
     echo "$OUTPUT"

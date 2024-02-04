@@ -1,10 +1,11 @@
+//go:build ignore
+// +build ignore
+
 /*
 Copyright IBM Corp. All Rights Reserved.
 
 SPDX-License-Identifier: Apache-2.0
 */
-
-// +build ignore
 
 //go:generate -command gencerts go run ./generate.go
 //go:generate gencerts -orgs 2 -child-orgs 2 -servers 2 -clients 2
@@ -24,6 +25,8 @@ import (
 	"net"
 	"os"
 	"time"
+
+	"github.com/hyperledger/fabric/pkg/cryptox"
 )
 
 // command line flags
@@ -66,7 +69,7 @@ func x509Template() (x509.Certificate, error) {
 
 // generate an EC private key (P256 curve)
 func genKeyECDSA(name string) (*ecdsa.PrivateKey, error) {
-	priv, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+	priv, err := cryptox.GenStdECDSAPrivateKey(elliptic.P256())
 	if err != nil {
 		return nil, err
 	}

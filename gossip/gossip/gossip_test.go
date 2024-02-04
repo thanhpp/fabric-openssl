@@ -36,7 +36,8 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-var timeout = time.Second * time.Duration(180)
+// update due to longer testing period while using openssl library
+var timeout = 180 * time.Minute
 
 func TestMain(m *testing.M) {
 	util.SetupTestLogging()

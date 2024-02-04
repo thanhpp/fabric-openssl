@@ -10,7 +10,6 @@ import (
 	"crypto/ecdsa"
 	"crypto/elliptic"
 	"crypto/rand"
-	"crypto/sha256"
 	"crypto/x509"
 	"crypto/x509/pkix"
 	"encoding/pem"
@@ -23,6 +22,7 @@ import (
 	"time"
 
 	"github.com/hyperledger/fabric/internal/cryptogen/csp"
+	"github.com/hyperledger/fabric/pkg/cryptox"
 	"github.com/pkg/errors"
 )
 
@@ -170,7 +170,7 @@ func computeSKI(privKey *ecdsa.PrivateKey) []byte {
 	raw := elliptic.Marshal(privKey.Curve, privKey.PublicKey.X, privKey.PublicKey.Y)
 
 	// Hash it
-	hash := sha256.Sum256(raw)
+	hash := cryptox.SHA256(raw)
 	return hash[:]
 }
 

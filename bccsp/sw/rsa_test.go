@@ -7,14 +7,12 @@ SPDX-License-Identifier: Apache-2.0
 package sw
 
 import (
-	"crypto/rand"
-	"crypto/rsa"
 	"crypto/sha256"
-	"crypto/x509"
 	"encoding/asn1"
 	"math/big"
 	"testing"
 
+	"github.com/hyperledger/fabric/pkg/cryptox"
 	"github.com/stretchr/testify/require"
 )
 
@@ -24,9 +22,11 @@ type rsaPublicKeyASN struct {
 }
 
 func TestRSAPublicKey(t *testing.T) {
-	lowLevelKey, err := rsa.GenerateKey(rand.Reader, 2048)
+	lowLevelKey, err := cryptox.GenerateRSAKeyStd(2048)
 	require.NoError(t, err)
-	k := &rsaPublicKey{&lowLevelKey.PublicKey}
+	oKey, err := cryptox.ConvertRSAPublicKey(&lowLevelKey.PublicKey)
+	require.NoError(t, err)
+	k := &rsaPublicKey{oKey}
 
 	require.False(t, k.Symmetric())
 	require.False(t, k.Private())
@@ -35,9 +35,9 @@ func TestRSAPublicKey(t *testing.T) {
 	ski := k.SKI()
 	require.Nil(t, ski)
 
-	k.pubKey = &lowLevelKey.PublicKey
+	k.pubKey = oKey
 	ski = k.SKI()
-	raw, err := asn1.Marshal(rsaPublicKeyASN{N: k.pubKey.N, E: k.pubKey.E})
+	raw, err := asn1.Marshal(rsaPublicKeyASN{N: k.pubKey.N(), E: k.pubKey.E()})
 	require.NoError(t, err, "asn1 marshal failed")
 	hash := sha256.New()
 	hash.Write(raw)
@@ -50,9 +50,11 @@ func TestRSAPublicKey(t *testing.T) {
 
 	bytes, err := k.Bytes()
 	require.NoError(t, err)
-	bytes2, err := x509.MarshalPKIXPublicKey(k.pubKey)
-	require.NoError(t, err)
+	bytes2 := k.pubKey.MarshalPKCS1PublicKey()
 	require.Equal(t, bytes2, bytes, "bytes are not computed in the right way.")
+
+	t.Logf("TestRSAPublicKey:\n Size: [%d bytes ~ %d bits] \nSKI: %+v\nBytes: %+v",
+		lowLevelKey.Size(), lowLevelKey.Size()*8, ski, bytes)
 
 	_, err = (&rsaPublicKey{}).Bytes()
 	require.EqualError(t, err, "Failed marshalling key. Key is nil.")

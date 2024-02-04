@@ -8,6 +8,7 @@ package gossip
 
 import (
 	"crypto/sha256"
+	"encoding/hex"
 	"errors"
 	"reflect"
 	"strings"
@@ -162,6 +163,7 @@ func TestSign(t *testing.T) {
 	sigma, err := msgCryptoService.Sign(msg)
 	require.NoError(t, err, "Failed generating signature")
 	require.NotNil(t, sigma, "Signature must be different from nil")
+	t.Logf("TestSign/msgCryptoService.Sign - msg: %s, signature: %+v, hexSignature: %s", string(msg), sigma, hex.EncodeToString(sigma))
 }
 
 func TestVerify(t *testing.T) {

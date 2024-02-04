@@ -100,6 +100,9 @@ func LogMessageForSerializedIdentity(serializedIdentity []byte) string {
 		// identity bytes
 		return fmt.Sprintf("serialized-identity=%x", serializedIdentity)
 	}
+
+	// can not use openssl.LoadCertificateFromPEM
+	// openssl.LoadCertificateFromPEM(
 	cert, err := x509.ParseCertificate(pemBlock.Bytes)
 	if err != nil {
 		return fmt.Sprintf("Could not parse certificate: %s", err)

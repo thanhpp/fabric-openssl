@@ -7,8 +7,8 @@ SPDX-License-Identifier: Apache-2.0
 package signer
 
 import (
-	"crypto/ecdsa"
 	"crypto/x509"
+	"encoding/hex"
 	"encoding/pem"
 	"io/ioutil"
 	"os"
@@ -33,10 +33,12 @@ func TestSigner(t *testing.T) {
 	msg := []byte("foo")
 	sig, err := signer.Sign(msg)
 	require.NoError(t, err)
+	t.Logf("TestSigner, msg: %s, signature: %+v, hexSignature: %s", msg, sig, hex.EncodeToString(sig))
 
 	r, s, err := utils.UnmarshalECDSASignature(sig)
 	require.NoError(t, err)
-	ecdsa.Verify(&signer.key.PublicKey, util.ComputeSHA256(msg), r, s)
+	// ecdsa.Verify(&signer.key.PublicKey, util.ComputeSHA256(msg), r, s)
+	signer.key.VerifyPublicKey(util.ComputeSHA256(msg), r, s)
 }
 
 func TestSignerDifferentFormats(t *testing.T) {

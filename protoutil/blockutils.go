@@ -8,12 +8,12 @@ package protoutil
 
 import (
 	"bytes"
-	"crypto/sha256"
 	"encoding/asn1"
 	"math/big"
 
 	"github.com/golang/protobuf/proto"
 	cb "github.com/hyperledger/fabric-protos-go/common"
+	"github.com/hyperledger/fabric/pkg/cryptox"
 	"github.com/pkg/errors"
 )
 
@@ -58,12 +58,12 @@ func BlockHeaderBytes(b *cb.BlockHeader) []byte {
 }
 
 func BlockHeaderHash(b *cb.BlockHeader) []byte {
-	sum := sha256.Sum256(BlockHeaderBytes(b))
+	sum := cryptox.SHA256(BlockHeaderBytes(b))
 	return sum[:]
 }
 
 func BlockDataHash(b *cb.BlockData) []byte {
-	sum := sha256.Sum256(bytes.Join(b.Data, nil))
+	sum := cryptox.SHA256(bytes.Join(b.Data, nil))
 	return sum[:]
 }
 

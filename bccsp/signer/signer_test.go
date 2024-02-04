@@ -90,6 +90,7 @@ func TestSign(t *testing.T) {
 	signature, err := signer.Sign(nil, expectedDigest, expectedOpts)
 	require.NoError(t, err)
 	require.Equal(t, expectedSig, signature)
+	t.Logf("TestSign, expectedDigest: %+v, signature: %+v", expectedDigest, signature)
 
 	signer = &bccspCryptoSigner{
 		key: expectedKey,

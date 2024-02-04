@@ -26,6 +26,7 @@ import (
 	"io"
 
 	"github.com/hyperledger/fabric/bccsp"
+	"github.com/hyperledger/fabric/pkg/cryptox"
 )
 
 // GetRandomBytes returns len random looking bytes
@@ -80,7 +81,7 @@ func aesCBCEncryptWithRand(prng io.Reader, key, s []byte) ([]byte, error) {
 		return nil, errors.New("Invalid plaintext. It must be a multiple of the block size")
 	}
 
-	block, err := aes.NewCipher(key)
+	block, err := cryptox.AESNewCipher(key)
 	if err != nil {
 		return nil, err
 	}
@@ -106,7 +107,7 @@ func aesCBCEncryptWithIV(IV []byte, key, s []byte) ([]byte, error) {
 		return nil, errors.New("Invalid IV. It must have length the block size")
 	}
 
-	block, err := aes.NewCipher(key)
+	block, err := cryptox.AESNewCipher(key)
 	if err != nil {
 		return nil, err
 	}
@@ -121,7 +122,7 @@ func aesCBCEncryptWithIV(IV []byte, key, s []byte) ([]byte, error) {
 }
 
 func aesCBCDecrypt(key, src []byte) ([]byte, error) {
-	block, err := aes.NewCipher(key)
+	block, err := cryptox.AESNewCipher(key)
 	if err != nil {
 		return nil, err
 	}

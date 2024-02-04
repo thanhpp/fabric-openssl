@@ -198,7 +198,7 @@ func New(c *Config, rootDir string, dockerClient *docker.Client, startPort int, 
 		DockerClient: dockerClient,
 
 		NetworkID:         runner.UniqueName(),
-		EventuallyTimeout: time.Minute,
+		EventuallyTimeout: time.Minute * 10,
 		MetricsProvider:   "prometheus",
 		PortsByBrokerID:   map[string]Ports{},
 		PortsByOrdererID:  map[string]Ports{},

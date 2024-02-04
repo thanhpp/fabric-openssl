@@ -29,12 +29,15 @@ ARG FABRIC_VER
 ARG GO_VER
 ARG GO_TAGS
 
+RUN ln -snf /usr/share/zoneinfo/$CONTAINER_TIMEZONE /etc/localtime && echo $CONTAINER_TIMEZONE > /etc/timezone
+
 RUN apt update && apt install -y \
     git \
     gcc \
     curl \
-    make
-
+    make \
+    pkg-config \
+    libssl-dev
 RUN curl -sL https://go.dev/dl/go${GO_VER}.${TARGETOS}-${TARGETARCH}.tar.gz | tar zxf - -C /usr/local
 ENV PATH="/usr/local/go/bin:$PATH"
 
@@ -59,6 +62,8 @@ RUN echo 'hosts: files dns' > /etc/nsswitch.conf
 
 ENV     FABRIC_CFG_PATH /var/hyperledger/fabric/config
 ENV     FABRIC_VER      ${FABRIC_VER}
+
+RUN apt update && apt install -y openssl
 
 COPY    --from=builder  build/bin/orderer           /usr/local/bin
 COPY    --from=builder  sampleconfig/msp            ${FABRIC_CFG_PATH}/msp

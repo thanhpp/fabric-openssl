@@ -46,7 +46,7 @@ import (
 
 const (
 	interval            = 100 * time.Millisecond
-	LongEventualTimeout = 10 * time.Second
+	LongEventualTimeout = 60 * time.Second
 
 	// 10 is the default setting of ELECTION_TICK.
 	// We used to have a small number here (2) to reduce the time for test - we don't

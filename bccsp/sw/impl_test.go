@@ -173,13 +173,13 @@ func TestKeyGenECDSAOpts(t *testing.T) {
 	}
 
 	ecdsaKey := k.(*ecdsaPrivateKey).privKey
-	if !elliptic.P256().IsOnCurve(ecdsaKey.X, ecdsaKey.Y) {
+	if !elliptic.P256().IsOnCurve(ecdsaKey.X(), ecdsaKey.Y()) {
 		t.Fatal("P256 generated key in invalid. The public key must be on the P256 curve.")
 	}
-	if elliptic.P256() != ecdsaKey.Curve {
+	if elliptic.P256() != ecdsaKey.Curve() {
 		t.Fatal("P256 generated key in invalid. The curve must be P256.")
 	}
-	if ecdsaKey.D.Cmp(big.NewInt(0)) == 0 {
+	if ecdsaKey.D().Cmp(big.NewInt(0)) == 0 {
 		t.Fatal("P256 generated key in invalid. Private key must be different from 0.")
 	}
 
@@ -199,13 +199,13 @@ func TestKeyGenECDSAOpts(t *testing.T) {
 	}
 
 	ecdsaKey = k.(*ecdsaPrivateKey).privKey
-	if !elliptic.P384().IsOnCurve(ecdsaKey.X, ecdsaKey.Y) {
+	if !elliptic.P384().IsOnCurve(ecdsaKey.X(), ecdsaKey.Y()) {
 		t.Fatal("P256 generated key in invalid. The public key must be on the P384 curve.")
 	}
-	if elliptic.P384() != ecdsaKey.Curve {
+	if elliptic.P384() != ecdsaKey.Curve() {
 		t.Fatal("P256 generated key in invalid. The curve must be P384.")
 	}
-	if ecdsaKey.D.Cmp(big.NewInt(0)) == 0 {
+	if ecdsaKey.D().Cmp(big.NewInt(0)) == 0 {
 		t.Fatal("P256 generated key in invalid. Private key must be different from 0.")
 	}
 }
@@ -989,7 +989,7 @@ func TestECDSALowS(t *testing.T) {
 		t.Fatalf("Failed unmarshalling signature [%s]", err)
 	}
 
-	if S.Cmp(utils.GetCurveHalfOrdersAt(k.(*ecdsaPrivateKey).privKey.Curve)) >= 0 {
+	if S.Cmp(utils.GetCurveHalfOrdersAt(k.(*ecdsaPrivateKey).privKey.Curve())) >= 0 {
 		t.Fatal("Invalid signature. It must have low-S")
 	}
 
@@ -1004,12 +1004,12 @@ func TestECDSALowS(t *testing.T) {
 	// Ensure that signature with high-S are rejected.
 	var R *big.Int
 	for {
-		R, S, err = ecdsa.Sign(rand.Reader, k.(*ecdsaPrivateKey).privKey, digest)
+		R, S, err = k.(*ecdsaPrivateKey).privKey.SignRS(digest)
 		if err != nil {
 			t.Fatalf("Failed generating signature [%s]", err)
 		}
 
-		if S.Cmp(utils.GetCurveHalfOrdersAt(k.(*ecdsaPrivateKey).privKey.Curve)) > 0 {
+		if S.Cmp(utils.GetCurveHalfOrdersAt(k.(*ecdsaPrivateKey).privKey.Curve())) > 0 {
 			break
 		}
 	}

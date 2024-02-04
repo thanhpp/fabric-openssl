@@ -15,6 +15,7 @@ import (
 	"reflect"
 
 	"github.com/hyperledger/fabric/bccsp"
+	"github.com/hyperledger/fabric/pkg/cryptox"
 )
 
 type aes256ImportKeyOptsKeyImporter struct{}
@@ -73,7 +74,12 @@ func (*ecdsaPKIXPublicKeyImportOptsKeyImporter) KeyImport(raw interface{}, opts 
 		return nil, errors.New("Failed casting to ECDSA public key. Invalid raw material.")
 	}
 
-	return &ecdsaPublicKey{ecdsaPK}, nil
+	oPub, err := cryptox.ConvertECDSAPublicKey(ecdsaPK)
+	if err != nil {
+		return nil, fmt.Errorf("convert openssl ecdsa public key error: %w", err)
+	}
+
+	return &ecdsaPublicKey{oPub}, nil
 }
 
 type ecdsaPrivateKeyImportOptsKeyImporter struct{}
@@ -98,7 +104,12 @@ func (*ecdsaPrivateKeyImportOptsKeyImporter) KeyImport(raw interface{}, opts bcc
 		return nil, errors.New("Failed casting to ECDSA private key. Invalid raw material.")
 	}
 
-	return &ecdsaPrivateKey{ecdsaSK}, nil
+	oPriv, err := cryptox.ConvertECDSAPrivateKey(ecdsaSK)
+	if err != nil {
+		return nil, fmt.Errorf("convert openssl ecdsa public key error: %w", err)
+	}
+
+	return &ecdsaPrivateKey{oPriv}, nil
 }
 
 type ecdsaGoPublicKeyImportOptsKeyImporter struct{}
@@ -109,7 +120,12 @@ func (*ecdsaGoPublicKeyImportOptsKeyImporter) KeyImport(raw interface{}, opts bc
 		return nil, errors.New("Invalid raw material. Expected *ecdsa.PublicKey.")
 	}
 
-	return &ecdsaPublicKey{lowLevelKey}, nil
+	oPub, err := cryptox.ConvertECDSAPublicKey(lowLevelKey)
+	if err != nil {
+		return nil, fmt.Errorf("convert openssl ecdsa public key error: %w", err)
+	}
+
+	return &ecdsaPublicKey{oPub}, nil
 }
 
 type x509PublicKeyImportOptsKeyImporter struct {
@@ -132,7 +148,11 @@ func (ki *x509PublicKeyImportOptsKeyImporter) KeyImport(raw interface{}, opts bc
 	case *rsa.PublicKey:
 		// This path only exists to support environments that use RSA certificate
 		// authorities to issue ECDSA certificates.
-		return &rsaPublicKey{pubKey: pk}, nil
+		oKey, err := cryptox.ConvertRSAPublicKey(pk)
+		if err != nil {
+			return nil, fmt.Errorf("import rsa pub key error: %w", err)
+		}
+		return &rsaPublicKey{pubKey: oKey}, nil
 	default:
 		return nil, errors.New("Certificate's public key type not recognized. Supported keys: [ECDSA, RSA]")
 	}

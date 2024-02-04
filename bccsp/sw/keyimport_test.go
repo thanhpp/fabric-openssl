@@ -26,6 +26,7 @@ import (
 
 	mocks2 "github.com/hyperledger/fabric/bccsp/mocks"
 	"github.com/hyperledger/fabric/bccsp/sw/mocks"
+	"github.com/hyperledger/fabric/pkg/cryptox"
 	"github.com/stretchr/testify/require"
 )
 
@@ -196,7 +197,7 @@ func TestX509PublicKeyImportOptsKeyImporter(t *testing.T) {
 }
 
 func TestX509RSAKeyImport(t *testing.T) {
-	pk, err := rsa.GenerateKey(rand.Reader, 2048)
+	pk, err := cryptox.GenerateRSAKeyStd(2048)
 	require.NoError(t, err, "key generation failed")
 
 	cert := &x509.Certificate{PublicKey: pk.Public()}
@@ -204,5 +205,16 @@ func TestX509RSAKeyImport(t *testing.T) {
 	key, err := ki.KeyImport(cert, nil)
 	require.NoError(t, err, "key import failed")
 	require.NotNil(t, key, "key must not be nil")
-	require.Equal(t, &rsaPublicKey{pubKey: &pk.PublicKey}, key)
+
+	oKey, err := cryptox.ConvertRSAPublicKey(&pk.PublicKey)
+	require.NoError(t, err)
+	importedBytes, err := key.Bytes()
+	require.NoError(t, err)
+	rsaKey := &rsaPublicKey{pubKey: oKey}
+	rsaBytes, err := rsaKey.Bytes()
+	require.NoError(t, err)
+	require.Equal(t, rsaBytes, importedBytes)
+
+	// compare by bytes, because the openssl store pubkey as a C pointer -> 2 keys can not have the same address
+	// require.Equal(t, &rsaPublicKey{pubKey: oKey}, key)
 }
