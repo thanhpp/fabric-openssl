@@ -8,8 +8,9 @@ package fabhttp
 
 import (
 	"crypto/tls"
-	"crypto/x509"
 	"io/ioutil"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	"github.com/hyperledger/fabric/internal/pkg/comm"
 )
@@ -42,7 +43,7 @@ func (t TLS) Config() (*tls.Config, error) {
 			MinVersion:   tls.VersionTLS12,
 			Certificates: []tls.Certificate{cert},
 			CipherSuites: comm.DefaultTLSCipherSuites,
-			ClientCAs:    caCertPool,
+			ClientCAs:    caCertPool.ToStd(),
 		}
 		if t.ClientCertRequired {
 			tlsConfig.ClientAuth = tls.RequireAndVerifyClientCert

@@ -9,7 +9,6 @@ package discovery
 import (
 	"context"
 	"crypto/tls"
-	"crypto/x509"
 	"fmt"
 	"io/ioutil"
 	"net"
@@ -17,6 +16,8 @@ import (
 	"strconv"
 	"testing"
 	"time"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	"github.com/golang/protobuf/proto"
 	"github.com/hyperledger/fabric-protos-go/common"
@@ -295,7 +296,7 @@ func createGRPCServer(t *testing.T) *comm.GRPCServer {
 func createConnector(t *testing.T, certificate tls.Certificate, targetPort int) func() (*grpc.ClientConn, error) {
 	caCert := loadFileOrPanic(filepath.Join("testdata", "server", "ca.pem"))
 	tlsConf := &tls.Config{
-		RootCAs:      x509.NewCertPool(),
+		RootCAs:      x509.NewCertPool().ToStd(),
 		Certificates: []tls.Certificate{certificate},
 	}
 	tlsConf.RootCAs.AppendCertsFromPEM(caCert)

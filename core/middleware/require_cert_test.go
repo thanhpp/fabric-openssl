@@ -7,9 +7,10 @@ SPDX-License-Identifier: Apache-2.0
 package middleware_test
 
 import (
-	"crypto/x509"
 	"net/http"
 	"net/http/httptest"
+
+	stdx509 "crypto/x509"
 
 	"github.com/hyperledger/fabric/core/middleware"
 	"github.com/hyperledger/fabric/core/middleware/fakes"
@@ -33,8 +34,8 @@ var _ = Describe("RequireCert", func() {
 		chain = requireCert(handler)
 
 		req = httptest.NewRequest("GET", "https:///", nil)
-		req.TLS.VerifiedChains = [][]*x509.Certificate{{
-			&x509.Certificate{},
+		req.TLS.VerifiedChains = [][]*stdx509.Certificate{{
+			&stdx509.Certificate{},
 		}}
 		resp = httptest.NewRecorder()
 	})
@@ -79,7 +80,7 @@ var _ = Describe("RequireCert", func() {
 
 	Context("when verified chains is empty", func() {
 		BeforeEach(func() {
-			req.TLS.VerifiedChains = [][]*x509.Certificate{}
+			req.TLS.VerifiedChains = [][]*stdx509.Certificate{}
 		})
 
 		It("responds with http.StatusUnauthorized", func() {
@@ -95,7 +96,7 @@ var _ = Describe("RequireCert", func() {
 
 	Context("when the first verified chain is empty", func() {
 		BeforeEach(func() {
-			req.TLS.VerifiedChains = [][]*x509.Certificate{{}}
+			req.TLS.VerifiedChains = [][]*stdx509.Certificate{{}}
 		})
 
 		It("responds with http.StatusUnauthorized", func() {

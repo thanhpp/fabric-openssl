@@ -9,10 +9,11 @@ package osnadmin
 import (
 	"bytes"
 	"crypto/tls"
-	"crypto/x509"
 	"fmt"
 	"mime/multipart"
 	"net/http"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 )
 
 // Joins an OSN to a new or existing channel.

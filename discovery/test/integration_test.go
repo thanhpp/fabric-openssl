@@ -11,7 +11,6 @@ import (
 	"context"
 	"crypto/ecdsa"
 	"crypto/rand"
-	"crypto/x509"
 	"encoding/hex"
 	"encoding/pem"
 	"fmt"
@@ -22,6 +21,8 @@ import (
 	"sync/atomic"
 	"testing"
 	"time"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	discovery_protos "github.com/hyperledger/fabric-protos-go/discovery"
 

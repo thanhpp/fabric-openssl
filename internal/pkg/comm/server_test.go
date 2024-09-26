@@ -10,7 +10,7 @@ import (
 	"bytes"
 	"context"
 	"crypto/tls"
-	"crypto/x509"
+	stdx509 "crypto/x509"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -20,6 +20,8 @@ import (
 	"sync/atomic"
 	"testing"
 	"time"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	"github.com/hyperledger/fabric/common/crypto/tlsgen"
 	"github.com/hyperledger/fabric/internal/pkg/comm"
@@ -243,7 +245,7 @@ func (org *testOrg) testServers(clientRootCAs [][]byte) []testServer {
 // return trusted clients for the org
 func (org *testOrg) trustedClients(serverRootCAs [][]byte) []*tls.Config {
 	// if we have any additional server root CAs add them to the certPool
-	certPool := org.rootCertPool()
+	certPool := org.rootCertPool().ToStd()
 	for _, serverRootCA := range serverRootCAs {
 		certPool.AppendCertsFromPEM(serverRootCA)
 	}
@@ -612,7 +614,7 @@ func TestNewSecureGRPCServer(t *testing.T) {
 	time.Sleep(10 * time.Millisecond)
 
 	// create the client credentials
-	certPool := x509.NewCertPool()
+	certPool := x509.NewCertPool().ToStd()
 	if !certPool.AppendCertsFromPEM([]byte(selfSignedCertPEM)) {
 		t.Fatal("Failed to append certificate to client credentials")
 	}
@@ -671,7 +673,7 @@ func TestVerifyCertificateCallback(t *testing.T) {
 	serverKeyPair, err := ca.NewServerCertKeyPair("127.0.0.1")
 	require.NoError(t, err)
 
-	verifyFunc := func(rawCerts [][]byte, verifiedChains [][]*x509.Certificate) error {
+	verifyFunc := func(rawCerts [][]byte, verifiedChains [][]*stdx509.Certificate) error {
 		if bytes.Equal(rawCerts[0], authorizedClientKeyPair.TLSCert.Raw) {
 			return nil
 		}
@@ -685,7 +687,7 @@ func TestVerifyCertificateCallback(t *testing.T) {
 		}
 		tlsCfg := &tls.Config{
 			Certificates: []tls.Certificate{cert},
-			RootCAs:      x509.NewCertPool(),
+			RootCAs:      x509.NewCertPool().ToStd(),
 			MinVersion:   tls.VersionTLS12,
 			MaxVersion:   tls.VersionTLS12,
 		}
@@ -764,7 +766,7 @@ func TestWithSignedRootCertificates(t *testing.T) {
 	// create a CertPool for use by the client with the server cert only
 	certPoolServer, err := createCertPool([][]byte{certPEMBlock})
 	require.NoError(t, err, "failed to load root certificates into pool")
-	creds := credentials.NewClientTLSFromCert(certPoolServer, "")
+	creds := credentials.NewClientTLSFromCert(certPoolServer.ToStd(), "")
 
 	// invoke the EmptyCall service
 	_, err = invokeEmptyCall(testAddress, grpc.WithTransportCredentials(creds))
@@ -775,7 +777,7 @@ func TestWithSignedRootCertificates(t *testing.T) {
 	if !certPoolCA.AppendCertsFromPEM(caPEMBlock) {
 		t.Fatal("Failed to append certificate to client credentials")
 	}
-	creds = credentials.NewClientTLSFromCert(certPoolCA, "")
+	creds = credentials.NewClientTLSFromCert(certPoolCA.ToStd(), "")
 
 	// invoke the EmptyCall service
 	_, err = invokeEmptyCall(testAddress, grpc.WithTransportCredentials(creds))
@@ -834,7 +836,7 @@ func TestWithSignedIntermediateCertificates(t *testing.T) {
 		t.Fatalf("Failed to load root certificates into pool: %v", err)
 	}
 	// create the client credentials
-	creds := credentials.NewClientTLSFromCert(certPoolServer, "")
+	creds := credentials.NewClientTLSFromCert(certPoolServer.ToStd(), "")
 
 	// invoke the EmptyCall service
 	_, err = invokeEmptyCall(testAddress, grpc.WithTransportCredentials(creds))
@@ -847,7 +849,7 @@ func TestWithSignedIntermediateCertificates(t *testing.T) {
 	certPoolCA, err := createCertPool([][]byte{intermediatePEMBlock})
 	require.NoError(t, err, "failed to load root certificates into pool")
 
-	creds = credentials.NewClientTLSFromCert(certPoolCA, "")
+	creds = credentials.NewClientTLSFromCert(certPoolCA.ToStd(), "")
 
 	// invoke the EmptyCall service
 	_, err = invokeEmptyCall(testAddress, grpc.WithTransportCredentials(creds))
@@ -1088,7 +1090,7 @@ func TestUpdateTLSCert(t *testing.T) {
 	probeServer := func() error {
 		_, err = invokeEmptyCall(
 			testAddress,
-			grpc.WithTransportCredentials(credentials.NewTLS(&tls.Config{RootCAs: certPool})),
+			grpc.WithTransportCredentials(credentials.NewTLS(&tls.Config{RootCAs: certPool.ToStd()})),
 			grpc.WithBlock(),
 		)
 		return err
@@ -1200,7 +1202,7 @@ func TestCipherSuites(t *testing.T) {
 
 			for _, tlsVersion := range test.versions {
 				tlsConfig := &tls.Config{
-					RootCAs:      certPool,
+					RootCAs:      certPool.ToStd(),
 					CipherSuites: test.clientCiphers,
 					MinVersion:   tlsVersion,
 					MaxVersion:   tlsVersion,

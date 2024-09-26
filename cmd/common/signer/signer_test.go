@@ -7,13 +7,14 @@ SPDX-License-Identifier: Apache-2.0
 package signer
 
 import (
-	"crypto/x509"
 	"encoding/hex"
 	"encoding/pem"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"testing"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	"github.com/hyperledger/fabric/bccsp/utils"
 	"github.com/hyperledger/fabric/common/util"
@@ -57,7 +58,7 @@ ZsQXrlIqlmNalfYPX+NDDELqlpXQBeEqnA==
 	ec1, err := x509.MarshalECPrivateKey(ecPK)
 	require.NoError(t, err)
 
-	pkcs8, err := x509.MarshalPKCS8PrivateKey(ecPK)
+	pkcs8, err := x509.MarshalECPrivateKey(ecPK)
 	require.NoError(t, err)
 
 	for _, testCase := range []struct {

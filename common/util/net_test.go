@@ -10,8 +10,11 @@ import (
 	"context"
 	"crypto/sha256"
 	"crypto/tls"
-	"crypto/x509"
 	"testing"
+
+	stdx509 "crypto/x509"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	"github.com/stretchr/testify/require"
 	"google.golang.org/grpc/credentials"
@@ -53,10 +56,13 @@ func TestExtractCertificateHashFromContext(t *testing.T) {
 	ctx = peer.NewContext(context.Background(), p)
 	require.Nil(t, ExtractCertificateHashFromContext(ctx))
 
+	cert := &x509.Certificate{
+		Raw: []byte{1, 2, 3},
+	}
 	p.AuthInfo = credentials.TLSInfo{
 		State: tls.ConnectionState{
-			PeerCertificates: []*x509.Certificate{
-				{Raw: []byte{1, 2, 3}},
+			PeerCertificates: []*stdx509.Certificate{
+				cert.ToStd(),
 			},
 		},
 	}

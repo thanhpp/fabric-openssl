@@ -8,7 +8,8 @@ package util
 
 import (
 	"context"
-	"crypto/x509"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	"github.com/hyperledger/fabric/pkg/cryptox"
 	"google.golang.org/grpc/credentials"
@@ -61,7 +62,7 @@ func ExtractCertificateFromContext(ctx context.Context) *x509.Certificate {
 	if len(certs) == 0 {
 		return nil
 	}
-	return certs[0]
+	return x509.ConvertCert(certs[0])
 }
 
 // ExtractRawCertificateFromContext returns the raw TLS certificate (if applicable)

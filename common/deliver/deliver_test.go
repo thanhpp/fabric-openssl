@@ -8,10 +8,11 @@ package deliver_test
 
 import (
 	"context"
-	"crypto/x509"
 	"encoding/pem"
 	"io"
 	"time"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	"github.com/golang/protobuf/proto"
 	"github.com/golang/protobuf/ptypes/timestamp"

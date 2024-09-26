@@ -9,12 +9,13 @@ package cryptox
 import (
 	"crypto/ecdsa"
 	"crypto/elliptic"
-	"crypto/x509"
 	"crypto/x509/pkix"
 	"encoding/asn1"
 	"errors"
 	"fmt"
 	"math/big"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	"github.com/hyperledger/fabric/pkg/bbig/bridge"
 	"github.com/hyperledger/fabric/pkg/mopenssl"
@@ -30,25 +31,25 @@ type ECDSAPublicKey interface {
 	MarshalPKIXPublicKey() ([]byte, error)
 }
 
-func NewECDSAPublicKey(curve elliptic.Curve, x, y *big.Int) (ECDSAPublicKey, error) {
+func NewECDSAPublicKey(_ elliptic.Curve, x, y *big.Int) (ECDSAPublicKey, error) {
 	if useStd {
 		return &ecdsaPublicKeyStd{
 			pub: &ecdsa.PublicKey{
-				Curve: curve,
+				Curve: Curve,
 				X:     x,
 				Y:     y,
 			},
 		}, nil
 	}
 
-	pub, err := bridge.NewPublicKeyECDSA(curve.Params().Name, x, y)
+	pub, err := bridge.NewPublicKeyECDSA(Curve.Params().Name, x, y)
 	if err != nil {
 		return nil, fmt.Errorf("new public key ecdsa error: %w", err)
 	}
 
 	return &ecdsaPublicKeyOpenSSL{
 		pub:   pub,
-		curve: curve,
+		curve: Curve,
 		x:     x,
 		y:     y,
 	}, nil

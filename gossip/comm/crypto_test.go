@@ -12,13 +12,14 @@ import (
 	"crypto/elliptic"
 	"crypto/rand"
 	"crypto/tls"
-	"crypto/x509"
 	"encoding/pem"
 	"math/big"
 	"net"
 	"sync"
 	"testing"
 	"time"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	proto "github.com/hyperledger/fabric-protos-go/gossip"
 	"github.com/hyperledger/fabric/gossip/util"

@@ -10,11 +10,12 @@ import (
 	"context"
 	"crypto/sha256"
 	"crypto/tls"
-	"crypto/x509"
 	"net"
 	"sync/atomic"
 	"testing"
 	"time"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	"github.com/golang/protobuf/proto"
 	"github.com/hyperledger/fabric-protos-go/common"
@@ -150,7 +151,7 @@ type inspection struct {
 
 func (is *inspectingServer) newInspection(t *testing.T) *inspection {
 	tlsConfig := &tls.Config{
-		RootCAs: x509.NewCertPool(),
+		RootCAs: x509.NewCertPool().ToStd(),
 	}
 	tlsConfig.RootCAs.AppendCertsFromPEM([]byte(selfSignedCertPEM))
 	return &inspection{

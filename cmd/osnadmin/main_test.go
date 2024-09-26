@@ -8,7 +8,6 @@ package main
 
 import (
 	"crypto/tls"
-	"crypto/x509"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -18,6 +17,8 @@ import (
 	"net/url"
 	"os"
 	"path/filepath"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	"github.com/golang/protobuf/proto"
 	cb "github.com/hyperledger/fabric-protos-go/common"
@@ -81,7 +82,7 @@ var _ = Describe("osnadmin", func() {
 
 		tlsConfig = &tls.Config{
 			Certificates: []tls.Certificate{cert},
-			ClientCAs:    caCertPool,
+			ClientCAs:    caCertPool.ToStd(),
 			ClientAuth:   tls.RequireAndVerifyClientCert,
 		}
 	})

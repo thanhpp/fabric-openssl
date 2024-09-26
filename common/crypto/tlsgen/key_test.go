@@ -8,9 +8,10 @@ package tlsgen
 
 import (
 	"crypto/tls"
-	"crypto/x509"
 	"encoding/pem"
 	"testing"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	"github.com/stretchr/testify/require"
 )

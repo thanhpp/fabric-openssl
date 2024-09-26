@@ -8,10 +8,11 @@ package fabhttp_test
 
 import (
 	"crypto/tls"
-	"crypto/x509"
 	"io/ioutil"
 	"os"
 	"path/filepath"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	"github.com/hyperledger/fabric/common/fabhttp"
 	. "github.com/onsi/ginkgo/v2"

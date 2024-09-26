@@ -8,11 +8,12 @@ package operations_test
 
 import (
 	"crypto/tls"
-	"crypto/x509"
 	"io/ioutil"
 	"net/http"
 	"path/filepath"
 	"testing"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	"github.com/hyperledger/fabric-lib-go/healthz"
 	"github.com/hyperledger/fabric/common/crypto/tlsgen"
@@ -56,7 +57,7 @@ func newHTTPClient(tlsDir string, withClientCert bool) *http.Client {
 	clientCertPool.AppendCertsFromPEM(caCert)
 
 	tlsClientConfig := &tls.Config{
-		RootCAs: clientCertPool,
+		RootCAs: clientCertPool.ToStd(),
 	}
 	if withClientCert {
 		clientCert, err := tls.LoadX509KeyPair(

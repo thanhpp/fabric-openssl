@@ -1,0 +1,908 @@
+cd ccaas_builder && go test -v ./cmd/detect && GOOS=linux GOARCH=amd64 go build -buildvcs=false -o ../release/linux-amd64/builders/ccaas/bin/ ./cmd/detect/
+=== RUN   TestArugments
+=== RUN   TestArugments/toofew
+=== RUN   TestArugments/twomany
+=== RUN   TestArugments/validtype
+=== RUN   TestArugments/wrongtype
+--- PASS: TestArugments (0.15s)
+    --- PASS: TestArugments/toofew (0.01s)
+    --- PASS: TestArugments/twomany (0.01s)
+    --- PASS: TestArugments/validtype (0.01s)
+    --- PASS: TestArugments/wrongtype (0.01s)
+=== RUN   TestMissingFile
+--- PASS: TestMissingFile (0.10s)
+PASS
+ok  	github.com/hyperledger/fabric/ccaas_builder/cmd/detect	(cached)
+cd ccaas_builder && go test -v ./cmd/build && GOOS=linux GOARCH=amd64 go build -buildvcs=false -o ../release/linux-amd64/builders/ccaas/bin/ ./cmd/build/
+=== RUN   TestArguements
+=== RUN   TestArguements/toofew2
+=== RUN   TestArguements/twomany
+=== RUN   TestArguements/toofew1
+--- PASS: TestArguements (0.16s)
+    --- PASS: TestArguements/toofew2 (0.01s)
+    --- PASS: TestArguements/twomany (0.01s)
+    --- PASS: TestArguements/toofew1 (0.01s)
+=== RUN   TestGoodPath
+--- PASS: TestGoodPath (0.12s)
+=== RUN   TestTemplating
+--- PASS: TestTemplating (0.12s)
+=== RUN   TestTemplatingFailure
+--- PASS: TestTemplatingFailure (0.13s)
+=== RUN   TestMissingConnection
+--- PASS: TestMissingConnection (0.12s)
+=== RUN   TestMissingMetadata
+--- PASS: TestMissingMetadata (0.12s)
+PASS
+ok  	github.com/hyperledger/fabric/ccaas_builder/cmd/build	(cached)
+cd ccaas_builder && go test -v ./cmd/release && GOOS=linux GOARCH=amd64 go build -buildvcs=false -o ../release/linux-amd64/builders/ccaas/bin/ ./cmd/release/
+=== RUN   TestArugments
+=== RUN   TestArugments/toofew
+=== RUN   TestArugments/twomany
+--- PASS: TestArugments (0.13s)
+    --- PASS: TestArugments/toofew (0.01s)
+    --- PASS: TestArugments/twomany (0.01s)
+=== RUN   TestGoodPath
+--- PASS: TestGoodPath (0.10s)
+=== RUN   TestMissingConnection
+--- PASS: TestMissingConnection (0.10s)
+PASS
+ok  	github.com/hyperledger/fabric/ccaas_builder/cmd/release	(cached)
+All files have SPDX-License-Identifier headers
+Building github.com/client9/misspell/cmd/misspell -> misspell
+Checking changed go files for spelling errors ...
+spell checker passed
+Checking for go:generate parent path references
+Checking trailing spaces ...
+DEP: Checking for dependency issues..
+./scripts/check_deps.sh
+Building golang.org/x/tools/cmd/goimports -> goimports
+Building mvdan.cc/gofumpt -> gofumpt
+Building honnef.co/go/tools/cmd/staticcheck@2023.1.2  -> staticcheck
+LINT: Running code checks..
+./scripts/golinter.sh
+Checking with goimports
+Checking with gofumpt
+Checking for golang.org/x/net/context
+Checking for github.com/gogo/protobuf
+Checking with go vet
+# github.com/hyperledger/fabric/pkg/mopenssl
+pkg/mopenssl/openssl.go:292:9: possible misuse of unsafe.Pointer
+Checking with staticcheck
+METRICS: Checking for outdated reference documentation..
+./scripts/metrics_doc.sh check
+Building github.com/go-swagger/go-swagger/cmd/swagger -> swagger
+SWAGGER: Checking for outdated swagger...
+./scripts/swagger.sh check
+docker pull couchdb:3.3.2
+3.3.2: Pulling from library/couchdb
+Digest: sha256:413645f2a2847264be532d7aa200637e1aa5d37b414996fe69c98a9e521724f8
+Status: Image is up to date for couchdb:3.3.2
+docker.io/library/couchdb:3.3.2
+./scripts/run-unit-tests.sh
+ok  	github.com/hyperledger/fabric/gossip/comm	51.080s	coverage: 92.8% of statements
+ok  	github.com/hyperledger/fabric/gossip/comm/mock	0.018s	coverage: 81.1% of statements
+[33m2024-01-22 23:48:40.094 +07 0001 WARN[0m [gossip.discovery#localhost:2048] [33;1mhandleMsgFromComm[0m -> Got message with wrong type (expected Alive or MembershipResponse or MembershipRequest message): data_msg:<> 
+[33m2024-01-22 23:48:47.305 +07 0002 WARN[0m [gossip.discovery#localhost:4676] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 55 55] for 3.003513763s
+[33m2024-01-22 23:48:47.305 +07 0003 WARN[0m [gossip.discovery#localhost:4676] [33;1mexpireDeadMembers[0m -> Entering [6c6f63616c686f73743a34363737]
+[33m2024-01-22 23:48:47.305 +07 0004 WARN[0m [gossip.discovery#localhost:4676] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4677, InternalEndpoint: localhost:4677, PKI-ID: 6c6f63616c686f73743a34363737, Metadata: 
+[33m2024-01-22 23:48:47.305 +07 0005 WARN[0m [gossip.discovery#localhost:4676] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:48:47.305 +07 0006 WARN[0m [gossip.discovery#localhost:4675] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 55 55] for 3.003853073s
+[33m2024-01-22 23:48:47.305 +07 0007 WARN[0m [gossip.discovery#localhost:4675] [33;1mexpireDeadMembers[0m -> Entering [6c6f63616c686f73743a34363737]
+[33m2024-01-22 23:48:47.305 +07 0008 WARN[0m [gossip.discovery#localhost:4675] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4677, InternalEndpoint: localhost:4677, PKI-ID: 6c6f63616c686f73743a34363737, Metadata: 
+[33m2024-01-22 23:48:47.305 +07 0009 WARN[0m [gossip.discovery#localhost:4675] [33;1mexpireDeadMembers[0m -> Exiting
+Ping to localhost:4676 failed
+Ping to localhost:4676 failed
+[33m2024-01-22 23:49:11.327 +07 000a WARN[0m [gossip.discovery#localhost:2612] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 50 54 49 52] for 3.005573315s
+[33m2024-01-22 23:49:11.327 +07 000b WARN[0m [gossip.discovery#localhost:2612] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 50 54 49 53] for 3.006824952s
+[33m2024-01-22 23:49:11.327 +07 000c WARN[0m [gossip.discovery#localhost:2612] [33;1mexpireDeadMembers[0m -> Entering [6c6f63616c686f73743a32363134 6c6f63616c686f73743a32363135]
+[33m2024-01-22 23:49:11.327 +07 000d WARN[0m [gossip.discovery#localhost:2612] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:2614, InternalEndpoint: localhost:2614, PKI-ID: 6c6f63616c686f73743a32363134, Metadata: 
+[33m2024-01-22 23:49:11.327 +07 000e WARN[0m [gossip.discovery#localhost:2612] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:2615, InternalEndpoint: localhost:2615, PKI-ID: 6c6f63616c686f73743a32363135, Metadata: 
+[33m2024-01-22 23:49:11.327 +07 000f WARN[0m [gossip.discovery#localhost:2612] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:49:11.327 +07 0010 WARN[0m [gossip.discovery#localhost:2613] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 50 54 49 52] for 3.00668561s
+[33m2024-01-22 23:49:11.328 +07 0011 WARN[0m [gossip.discovery#localhost:2613] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 50 54 49 53] for 3.006893943s
+[33m2024-01-22 23:49:11.327 +07 0012 WARN[0m [gossip.discovery#localhost:2611] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 50 54 49 53] for 3.00710518s
+[33m2024-01-22 23:49:11.328 +07 0013 WARN[0m [gossip.discovery#localhost:2611] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 50 54 49 52] for 3.007097846s
+[33m2024-01-22 23:49:11.328 +07 0014 WARN[0m [gossip.discovery#localhost:2613] [33;1mexpireDeadMembers[0m -> Entering [6c6f63616c686f73743a32363134 6c6f63616c686f73743a32363135]
+[33m2024-01-22 23:49:11.328 +07 0015 WARN[0m [gossip.discovery#localhost:2611] [33;1mexpireDeadMembers[0m -> Entering [6c6f63616c686f73743a32363135 6c6f63616c686f73743a32363134]
+[33m2024-01-22 23:49:11.328 +07 0016 WARN[0m [gossip.discovery#localhost:2611] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:2615, InternalEndpoint: localhost:2615, PKI-ID: 6c6f63616c686f73743a32363135, Metadata: 
+[33m2024-01-22 23:49:11.328 +07 0017 WARN[0m [gossip.discovery#localhost:2613] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:2614, InternalEndpoint: localhost:2614, PKI-ID: 6c6f63616c686f73743a32363134, Metadata: 
+[33m2024-01-22 23:49:11.328 +07 0018 WARN[0m [gossip.discovery#localhost:2613] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:2615, InternalEndpoint: localhost:2615, PKI-ID: 6c6f63616c686f73743a32363135, Metadata: 
+[33m2024-01-22 23:49:11.328 +07 0019 WARN[0m [gossip.discovery#localhost:2613] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:49:11.328 +07 001a WARN[0m [gossip.discovery#localhost:2611] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:2614, InternalEndpoint: localhost:2614, PKI-ID: 6c6f63616c686f73743a32363134, Metadata: 
+[33m2024-01-22 23:49:11.328 +07 001b WARN[0m [gossip.discovery#localhost:2611] [33;1mexpireDeadMembers[0m -> Exiting
+Ping to localhost:5511 failed
+Ping to localhost:5511 failed
+Ping to localhost:5512 failed
+Ping to localhost:5512 failed
+Ping to localhost:5512 failed
+Ping to localhost:5511 failed
+Ping to localhost:5512 failed
+Ping to localhost:5512 failed
+Ping to localhost:5511 failed
+Ping to localhost:5511 failed
+Ping to localhost:5512 failed
+Ping to localhost:5511 failed
+Ping to localhost:5512 failed
+Ping to localhost:5512 failed
+Ping to localhost:5511 failed
+Ping to localhost:5512 failed
+Ping to localhost:5512 failed
+Ping to localhost:5511 failed
+Ping to localhost:5511 failed
+Ping to localhost:5511 failed
+Ping to localhost:5511 failed
+Ping to localhost:5512 failed
+Ping to localhost:5512 failed
+Ping to localhost:5511 failed
+Ping to localhost:5512 failed
+Ping to localhost:5511 failed
+[33m2024-01-22 23:49:29.852 +07 001c WARN[0m [gossip.discovery#localhost:4611] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 55] for 3.001197239s
+[33m2024-01-22 23:49:29.852 +07 001d WARN[0m [gossip.discovery#localhost:4611] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 54] for 3.003295171s
+[33m2024-01-22 23:49:29.852 +07 001e WARN[0m [gossip.discovery#localhost:4611] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 50] for 3.001251832s
+[33m2024-01-22 23:49:29.852 +07 001f WARN[0m [gossip.discovery#localhost:4622] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 54] for 3.001475153s
+[33m2024-01-22 23:49:29.852 +07 0020 WARN[0m [gossip.discovery#localhost:4611] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 53] for 3.004463633s
+[33m2024-01-22 23:49:29.852 +07 0021 WARN[0m [gossip.discovery#localhost:4620] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 49] for 3.001743588s
+[33m2024-01-22 23:49:29.852 +07 0022 WARN[0m [gossip.discovery#localhost:4622] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 51] for 3.001748928s
+[33m2024-01-22 23:49:29.852 +07 0023 WARN[0m [gossip.discovery#localhost:4611] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 57] for 3.005214667s
+[33m2024-01-22 23:49:29.852 +07 0024 WARN[0m [gossip.discovery#localhost:4622] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 56] for 3.001683084s
+[33m2024-01-22 23:49:29.852 +07 0025 WARN[0m [gossip.discovery#localhost:4620] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 53] for 3.001660572s
+[33m2024-01-22 23:49:29.852 +07 0026 WARN[0m [gossip.discovery#localhost:4616] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 50] for 3.00352223s
+[33m2024-01-22 23:49:29.852 +07 0027 WARN[0m [gossip.discovery#localhost:4613] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 57] for 3.003834888s
+[33m2024-01-22 23:49:29.852 +07 0029 WARN[0m [gossip.discovery#localhost:4620] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 50] for 3.001767153s
+[33m2024-01-22 23:49:29.852 +07 002a WARN[0m [gossip.discovery#localhost:4618] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 52] for 3.002432436s
+[33m2024-01-22 23:49:29.852 +07 002b WARN[0m [gossip.discovery#localhost:4620] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 52] for 3.00169157s
+[33m2024-01-22 23:49:29.852 +07 0028 WARN[0m [gossip.discovery#localhost:4616] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 48] for 3.001294322s
+[33m2024-01-22 23:49:29.852 +07 002d WARN[0m [gossip.discovery#localhost:4618] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 51] for 3.002436083s
+[33m2024-01-22 23:49:29.852 +07 002c WARN[0m [gossip.discovery#localhost:4615] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 51] for 3.005876665s
+[33m2024-01-22 23:49:29.852 +07 002e WARN[0m [gossip.discovery#localhost:4617] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 50] for 3.004941293s
+[33m2024-01-22 23:49:29.852 +07 002f WARN[0m [gossip.discovery#localhost:4616] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 51] for 3.00385707s
+[33m2024-01-22 23:49:29.852 +07 0031 WARN[0m [gossip.discovery#localhost:4613] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 55] for 3.00158544s
+[33m2024-01-22 23:49:29.852 +07 0034 WARN[0m [gossip.discovery#localhost:4618] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 49] for 3.004806268s
+[33m2024-01-22 23:49:29.852 +07 0030 WARN[0m [gossip.discovery#localhost:4622] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 55] for 3.001077093s
+[33m2024-01-22 23:49:29.852 +07 0036 WARN[0m [gossip.discovery#localhost:4615] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 49] for 3.005745318s
+[33m2024-01-22 23:49:29.852 +07 0037 WARN[0m [gossip.discovery#localhost:4612] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 57] for 3.004332646s
+[33m2024-01-22 23:49:29.852 +07 0039 WARN[0m [gossip.discovery#localhost:4617] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 51] for 3.005500646s
+[33m2024-01-22 23:49:29.853 +07 003c WARN[0m [gossip.discovery#localhost:4622] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 49] for 3.002484884s
+[33m2024-01-22 23:49:29.853 +07 003f WARN[0m [gossip.discovery#localhost:4622] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 53] for 3.002337276s
+[33m2024-01-22 23:49:29.853 +07 003d WARN[0m [gossip.discovery#localhost:4615] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 52] for 3.003545133s
+[33m2024-01-22 23:49:29.853 +07 0040 WARN[0m [gossip.discovery#localhost:4617] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 49] for 3.00320392s
+[33m2024-01-22 23:49:29.853 +07 0041 WARN[0m [gossip.discovery#localhost:4622] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 52] for 3.002277784s
+[33m2024-01-22 23:49:29.853 +07 0043 WARN[0m [gossip.discovery#localhost:4617] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 50] for 3.001302958s
+[33m2024-01-22 23:49:29.853 +07 0042 WARN[0m [gossip.discovery#localhost:4615] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 51] for 3.00348519s
+[33m2024-01-22 23:49:29.852 +07 0045 WARN[0m [gossip.discovery#localhost:4621] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 49] for 3.002781964s
+[33m2024-01-22 23:49:29.852 +07 0035 WARN[0m [gossip.discovery#localhost:4616] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 50] for 3.001223509s
+[33m2024-01-22 23:49:29.853 +07 0046 WARN[0m [gossip.discovery#localhost:4617] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 49] for 3.005365872s
+[33m2024-01-22 23:49:29.853 +07 003e WARN[0m [gossip.discovery#localhost:4612] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 56] for 3.004015468s
+[33m2024-01-22 23:49:29.853 +07 0044 WARN[0m [gossip.discovery#localhost:4622] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 50] for 3.002465038s
+[33m2024-01-22 23:49:29.853 +07 0048 WARN[0m [gossip.discovery#localhost:4621] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 53] for 3.002827901s
+[33m2024-01-22 23:49:29.853 +07 0049 WARN[0m [gossip.discovery#localhost:4617] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 52] for 3.003076319s
+[33m2024-01-22 23:49:29.852 +07 004a WARN[0m [gossip.discovery#localhost:4614] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 55] for 3.001373681s
+[33m2024-01-22 23:49:29.853 +07 003a WARN[0m [gossip.discovery#localhost:4613] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 54] for 3.002969518s
+[33m2024-01-22 23:49:29.853 +07 004e WARN[0m [gossip.discovery#localhost:4617] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 51] for 3.003018289s
+[33m2024-01-22 23:49:29.853 +07 003b WARN[0m [gossip.discovery#localhost:4618] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 57] for 3.00331018s
+[33m2024-01-22 23:49:29.853 +07 004d WARN[0m [gossip.discovery#localhost:4621] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 52] for 3.002777927s
+[33m2024-01-22 23:49:29.853 +07 0050 WARN[0m [gossip.discovery#localhost:4613] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 51] for 3.005704039s
+[33m2024-01-22 23:49:29.852 +07 0033 WARN[0m [gossip.discovery#localhost:4619] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 51] for 3.003323275s
+[33m2024-01-22 23:49:29.852 +07 0032 WARN[0m [gossip.discovery#localhost:4620] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 51] for 3.001607101s
+[33m2024-01-22 23:49:29.853 +07 0053 WARN[0m [gossip.discovery#localhost:4618] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 50] for 3.005086556s
+[33m2024-01-22 23:49:29.853 +07 0054 WARN[0m [gossip.discovery#localhost:4621] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 56] for 3.002603959s
+[33m2024-01-22 23:49:29.853 +07 0055 WARN[0m [gossip.discovery#localhost:4613] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 56] for 3.003212626s
+[33m2024-01-22 23:49:29.853 +07 0056 WARN[0m [gossip.discovery#localhost:4620] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 56] for 3.001934388s
+[33m2024-01-22 23:49:29.853 +07 0057 WARN[0m [gossip.discovery#localhost:4618] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 48] for 3.003270655s
+[33m2024-01-22 23:49:29.853 +07 005b WARN[0m [gossip.discovery#localhost:4613] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 48] for 3.004247706s
+[33m2024-01-22 23:49:29.853 +07 005d WARN[0m [gossip.discovery#localhost:4613] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 49] for 3.004362853s
+[33m2024-01-22 23:49:29.853 +07 004c WARN[0m [gossip.discovery#localhost:4622] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 51] for 3.004064631s
+[33m2024-01-22 23:49:29.853 +07 005e WARN[0m [gossip.discovery#localhost:4613] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 50] for 3.002006123s
+[33m2024-01-22 23:49:29.853 +07 004b WARN[0m [gossip.discovery#localhost:4616] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 49] for 3.004102462s
+[33m2024-01-22 23:49:29.853 +07 0060 WARN[0m [gossip.discovery#localhost:4613] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 53] for 3.004231505s
+[33m2024-01-22 23:49:29.853 +07 0061 WARN[0m [gossip.discovery#localhost:4616] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 52] for 3.001712851s
+[33m2024-01-22 23:49:29.853 +07 005f WARN[0m [gossip.discovery#localhost:4622] [33;1mexpireDeadMembers[0m -> Entering [6c6f63616c686f73743a34363136 6c6f63616c686f73743a34363133 6c6f63616c686f73743a34363138 6c6f63616c686f73743a34363137 6c6f63616c686f73743a34363131 6c6f63616c686f73743a34363135 6c6f63616c686f73743a34363134 6c6f63616c686f73743a34363132 6c6f63616c686f73743a34363233]
+[33m2024-01-22 23:49:29.853 +07 0062 WARN[0m [gossip.discovery#localhost:4613] [33;1mexpireDeadMembers[0m -> Entering [6c6f63616c686f73743a34363139 6c6f63616c686f73743a34363137 6c6f63616c686f73743a34363136 6c6f63616c686f73743a34363233 6c6f63616c686f73743a34363138 6c6f63616c686f73743a34363230 6c6f63616c686f73743a34363231 6c6f63616c686f73743a34363232 6c6f63616c686f73743a34363135]
+[33m2024-01-22 23:49:29.853 +07 005c WARN[0m [gossip.discovery#localhost:4618] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 51] for 3.005328562s
+[33m2024-01-22 23:49:29.853 +07 0051 WARN[0m [gossip.discovery#localhost:4617] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 57] for 3.003390781s
+[33m2024-01-22 23:49:29.853 +07 0065 WARN[0m [gossip.discovery#localhost:4617] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 48] for 3.003424785s
+[33m2024-01-22 23:49:29.853 +07 0064 WARN[0m [gossip.discovery#localhost:4618] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 49] for 3.003527468s
+[33m2024-01-22 23:49:29.853 +07 0067 WARN[0m [gossip.discovery#localhost:4618] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 50] for 3.002841897s
+[33m2024-01-22 23:49:29.853 +07 0068 WARN[0m [gossip.discovery#localhost:4617] [33;1mexpireDeadMembers[0m -> Entering [6c6f63616c686f73743a34363132 6c6f63616c686f73743a34363233 6c6f63616c686f73743a34363231 6c6f63616c686f73743a34363232 6c6f63616c686f73743a34363131 6c6f63616c686f73743a34363134 6c6f63616c686f73743a34363133 6c6f63616c686f73743a34363139 6c6f63616c686f73743a34363230]
+[33m2024-01-22 23:49:29.853 +07 0058 WARN[0m [gossip.discovery#localhost:4621] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 50] for 3.002993333s
+[33m2024-01-22 23:49:29.853 +07 0066 WARN[0m [gossip.discovery#localhost:4622] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4616, InternalEndpoint: localhost:4616, PKI-ID: 6c6f63616c686f73743a34363136, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 0069 WARN[0m [gossip.discovery#localhost:4618] [33;1mexpireDeadMembers[0m -> Entering [6c6f63616c686f73743a34363134 6c6f63616c686f73743a34363133 6c6f63616c686f73743a34363131 6c6f63616c686f73743a34363139 6c6f63616c686f73743a34363132 6c6f63616c686f73743a34363230 6c6f63616c686f73743a34363233 6c6f63616c686f73743a34363231 6c6f63616c686f73743a34363232]
+[33m2024-01-22 23:49:29.853 +07 006a WARN[0m [gossip.discovery#localhost:4621] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 54] for 3.002792304s
+[33m2024-01-22 23:49:29.853 +07 0063 WARN[0m [gossip.discovery#localhost:4616] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 51] for 3.0016598s
+[33m2024-01-22 23:49:29.853 +07 006b WARN[0m [gossip.discovery#localhost:4613] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4619, InternalEndpoint: localhost:4619, PKI-ID: 6c6f63616c686f73743a34363139, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 006d WARN[0m [gossip.discovery#localhost:4621] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 51] for 3.003942941s
+[33m2024-01-22 23:49:29.853 +07 004f WARN[0m [gossip.discovery#localhost:4612] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 54] for 3.004022231s
+[33m2024-01-22 23:49:29.853 +07 006f WARN[0m [gossip.discovery#localhost:4613] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4617, InternalEndpoint: localhost:4617, PKI-ID: 6c6f63616c686f73743a34363137, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 0071 WARN[0m [gossip.discovery#localhost:4612] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 48] for 3.004790398s
+[33m2024-01-22 23:49:29.853 +07 0072 WARN[0m [gossip.discovery#localhost:4613] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4616, InternalEndpoint: localhost:4616, PKI-ID: 6c6f63616c686f73743a34363136, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 0073 WARN[0m [gossip.discovery#localhost:4612] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 53] for 3.004750283s
+[33m2024-01-22 23:49:29.853 +07 0074 WARN[0m [gossip.discovery#localhost:4613] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4623, InternalEndpoint: localhost:4623, PKI-ID: 6c6f63616c686f73743a34363233, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 0075 WARN[0m [gossip.discovery#localhost:4617] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4612, InternalEndpoint: localhost:4612, PKI-ID: 6c6f63616c686f73743a34363132, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 0076 WARN[0m [gossip.discovery#localhost:4612] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 55] for 3.002571368s
+[33m2024-01-22 23:49:29.853 +07 0077 WARN[0m [gossip.discovery#localhost:4613] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4618, InternalEndpoint: localhost:4618, PKI-ID: 6c6f63616c686f73743a34363138, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 0079 WARN[0m [gossip.discovery#localhost:4617] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4623, InternalEndpoint: localhost:4623, PKI-ID: 6c6f63616c686f73743a34363233, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 006c WARN[0m [gossip.discovery#localhost:4622] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4613, InternalEndpoint: localhost:4613, PKI-ID: 6c6f63616c686f73743a34363133, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 007b WARN[0m [gossip.discovery#localhost:4618] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4614, InternalEndpoint: localhost:4614, PKI-ID: 6c6f63616c686f73743a34363134, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 007d WARN[0m [gossip.discovery#localhost:4618] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4613, InternalEndpoint: localhost:4613, PKI-ID: 6c6f63616c686f73743a34363133, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 0078 WARN[0m [gossip.discovery#localhost:4612] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 51] for 3.006200885s
+[33m2024-01-22 23:49:29.853 +07 007e WARN[0m [gossip.discovery#localhost:4622] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4618, InternalEndpoint: localhost:4618, PKI-ID: 6c6f63616c686f73743a34363138, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 0080 WARN[0m [gossip.discovery#localhost:4612] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 49] for 3.005112655s
+[33m2024-01-22 23:49:29.853 +07 007f WARN[0m [gossip.discovery#localhost:4618] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4611, InternalEndpoint: localhost:4611, PKI-ID: 6c6f63616c686f73743a34363131, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 0081 WARN[0m [gossip.discovery#localhost:4622] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4617, InternalEndpoint: localhost:4617, PKI-ID: 6c6f63616c686f73743a34363137, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 0083 WARN[0m [gossip.discovery#localhost:4622] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4611, InternalEndpoint: localhost:4611, PKI-ID: 6c6f63616c686f73743a34363131, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 0082 WARN[0m [gossip.discovery#localhost:4612] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 50] for 3.002655596s
+[33m2024-01-22 23:49:29.853 +07 0084 WARN[0m [gossip.discovery#localhost:4618] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4619, InternalEndpoint: localhost:4619, PKI-ID: 6c6f63616c686f73743a34363139, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 0085 WARN[0m [gossip.discovery#localhost:4622] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4615, InternalEndpoint: localhost:4615, PKI-ID: 6c6f63616c686f73743a34363135, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 0086 WARN[0m [gossip.discovery#localhost:4618] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4612, InternalEndpoint: localhost:4612, PKI-ID: 6c6f63616c686f73743a34363132, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 0087 WARN[0m [gossip.discovery#localhost:4612] [33;1mexpireDeadMembers[0m -> Entering [6c6f63616c686f73743a34363139 6c6f63616c686f73743a34363138 6c6f63616c686f73743a34363136 6c6f63616c686f73743a34363230 6c6f63616c686f73743a34363135 6c6f63616c686f73743a34363137 6c6f63616c686f73743a34363233 6c6f63616c686f73743a34363231 6c6f63616c686f73743a34363232]
+[33m2024-01-22 23:49:29.853 +07 0088 WARN[0m [gossip.discovery#localhost:4622] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4614, InternalEndpoint: localhost:4614, PKI-ID: 6c6f63616c686f73743a34363134, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 0070 WARN[0m [gossip.discovery#localhost:4621] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 51] for 3.003012599s
+[33m2024-01-22 23:49:29.853 +07 0089 WARN[0m [gossip.discovery#localhost:4618] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4620, InternalEndpoint: localhost:4620, PKI-ID: 6c6f63616c686f73743a34363230, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 008a WARN[0m [gossip.discovery#localhost:4622] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4612, InternalEndpoint: localhost:4612, PKI-ID: 6c6f63616c686f73743a34363132, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 008b WARN[0m [gossip.discovery#localhost:4618] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4623, InternalEndpoint: localhost:4623, PKI-ID: 6c6f63616c686f73743a34363233, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 008c WARN[0m [gossip.discovery#localhost:4612] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4619, InternalEndpoint: localhost:4619, PKI-ID: 6c6f63616c686f73743a34363139, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 008d WARN[0m [gossip.discovery#localhost:4622] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4623, InternalEndpoint: localhost:4623, PKI-ID: 6c6f63616c686f73743a34363233, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 008f WARN[0m [gossip.discovery#localhost:4618] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4621, InternalEndpoint: localhost:4621, PKI-ID: 6c6f63616c686f73743a34363231, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 0090 WARN[0m [gossip.discovery#localhost:4612] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4618, InternalEndpoint: localhost:4618, PKI-ID: 6c6f63616c686f73743a34363138, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 0091 WARN[0m [gossip.discovery#localhost:4622] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:49:29.853 +07 008e WARN[0m [gossip.discovery#localhost:4621] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 55] for 3.002478623s
+[33m2024-01-22 23:49:29.853 +07 0092 WARN[0m [gossip.discovery#localhost:4618] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4622, InternalEndpoint: localhost:4622, PKI-ID: 6c6f63616c686f73743a34363232, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 0093 WARN[0m [gossip.discovery#localhost:4612] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4616, InternalEndpoint: localhost:4616, PKI-ID: 6c6f63616c686f73743a34363136, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 0094 WARN[0m [gossip.discovery#localhost:4618] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:49:29.853 +07 0095 WARN[0m [gossip.discovery#localhost:4612] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4620, InternalEndpoint: localhost:4620, PKI-ID: 6c6f63616c686f73743a34363230, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 0052 WARN[0m [gossip.discovery#localhost:4614] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 54] for 3.002569674s
+[33m2024-01-22 23:49:29.853 +07 0096 WARN[0m [gossip.discovery#localhost:4621] [33;1mexpireDeadMembers[0m -> Entering [6c6f63616c686f73743a34363131 6c6f63616c686f73743a34363135 6c6f63616c686f73743a34363134 6c6f63616c686f73743a34363138 6c6f63616c686f73743a34363132 6c6f63616c686f73743a34363136 6c6f63616c686f73743a34363233 6c6f63616c686f73743a34363133 6c6f63616c686f73743a34363137]
+[33m2024-01-22 23:49:29.852 +07 0038 WARN[0m [gossip.discovery#localhost:4611] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 56] for 3.003527459s
+[33m2024-01-22 23:49:29.853 +07 0097 WARN[0m [gossip.discovery#localhost:4612] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4615, InternalEndpoint: localhost:4615, PKI-ID: 6c6f63616c686f73743a34363135, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 0098 WARN[0m [gossip.discovery#localhost:4611] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 49] for 3.005995118s
+[33m2024-01-22 23:49:29.853 +07 009a WARN[0m [gossip.discovery#localhost:4612] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4617, InternalEndpoint: localhost:4617, PKI-ID: 6c6f63616c686f73743a34363137, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 0047 WARN[0m [gossip.discovery#localhost:4615] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 48] for 3.004014767s
+[33m2024-01-22 23:49:29.853 +07 0099 WARN[0m [gossip.discovery#localhost:4614] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 51] for 3.006266218s
+[33m2024-01-22 23:49:29.853 +07 009b WARN[0m [gossip.discovery#localhost:4611] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 51] for 3.006859777s
+[33m2024-01-22 23:49:29.853 +07 009c WARN[0m [gossip.discovery#localhost:4612] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4623, InternalEndpoint: localhost:4623, PKI-ID: 6c6f63616c686f73743a34363233, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 009d WARN[0m [gossip.discovery#localhost:4611] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 48] for 3.00591625s
+[33m2024-01-22 23:49:29.853 +07 009e WARN[0m [gossip.discovery#localhost:4615] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 49] for 3.004938637s
+[33m2024-01-22 23:49:29.853 +07 009f WARN[0m [gossip.discovery#localhost:4614] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 49] for 3.00607598s
+[33m2024-01-22 23:49:29.853 +07 00a0 WARN[0m [gossip.discovery#localhost:4612] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4621, InternalEndpoint: localhost:4621, PKI-ID: 6c6f63616c686f73743a34363231, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 00a1 WARN[0m [gossip.discovery#localhost:4611] [33;1mexpireDeadMembers[0m -> Entering [6c6f63616c686f73743a34363137 6c6f63616c686f73743a34363136 6c6f63616c686f73743a34363232 6c6f63616c686f73743a34363135 6c6f63616c686f73743a34363139 6c6f63616c686f73743a34363138 6c6f63616c686f73743a34363231 6c6f63616c686f73743a34363233 6c6f63616c686f73743a34363230]
+[33m2024-01-22 23:49:29.853 +07 00a3 WARN[0m [gossip.discovery#localhost:4612] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4622, InternalEndpoint: localhost:4622, PKI-ID: 6c6f63616c686f73743a34363232, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 00a2 WARN[0m [gossip.discovery#localhost:4615] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 57] for 3.005113046s
+[33m2024-01-22 23:49:29.853 +07 00a5 WARN[0m [gossip.discovery#localhost:4612] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:49:29.853 +07 007a WARN[0m [gossip.discovery#localhost:4613] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4620, InternalEndpoint: localhost:4620, PKI-ID: 6c6f63616c686f73743a34363230, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 00a6 WARN[0m [gossip.discovery#localhost:4615] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 50] for 3.006826144s
+[33m2024-01-22 23:49:29.853 +07 00a7 WARN[0m [gossip.discovery#localhost:4613] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4621, InternalEndpoint: localhost:4621, PKI-ID: 6c6f63616c686f73743a34363231, Metadata: 
+[33m2024-01-22 23:49:29.854 +07 00a8 WARN[0m [gossip.discovery#localhost:4613] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4622, InternalEndpoint: localhost:4622, PKI-ID: 6c6f63616c686f73743a34363232, Metadata: 
+[33m2024-01-22 23:49:29.854 +07 00a9 WARN[0m [gossip.discovery#localhost:4615] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 50] for 3.003485319s
+[33m2024-01-22 23:49:29.854 +07 00aa WARN[0m [gossip.discovery#localhost:4621] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4611, InternalEndpoint: localhost:4611, PKI-ID: 6c6f63616c686f73743a34363131, Metadata: 
+[33m2024-01-22 23:49:29.854 +07 00ac WARN[0m [gossip.discovery#localhost:4621] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4615, InternalEndpoint: localhost:4615, PKI-ID: 6c6f63616c686f73743a34363135, Metadata: 
+[33m2024-01-22 23:49:29.854 +07 00ae WARN[0m [gossip.discovery#localhost:4621] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4614, InternalEndpoint: localhost:4614, PKI-ID: 6c6f63616c686f73743a34363134, Metadata: 
+[33m2024-01-22 23:49:29.854 +07 00ad WARN[0m [gossip.discovery#localhost:4615] [33;1mexpireDeadMembers[0m -> Entering [6c6f63616c686f73743a34363233 6c6f63616c686f73743a34363131 6c6f63616c686f73743a34363134 6c6f63616c686f73743a34363133 6c6f63616c686f73743a34363230 6c6f63616c686f73743a34363231 6c6f63616c686f73743a34363139 6c6f63616c686f73743a34363132 6c6f63616c686f73743a34363232]
+[33m2024-01-22 23:49:29.853 +07 00a4 WARN[0m [gossip.discovery#localhost:4614] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 53] for 3.005749545s
+[33m2024-01-22 23:49:29.854 +07 00af WARN[0m [gossip.discovery#localhost:4621] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4618, InternalEndpoint: localhost:4618, PKI-ID: 6c6f63616c686f73743a34363138, Metadata: 
+[33m2024-01-22 23:49:29.854 +07 00b0 WARN[0m [gossip.discovery#localhost:4621] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4612, InternalEndpoint: localhost:4612, PKI-ID: 6c6f63616c686f73743a34363132, Metadata: 
+[33m2024-01-22 23:49:29.854 +07 00b1 WARN[0m [gossip.discovery#localhost:4614] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 56] for 3.003610496s
+[33m2024-01-22 23:49:29.854 +07 00b2 WARN[0m [gossip.discovery#localhost:4621] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4616, InternalEndpoint: localhost:4616, PKI-ID: 6c6f63616c686f73743a34363136, Metadata: 
+[33m2024-01-22 23:49:29.854 +07 00b3 WARN[0m [gossip.discovery#localhost:4614] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 57] for 3.006368952s
+[33m2024-01-22 23:49:29.854 +07 00b4 WARN[0m [gossip.discovery#localhost:4621] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4623, InternalEndpoint: localhost:4623, PKI-ID: 6c6f63616c686f73743a34363233, Metadata: 
+[33m2024-01-22 23:49:29.854 +07 00b5 WARN[0m [gossip.discovery#localhost:4614] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 48] for 3.006105106s
+[33m2024-01-22 23:49:29.854 +07 00b7 WARN[0m [gossip.discovery#localhost:4611] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4617, InternalEndpoint: localhost:4617, PKI-ID: 6c6f63616c686f73743a34363137, Metadata: 
+[33m2024-01-22 23:49:29.854 +07 00b9 WARN[0m [gossip.discovery#localhost:4611] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4616, InternalEndpoint: localhost:4616, PKI-ID: 6c6f63616c686f73743a34363136, Metadata: 
+[33m2024-01-22 23:49:29.854 +07 00ba WARN[0m [gossip.discovery#localhost:4615] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4623, InternalEndpoint: localhost:4623, PKI-ID: 6c6f63616c686f73743a34363233, Metadata: 
+[33m2024-01-22 23:49:29.854 +07 00bb WARN[0m [gossip.discovery#localhost:4611] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4622, InternalEndpoint: localhost:4622, PKI-ID: 6c6f63616c686f73743a34363232, Metadata: 
+[33m2024-01-22 23:49:29.854 +07 00ab WARN[0m [gossip.discovery#localhost:4613] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4615, InternalEndpoint: localhost:4615, PKI-ID: 6c6f63616c686f73743a34363135, Metadata: 
+[33m2024-01-22 23:49:29.854 +07 00bc WARN[0m [gossip.discovery#localhost:4613] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:49:29.854 +07 00b6 WARN[0m [gossip.discovery#localhost:4621] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4613, InternalEndpoint: localhost:4613, PKI-ID: 6c6f63616c686f73743a34363133, Metadata: 
+[33m2024-01-22 23:49:29.854 +07 00bd WARN[0m [gossip.discovery#localhost:4621] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4617, InternalEndpoint: localhost:4617, PKI-ID: 6c6f63616c686f73743a34363137, Metadata: 
+[33m2024-01-22 23:49:29.854 +07 00be WARN[0m [gossip.discovery#localhost:4615] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4611, InternalEndpoint: localhost:4611, PKI-ID: 6c6f63616c686f73743a34363131, Metadata: 
+[33m2024-01-22 23:49:29.854 +07 00bf WARN[0m [gossip.discovery#localhost:4611] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4615, InternalEndpoint: localhost:4615, PKI-ID: 6c6f63616c686f73743a34363135, Metadata: 
+[33m2024-01-22 23:49:29.854 +07 00c1 WARN[0m [gossip.discovery#localhost:4615] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4614, InternalEndpoint: localhost:4614, PKI-ID: 6c6f63616c686f73743a34363134, Metadata: 
+[33m2024-01-22 23:49:29.854 +07 00c2 WARN[0m [gossip.discovery#localhost:4611] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4619, InternalEndpoint: localhost:4619, PKI-ID: 6c6f63616c686f73743a34363139, Metadata: 
+[33m2024-01-22 23:49:29.854 +07 00c3 WARN[0m [gossip.discovery#localhost:4615] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4613, InternalEndpoint: localhost:4613, PKI-ID: 6c6f63616c686f73743a34363133, Metadata: 
+[33m2024-01-22 23:49:29.854 +07 00c4 WARN[0m [gossip.discovery#localhost:4611] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4618, InternalEndpoint: localhost:4618, PKI-ID: 6c6f63616c686f73743a34363138, Metadata: 
+[33m2024-01-22 23:49:29.854 +07 00c6 WARN[0m [gossip.discovery#localhost:4611] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4621, InternalEndpoint: localhost:4621, PKI-ID: 6c6f63616c686f73743a34363231, Metadata: 
+[33m2024-01-22 23:49:29.854 +07 00c7 WARN[0m [gossip.discovery#localhost:4611] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4623, InternalEndpoint: localhost:4623, PKI-ID: 6c6f63616c686f73743a34363233, Metadata: 
+[33m2024-01-22 23:49:29.854 +07 00b8 WARN[0m [gossip.discovery#localhost:4614] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 50] for 3.002868788s
+[33m2024-01-22 23:49:29.854 +07 00c9 WARN[0m [gossip.discovery#localhost:4614] [33;1mexpireDeadMembers[0m -> Entering [6c6f63616c686f73743a34363137 6c6f63616c686f73743a34363136 6c6f63616c686f73743a34363233 6c6f63616c686f73743a34363231 6c6f63616c686f73743a34363135 6c6f63616c686f73743a34363138 6c6f63616c686f73743a34363139 6c6f63616c686f73743a34363230 6c6f63616c686f73743a34363232]
+[33m2024-01-22 23:49:29.854 +07 00c0 WARN[0m [gossip.discovery#localhost:4621] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:49:29.854 +07 00c8 WARN[0m [gossip.discovery#localhost:4611] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4620, InternalEndpoint: localhost:4620, PKI-ID: 6c6f63616c686f73743a34363230, Metadata: 
+[33m2024-01-22 23:49:29.854 +07 00ca WARN[0m [gossip.discovery#localhost:4611] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:49:29.853 +07 007c WARN[0m [gossip.discovery#localhost:4617] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4621, InternalEndpoint: localhost:4621, PKI-ID: 6c6f63616c686f73743a34363231, Metadata: 
+[33m2024-01-22 23:49:29.854 +07 00cb WARN[0m [gossip.discovery#localhost:4617] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4622, InternalEndpoint: localhost:4622, PKI-ID: 6c6f63616c686f73743a34363232, Metadata: 
+[33m2024-01-22 23:49:29.854 +07 00cc WARN[0m [gossip.discovery#localhost:4617] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4611, InternalEndpoint: localhost:4611, PKI-ID: 6c6f63616c686f73743a34363131, Metadata: 
+[33m2024-01-22 23:49:29.855 +07 00cd WARN[0m [gossip.discovery#localhost:4617] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4614, InternalEndpoint: localhost:4614, PKI-ID: 6c6f63616c686f73743a34363134, Metadata: 
+[33m2024-01-22 23:49:29.855 +07 00ce WARN[0m [gossip.discovery#localhost:4614] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4617, InternalEndpoint: localhost:4617, PKI-ID: 6c6f63616c686f73743a34363137, Metadata: 
+[33m2024-01-22 23:49:29.853 +07 0059 WARN[0m [gossip.discovery#localhost:4619] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 56] for 3.003589576s
+[33m2024-01-22 23:49:29.855 +07 00d1 WARN[0m [gossip.discovery#localhost:4619] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 49] for 3.006206506s
+[33m2024-01-22 23:49:29.855 +07 00d2 WARN[0m [gossip.discovery#localhost:4619] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 53] for 3.005899438s
+[33m2024-01-22 23:49:29.855 +07 00d3 WARN[0m [gossip.discovery#localhost:4619] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 52] for 3.005817363s
+[33m2024-01-22 23:49:29.853 +07 005a WARN[0m [gossip.discovery#localhost:4620] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 55] for 3.001439585s
+[33m2024-01-22 23:49:29.853 +07 006e WARN[0m [gossip.discovery#localhost:4616] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 57] for 3.00222196s
+[33m2024-01-22 23:49:29.854 +07 00c5 WARN[0m [gossip.discovery#localhost:4615] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4620, InternalEndpoint: localhost:4620, PKI-ID: 6c6f63616c686f73743a34363230, Metadata: 
+[33m2024-01-22 23:49:29.855 +07 00d4 WARN[0m [gossip.discovery#localhost:4619] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 55] for 3.005155816s
+[33m2024-01-22 23:49:29.855 +07 00d5 WARN[0m [gossip.discovery#localhost:4619] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 54] for 3.005641903s
+[33m2024-01-22 23:49:29.855 +07 00d6 WARN[0m [gossip.discovery#localhost:4615] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4621, InternalEndpoint: localhost:4621, PKI-ID: 6c6f63616c686f73743a34363231, Metadata: 
+[33m2024-01-22 23:49:29.855 +07 00d9 WARN[0m [gossip.discovery#localhost:4616] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 49] for 3.004105148s
+[33m2024-01-22 23:49:29.855 +07 00da WARN[0m [gossip.discovery#localhost:4615] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4619, InternalEndpoint: localhost:4619, PKI-ID: 6c6f63616c686f73743a34363139, Metadata: 
+[33m2024-01-22 23:49:29.855 +07 00db WARN[0m [gossip.discovery#localhost:4616] [33;1mexpireDeadMembers[0m -> Entering [6c6f63616c686f73743a34363132 6c6f63616c686f73743a34363230 6c6f63616c686f73743a34363233 6c6f63616c686f73743a34363232 6c6f63616c686f73743a34363131 6c6f63616c686f73743a34363134 6c6f63616c686f73743a34363133 6c6f63616c686f73743a34363139 6c6f63616c686f73743a34363231]
+[33m2024-01-22 23:49:29.855 +07 00d7 WARN[0m [gossip.discovery#localhost:4620] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 54] for 3.004054922s
+[33m2024-01-22 23:49:29.855 +07 00dc WARN[0m [gossip.discovery#localhost:4615] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4612, InternalEndpoint: localhost:4612, PKI-ID: 6c6f63616c686f73743a34363132, Metadata: 
+[33m2024-01-22 23:49:29.855 +07 00dd WARN[0m [gossip.discovery#localhost:4615] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4622, InternalEndpoint: localhost:4622, PKI-ID: 6c6f63616c686f73743a34363232, Metadata: 
+[33m2024-01-22 23:49:29.855 +07 00de WARN[0m [gossip.discovery#localhost:4620] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 51] for 3.006079817s
+[33m2024-01-22 23:49:29.855 +07 00df WARN[0m [gossip.discovery#localhost:4615] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:49:29.855 +07 00cf WARN[0m [gossip.discovery#localhost:4617] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4613, InternalEndpoint: localhost:4613, PKI-ID: 6c6f63616c686f73743a34363133, Metadata: 
+[33m2024-01-22 23:49:29.855 +07 00e0 WARN[0m [gossip.discovery#localhost:4620] [33;1mexpireDeadMembers[0m -> Entering [6c6f63616c686f73743a34363131 6c6f63616c686f73743a34363135 6c6f63616c686f73743a34363132 6c6f63616c686f73743a34363134 6c6f63616c686f73743a34363133 6c6f63616c686f73743a34363138 6c6f63616c686f73743a34363137 6c6f63616c686f73743a34363136 6c6f63616c686f73743a34363233]
+[33m2024-01-22 23:49:29.855 +07 00e1 WARN[0m [gossip.discovery#localhost:4617] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4619, InternalEndpoint: localhost:4619, PKI-ID: 6c6f63616c686f73743a34363139, Metadata: 
+[33m2024-01-22 23:49:29.855 +07 00e2 WARN[0m [gossip.discovery#localhost:4617] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4620, InternalEndpoint: localhost:4620, PKI-ID: 6c6f63616c686f73743a34363230, Metadata: 
+[33m2024-01-22 23:49:29.855 +07 00e3 WARN[0m [gossip.discovery#localhost:4617] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:49:29.855 +07 00d8 WARN[0m [gossip.discovery#localhost:4619] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 49 50] for 3.006378761s
+[33m2024-01-22 23:49:29.855 +07 00e4 WARN[0m [gossip.discovery#localhost:4616] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4612, InternalEndpoint: localhost:4612, PKI-ID: 6c6f63616c686f73743a34363132, Metadata: 
+[33m2024-01-22 23:49:29.855 +07 00e5 WARN[0m [gossip.discovery#localhost:4619] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 52 54 50 51] for 3.008948172s
+[33m2024-01-22 23:49:29.855 +07 00d0 WARN[0m [gossip.discovery#localhost:4614] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4616, InternalEndpoint: localhost:4616, PKI-ID: 6c6f63616c686f73743a34363136, Metadata: 
+[33m2024-01-22 23:49:29.855 +07 00e7 WARN[0m [gossip.discovery#localhost:4619] [33;1mexpireDeadMembers[0m -> Entering [6c6f63616c686f73743a34363133 6c6f63616c686f73743a34363138 6c6f63616c686f73743a34363131 6c6f63616c686f73743a34363135 6c6f63616c686f73743a34363134 6c6f63616c686f73743a34363137 6c6f63616c686f73743a34363136 6c6f63616c686f73743a34363132 6c6f63616c686f73743a34363233]
+[33m2024-01-22 23:49:29.855 +07 00e8 WARN[0m [gossip.discovery#localhost:4614] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4623, InternalEndpoint: localhost:4623, PKI-ID: 6c6f63616c686f73743a34363233, Metadata: 
+[33m2024-01-22 23:49:29.855 +07 00e9 WARN[0m [gossip.discovery#localhost:4614] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4621, InternalEndpoint: localhost:4621, PKI-ID: 6c6f63616c686f73743a34363231, Metadata: 
+[33m2024-01-22 23:49:29.855 +07 00e6 WARN[0m [gossip.discovery#localhost:4616] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4620, InternalEndpoint: localhost:4620, PKI-ID: 6c6f63616c686f73743a34363230, Metadata: 
+[33m2024-01-22 23:49:29.855 +07 00ea WARN[0m [gossip.discovery#localhost:4614] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4615, InternalEndpoint: localhost:4615, PKI-ID: 6c6f63616c686f73743a34363135, Metadata: 
+[33m2024-01-22 23:49:29.855 +07 00ec WARN[0m [gossip.discovery#localhost:4616] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4623, InternalEndpoint: localhost:4623, PKI-ID: 6c6f63616c686f73743a34363233, Metadata: 
+[33m2024-01-22 23:49:29.855 +07 00eb WARN[0m [gossip.discovery#localhost:4620] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4611, InternalEndpoint: localhost:4611, PKI-ID: 6c6f63616c686f73743a34363131, Metadata: 
+[33m2024-01-22 23:49:29.855 +07 00ed WARN[0m [gossip.discovery#localhost:4614] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4618, InternalEndpoint: localhost:4618, PKI-ID: 6c6f63616c686f73743a34363138, Metadata: 
+[33m2024-01-22 23:49:29.855 +07 00ee WARN[0m [gossip.discovery#localhost:4620] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4615, InternalEndpoint: localhost:4615, PKI-ID: 6c6f63616c686f73743a34363135, Metadata: 
+[33m2024-01-22 23:49:29.855 +07 00ef WARN[0m [gossip.discovery#localhost:4614] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4619, InternalEndpoint: localhost:4619, PKI-ID: 6c6f63616c686f73743a34363139, Metadata: 
+[33m2024-01-22 23:49:29.856 +07 00f1 WARN[0m [gossip.discovery#localhost:4614] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4620, InternalEndpoint: localhost:4620, PKI-ID: 6c6f63616c686f73743a34363230, Metadata: 
+[33m2024-01-22 23:49:29.856 +07 00f3 WARN[0m [gossip.discovery#localhost:4614] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4622, InternalEndpoint: localhost:4622, PKI-ID: 6c6f63616c686f73743a34363232, Metadata: 
+[33m2024-01-22 23:49:29.856 +07 00f4 WARN[0m [gossip.discovery#localhost:4619] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4613, InternalEndpoint: localhost:4613, PKI-ID: 6c6f63616c686f73743a34363133, Metadata: 
+[33m2024-01-22 23:49:29.856 +07 00f2 WARN[0m [gossip.discovery#localhost:4616] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4622, InternalEndpoint: localhost:4622, PKI-ID: 6c6f63616c686f73743a34363232, Metadata: 
+[33m2024-01-22 23:49:29.856 +07 00f5 WARN[0m [gossip.discovery#localhost:4614] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:49:29.856 +07 00f6 WARN[0m [gossip.discovery#localhost:4619] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4618, InternalEndpoint: localhost:4618, PKI-ID: 6c6f63616c686f73743a34363138, Metadata: 
+[33m2024-01-22 23:49:29.856 +07 00f7 WARN[0m [gossip.discovery#localhost:4619] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4611, InternalEndpoint: localhost:4611, PKI-ID: 6c6f63616c686f73743a34363131, Metadata: 
+[33m2024-01-22 23:49:29.856 +07 00f8 WARN[0m [gossip.discovery#localhost:4616] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4611, InternalEndpoint: localhost:4611, PKI-ID: 6c6f63616c686f73743a34363131, Metadata: 
+[33m2024-01-22 23:49:29.856 +07 00fa WARN[0m [gossip.discovery#localhost:4616] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4614, InternalEndpoint: localhost:4614, PKI-ID: 6c6f63616c686f73743a34363134, Metadata: 
+[33m2024-01-22 23:49:29.856 +07 00fb WARN[0m [gossip.discovery#localhost:4616] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4613, InternalEndpoint: localhost:4613, PKI-ID: 6c6f63616c686f73743a34363133, Metadata: 
+[33m2024-01-22 23:49:29.856 +07 00fc WARN[0m [gossip.discovery#localhost:4616] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4619, InternalEndpoint: localhost:4619, PKI-ID: 6c6f63616c686f73743a34363139, Metadata: 
+[33m2024-01-22 23:49:29.856 +07 00fd WARN[0m [gossip.discovery#localhost:4616] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4621, InternalEndpoint: localhost:4621, PKI-ID: 6c6f63616c686f73743a34363231, Metadata: 
+[33m2024-01-22 23:49:29.856 +07 00fe WARN[0m [gossip.discovery#localhost:4616] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:49:29.856 +07 00f9 WARN[0m [gossip.discovery#localhost:4619] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4615, InternalEndpoint: localhost:4615, PKI-ID: 6c6f63616c686f73743a34363135, Metadata: 
+[33m2024-01-22 23:49:29.856 +07 00ff WARN[0m [gossip.discovery#localhost:4619] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4614, InternalEndpoint: localhost:4614, PKI-ID: 6c6f63616c686f73743a34363134, Metadata: 
+[33m2024-01-22 23:49:29.856 +07 0100 WARN[0m [gossip.discovery#localhost:4619] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4617, InternalEndpoint: localhost:4617, PKI-ID: 6c6f63616c686f73743a34363137, Metadata: 
+[33m2024-01-22 23:49:29.855 +07 00f0 WARN[0m [gossip.discovery#localhost:4620] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4612, InternalEndpoint: localhost:4612, PKI-ID: 6c6f63616c686f73743a34363132, Metadata: 
+[33m2024-01-22 23:49:29.856 +07 0101 WARN[0m [gossip.discovery#localhost:4619] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4616, InternalEndpoint: localhost:4616, PKI-ID: 6c6f63616c686f73743a34363136, Metadata: 
+[33m2024-01-22 23:49:29.856 +07 0102 WARN[0m [gossip.discovery#localhost:4619] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4612, InternalEndpoint: localhost:4612, PKI-ID: 6c6f63616c686f73743a34363132, Metadata: 
+[33m2024-01-22 23:49:29.856 +07 0103 WARN[0m [gossip.discovery#localhost:4620] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4614, InternalEndpoint: localhost:4614, PKI-ID: 6c6f63616c686f73743a34363134, Metadata: 
+[33m2024-01-22 23:49:29.856 +07 0104 WARN[0m [gossip.discovery#localhost:4619] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4623, InternalEndpoint: localhost:4623, PKI-ID: 6c6f63616c686f73743a34363233, Metadata: 
+[33m2024-01-22 23:49:29.856 +07 0105 WARN[0m [gossip.discovery#localhost:4620] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4613, InternalEndpoint: localhost:4613, PKI-ID: 6c6f63616c686f73743a34363133, Metadata: 
+[33m2024-01-22 23:49:29.856 +07 0106 WARN[0m [gossip.discovery#localhost:4620] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4618, InternalEndpoint: localhost:4618, PKI-ID: 6c6f63616c686f73743a34363138, Metadata: 
+[33m2024-01-22 23:49:29.856 +07 0108 WARN[0m [gossip.discovery#localhost:4620] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4617, InternalEndpoint: localhost:4617, PKI-ID: 6c6f63616c686f73743a34363137, Metadata: 
+[33m2024-01-22 23:49:29.856 +07 0109 WARN[0m [gossip.discovery#localhost:4620] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4616, InternalEndpoint: localhost:4616, PKI-ID: 6c6f63616c686f73743a34363136, Metadata: 
+[33m2024-01-22 23:49:29.856 +07 0107 WARN[0m [gossip.discovery#localhost:4619] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:49:29.856 +07 010a WARN[0m [gossip.discovery#localhost:4620] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:4623, InternalEndpoint: localhost:4623, PKI-ID: 6c6f63616c686f73743a34363233, Metadata: 
+[33m2024-01-22 23:49:29.856 +07 010b WARN[0m [gossip.discovery#localhost:4620] [33;1mexpireDeadMembers[0m -> Exiting
+Ping to localhost:8616 failed
+[33m2024-01-22 23:49:37.662 +07 010c WARN[0m [gossip.discovery#localhost:8611] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 56 54 49 48] for 3.012386121s
+[33m2024-01-22 23:49:37.663 +07 010d WARN[0m [gossip.discovery#localhost:8613] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 56 54 49 48] for 3.012495517s
+[33m2024-01-22 23:49:37.663 +07 010e WARN[0m [gossip.discovery#localhost:8612] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 56 54 49 48] for 3.012415727s
+[33m2024-01-22 23:49:37.663 +07 0110 WARN[0m [gossip.discovery#localhost:8616] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 56 54 49 48] for 3.012530383s
+[33m2024-01-22 23:49:37.663 +07 0111 WARN[0m [gossip.discovery#localhost:8613] [33;1mexpireDeadMembers[0m -> Entering [6c6f63616c686f73743a38363130]
+[33m2024-01-22 23:49:37.663 +07 0113 WARN[0m [gossip.discovery#localhost:8612] [33;1mexpireDeadMembers[0m -> Entering [6c6f63616c686f73743a38363130]
+[33m2024-01-22 23:49:37.663 +07 0115 WARN[0m [gossip.discovery#localhost:8612] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:8610, InternalEndpoint: localhost:8610, PKI-ID: 6c6f63616c686f73743a38363130, Metadata: 
+[33m2024-01-22 23:49:37.663 +07 010f WARN[0m [gossip.discovery#localhost:8614] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 56 54 49 48] for 3.012545111s
+[33m2024-01-22 23:49:37.663 +07 0112 WARN[0m [gossip.discovery#localhost:8611] [33;1mexpireDeadMembers[0m -> Entering [6c6f63616c686f73743a38363130]
+[33m2024-01-22 23:49:37.663 +07 0114 WARN[0m [gossip.discovery#localhost:8616] [33;1mexpireDeadMembers[0m -> Entering [6c6f63616c686f73743a38363130]
+[33m2024-01-22 23:49:37.663 +07 0118 WARN[0m [gossip.discovery#localhost:8612] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:49:37.663 +07 0119 WARN[0m [gossip.discovery#localhost:8616] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:8610, InternalEndpoint: localhost:8610, PKI-ID: 6c6f63616c686f73743a38363130, Metadata: 
+[33m2024-01-22 23:49:37.663 +07 011a WARN[0m [gossip.discovery#localhost:8611] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:8610, InternalEndpoint: localhost:8610, PKI-ID: 6c6f63616c686f73743a38363130, Metadata: 
+[33m2024-01-22 23:49:37.663 +07 0117 WARN[0m [gossip.discovery#localhost:8614] [33;1mexpireDeadMembers[0m -> Entering [6c6f63616c686f73743a38363130]
+[33m2024-01-22 23:49:37.663 +07 0116 WARN[0m [gossip.discovery#localhost:8613] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:8610, InternalEndpoint: localhost:8610, PKI-ID: 6c6f63616c686f73743a38363130, Metadata: 
+[33m2024-01-22 23:49:37.663 +07 011b WARN[0m [gossip.discovery#localhost:8616] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:49:37.663 +07 011d WARN[0m [gossip.discovery#localhost:8614] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:8610, InternalEndpoint: localhost:8610, PKI-ID: 6c6f63616c686f73743a38363130, Metadata: 
+[33m2024-01-22 23:49:37.663 +07 011c WARN[0m [gossip.discovery#localhost:8611] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:49:37.663 +07 011e WARN[0m [gossip.discovery#localhost:8614] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:49:37.663 +07 011f WARN[0m [gossip.discovery#localhost:8613] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:49:37.664 +07 0120 WARN[0m [gossip.discovery#localhost:8618] [33;1mgetDeadMembers[0m -> Haven't heard from [108 111 99 97 108 104 111 115 116 58 56 54 49 48] for 3.014076887s
+[33m2024-01-22 23:49:37.664 +07 0121 WARN[0m [gossip.discovery#localhost:8618] [33;1mexpireDeadMembers[0m -> Entering [6c6f63616c686f73743a38363130]
+[33m2024-01-22 23:49:37.664 +07 0122 WARN[0m [gossip.discovery#localhost:8618] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: localhost:8610, InternalEndpoint: localhost:8610, PKI-ID: 6c6f63616c686f73743a38363130, Metadata: 
+[33m2024-01-22 23:49:37.664 +07 0123 WARN[0m [gossip.discovery#localhost:8618] [33;1mexpireDeadMembers[0m -> Exiting
+--- FAIL: TestCertificateChange (0.00s)
+panic: Failed creating listener on address :42612 for gossip instance: listen tcp :42612: bind: address already in use [recovered]
+	panic: Failed creating listener on address :42612 for gossip instance: listen tcp :42612: bind: address already in use
+
+goroutine 8341 [running]:
+testing.tRunner.func1.2({0xaa62a0, 0xc00254acd0})
+	/usr/local/go/src/testing/testing.go:1545 +0x238
+testing.tRunner.func1()
+	/usr/local/go/src/testing/testing.go:1548 +0x397
+panic({0xaa62a0?, 0xc00254acd0?})
+	/usr/local/go/src/runtime/panic.go:914 +0x21f
+github.com/hyperledger/fabric/gossip/discovery.createDiscoveryInstanceWithAnchorPeerTracker(0xa674, {0xbd902a, 0x2}, {0xc00209dec0?, 0x3, 0x3}, 0x1, 0x30?, 0xc23340, {0x11e1a300, ...}, ...)
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/discovery/discovery_test.go:429 +0x8cb
+github.com/hyperledger/fabric/gossip/discovery.createDiscoveryInstanceThatGossipsWithInterceptors(...)
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/discovery/discovery_test.go:398
+github.com/hyperledger/fabric/gossip/discovery.createDiscoveryInstanceThatGossips(0x0?, {0xbd902a, 0x2}, {0xc00209dec0, 0x3, 0x3}, 0x0?, 0x11ab520?, {0x11e1a300, 0xb2d05e00, ...})
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/discovery/discovery_test.go:393 +0x165
+github.com/hyperledger/fabric/gossip/discovery.createDiscoveryInstanceCustomConfig(...)
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/discovery/discovery_test.go:381
+github.com/hyperledger/fabric/gossip/discovery.createDiscoveryInstance(...)
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/discovery/discovery_test.go:377
+github.com/hyperledger/fabric/gossip/discovery.TestCertificateChange(0xc000ef2ae0?)
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/discovery/discovery_test.go:1160 +0x366
+testing.tRunner(0xc000a88000, 0xc23110)
+	/usr/local/go/src/testing/testing.go:1595 +0xff
+created by testing.(*T).Run in goroutine 1
+	/usr/local/go/src/testing/testing.go:1648 +0x3ad
+FAIL	github.com/hyperledger/fabric/gossip/discovery	60.590s
+ok  	github.com/hyperledger/fabric/gossip/election	36.124s	coverage: 94.4% of statements
+ok  	github.com/hyperledger/fabric/gossip/filter	0.019s	coverage: 100.0% of statements
+[33m2024-01-22 23:50:21.602 +07 0001 WARN[0m [gossip.gossip#p0] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:40205 for channel TEST failed: context deadline exceeded
+[33m2024-01-22 23:50:21.602 +07 0002 WARN[0m [gossip.gossip#p0] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:38481 for channel TEST failed: context deadline exceeded
+[33m2024-01-22 23:50:21.602 +07 0003 WARN[0m [gossip.discovery#127.0.0.1:40623] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:40205, InternalEndpoint: 127.0.0.1:40205, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:50:21.602 +07 0004 WARN[0m [gossip.discovery#127.0.0.1:40623] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:38481, InternalEndpoint: 127.0.0.1:38481, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[31m2024-01-22 23:50:23.602 +07 0005 ERRO[0m [comm.tls] [31;1mServerHandshake[0m -> Server TLS handshake failed in 552.6µs with error EOF remoteaddress=127.0.0.1:43104
+[31m2024-01-22 23:50:23.602 +07 0006 ERRO[0m [comm.tls] [31;1mServerHandshake[0m -> Server TLS handshake failed in 603.276µs with error EOF remoteaddress=127.0.0.1:53840
+port 46431
+port1 34291
+port2 43583
+[33m2024-01-22 23:50:24.608 +07 0007 WARN[0m [gossip.discovery#127.0.0.1:46431] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:34291, InternalEndpoint: 127.0.0.1:34291, PKI-ID: <nil>, Metadata:  : 127.0.0.1:34291 isn't in our organization, cannot be a bootstrap peer
+[33m2024-01-22 23:50:25.613 +07 0008 WARN[0m [gossip.discovery#127.0.0.1:46431] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:34291, InternalEndpoint: 127.0.0.1:34291, PKI-ID: <nil>, Metadata:  : 127.0.0.1:34291 isn't in our organization, cannot be a bootstrap peer
+2024/01/22 23:50:28 emitted 1
+2024/01/22 23:50:28 counters[n] n 1 counters[n] 0
+2024/01/22 23:50:28 emitted 2
+2024/01/22 23:50:29 counters[n] n 1 counters[n] 1
+2024/01/22 23:50:29 counters[n] n 2 counters[n] 0
+2024/01/22 23:50:29 emitted 3
+2024/01/22 23:50:29 counters[n] n 1 counters[n] 2
+2024/01/22 23:50:29 counters[n] n 2 counters[n] 1
+2024/01/22 23:50:29 counters[n] n 3 counters[n] 0
+2024/01/22 23:50:30 emitted 4
+2024/01/22 23:50:30 counters[n] n 1 counters[n] 3
+2024/01/22 23:50:30 counters[n] n 2 counters[n] 2
+2024/01/22 23:50:30 counters[n] n 3 counters[n] 1
+2024/01/22 23:50:30 counters[n] n 4 counters[n] 0
+2024/01/22 23:50:30 emitted 5
+[33m2024-01-22 23:50:31.775 +07 0009 WARN[0m [gossip.gossip#53454c46] [33;1mhandleMessage[0m -> Failed validating identity message: Wrong signature:[0 1 170 1 6 10 1 67 18 1 67], [24 1 170 1 6 10 1 67 18 1 67]
+Failed verifying message
+github.com/hyperledger/fabric/gossip/gossip.(*certStore).validateIdentityMsg
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/gossip/certstore.go:105
+github.com/hyperledger/fabric/gossip/gossip.(*certStore).handleMessage
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/gossip/certstore.go:77
+github.com/hyperledger/fabric/gossip/gossip.createObjects.func5
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/gossip/certstore_test.go:460
+github.com/stretchr/testify/mock.(*Mock).MethodCalled
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/vendor/github.com/stretchr/testify/mock/mock.go:538
+github.com/stretchr/testify/mock.(*Mock).Called
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/vendor/github.com/stretchr/testify/mock/mock.go:450
+github.com/hyperledger/fabric/gossip/gossip.(*senderMock).Send
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/gossip/certstore_test.go:78
+github.com/hyperledger/fabric/gossip/gossip/pull.(*pullMediatorImpl).SendReq
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/gossip/pull/pullstore.go:330
+github.com/hyperledger/fabric/gossip/gossip/algo.(*PullEngine).processIncomingDigests
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/gossip/algo/pull.go:211
+github.com/hyperledger/fabric/gossip/gossip/algo.(*PullEngine).initiatePull.func1
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/gossip/algo/pull.go:187
+runtime.goexit
+	/usr/local/go/src/runtime/asm_amd64.s:1650
+github.com/hyperledger/fabric/gossip/gossip.(*certStore).handleMessage
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/gossip/certstore.go:78
+github.com/hyperledger/fabric/gossip/gossip.createObjects.func5
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/gossip/certstore_test.go:460
+github.com/stretchr/testify/mock.(*Mock).MethodCalled
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/vendor/github.com/stretchr/testify/mock/mock.go:538
+github.com/stretchr/testify/mock.(*Mock).Called
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/vendor/github.com/stretchr/testify/mock/mock.go:450
+github.com/hyperledger/fabric/gossip/gossip.(*senderMock).Send
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/gossip/certstore_test.go:78
+github.com/hyperledger/fabric/gossip/gossip/pull.(*pullMediatorImpl).SendReq
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/gossip/pull/pullstore.go:330
+github.com/hyperledger/fabric/gossip/gossip/algo.(*PullEngine).processIncomingDigests
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/gossip/algo/pull.go:211
+github.com/hyperledger/fabric/gossip/gossip/algo.(*PullEngine).initiatePull.func1
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/gossip/algo/pull.go:187
+runtime.goexit
+	/usr/local/go/src/runtime/asm_amd64.s:1650
+[33m2024-01-22 23:50:32.928 +07 000a WARN[0m [gossip.gossip#53454c46] [33;1mhandleMessage[0m -> Failed validating identity message: Calculated pkiID doesn't match identity: calculated: 44, claimedPKI-ID: 41
+github.com/hyperledger/fabric/gossip/gossip.(*certStore).validateIdentityMsg
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/gossip/certstore.go:96
+github.com/hyperledger/fabric/gossip/gossip.(*certStore).handleMessage
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/gossip/certstore.go:77
+github.com/hyperledger/fabric/gossip/gossip.createObjects.func5
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/gossip/certstore_test.go:460
+github.com/stretchr/testify/mock.(*Mock).MethodCalled
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/vendor/github.com/stretchr/testify/mock/mock.go:538
+github.com/stretchr/testify/mock.(*Mock).Called
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/vendor/github.com/stretchr/testify/mock/mock.go:450
+github.com/hyperledger/fabric/gossip/gossip.(*senderMock).Send
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/gossip/certstore_test.go:78
+github.com/hyperledger/fabric/gossip/gossip/pull.(*pullMediatorImpl).SendReq
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/gossip/pull/pullstore.go:330
+github.com/hyperledger/fabric/gossip/gossip/algo.(*PullEngine).processIncomingDigests
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/gossip/algo/pull.go:211
+github.com/hyperledger/fabric/gossip/gossip/algo.(*PullEngine).initiatePull.func1
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/gossip/algo/pull.go:187
+runtime.goexit
+	/usr/local/go/src/runtime/asm_amd64.s:1650
+github.com/hyperledger/fabric/gossip/gossip.(*certStore).handleMessage
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/gossip/certstore.go:78
+github.com/hyperledger/fabric/gossip/gossip.createObjects.func5
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/gossip/certstore_test.go:460
+github.com/stretchr/testify/mock.(*Mock).MethodCalled
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/vendor/github.com/stretchr/testify/mock/mock.go:538
+github.com/stretchr/testify/mock.(*Mock).Called
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/vendor/github.com/stretchr/testify/mock/mock.go:450
+github.com/hyperledger/fabric/gossip/gossip.(*senderMock).Send
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/gossip/certstore_test.go:78
+github.com/hyperledger/fabric/gossip/gossip/pull.(*pullMediatorImpl).SendReq
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/gossip/pull/pullstore.go:330
+github.com/hyperledger/fabric/gossip/gossip/algo.(*PullEngine).processIncomingDigests
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/gossip/algo/pull.go:211
+github.com/hyperledger/fabric/gossip/gossip/algo.(*PullEngine).initiatePull.func1
+	/home/thanhpp/go/src/github.com/thanhpp/fabric-openssl/gossip/gossip/algo/pull.go:187
+runtime.goexit
+	/usr/local/go/src/runtime/asm_amd64.s:1650
+[33m2024-01-22 23:50:44.744 +07 000b WARN[0m [gossip.gossip#p0] [33;1mpeersByOriginOrgPolicy[0m -> Unable to determine organization of peer Endpoint: , InternalEndpoint: , PKI-ID: 3132372e302e302e313a3338383535, Metadata: 
+[33m2024-01-22 23:51:29.857 +07 000c WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:35109, PKIid:3132372e302e302e313a3335313039 isn't responsive: EOF
+[33m2024-01-22 23:51:29.857 +07 000d WARN[0m [gossip.discovery#127.0.0.1:43631] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3335313039]
+[33m2024-01-22 23:51:29.857 +07 000e WARN[0m [gossip.discovery#127.0.0.1:43631] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:35109, InternalEndpoint: 127.0.0.1:35109, PKI-ID: 3132372e302e302e313a3335313039, Metadata: 
+[33m2024-01-22 23:51:29.857 +07 000f WARN[0m [gossip.discovery#127.0.0.1:43631] [33;1mexpireDeadMembers[0m -> Exiting
+<<<TestPull>>>
+[33m2024-01-22 23:51:32.169 +07 0010 WARN[0m [gossip.gossip#p10] [33;1mvalidateMsg[0m -> StateInfo message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942290669446415 seq_num:1705942290669669024 PKI-id:3132372e302e302e313a3430383131 channel MAC:c455540d06d7cbb74266362c188fd710c30c779e8455468b48fadf4207d7cdc6 properties:ledger_height:1 , Envelope: 81 bytes, Signature: 81 bytes is found invalid: PKIID wasn't found
+[33m2024-01-22 23:51:32.169 +07 0011 WARN[0m [gossip.gossip#p10] [33;1mhandleMessage[0m -> Message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942290669446415 seq_num:1705942290669669024 PKI-id:3132372e302e302e313a3430383131 channel MAC:c455540d06d7cbb74266362c188fd710c30c779e8455468b48fadf4207d7cdc6 properties:ledger_height:1 , Envelope: 81 bytes, Signature: 81 bytes isn't valid
+[33m2024-01-22 23:51:32.170 +07 0012 WARN[0m [gossip.gossip#p9] [33;1mvalidateMsg[0m -> StateInfo message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942290667475545 seq_num:1705942290667740073 PKI-id:3132372e302e302e313a3339393037 channel MAC:272c56c073ab6579fbaffb5cb829482a6564d591fea9eb022cc147f64f558356 properties:ledger_height:1 , Envelope: 81 bytes, Signature: 81 bytes is found invalid: PKIID wasn't found
+[33m2024-01-22 23:51:32.170 +07 0013 WARN[0m [gossip.gossip#p9] [33;1mhandleMessage[0m -> Message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942290667475545 seq_num:1705942290667740073 PKI-id:3132372e302e302e313a3339393037 channel MAC:272c56c073ab6579fbaffb5cb829482a6564d591fea9eb022cc147f64f558356 properties:ledger_height:1 , Envelope: 81 bytes, Signature: 81 bytes isn't valid
+[33m2024-01-22 23:51:32.174 +07 0014 WARN[0m [gossip.gossip#p10] [33;1mvalidateMsg[0m -> StateInfo message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942290669446415 seq_num:1705942290669669024 PKI-id:3132372e302e302e313a3430383131 channel MAC:c455540d06d7cbb74266362c188fd710c30c779e8455468b48fadf4207d7cdc6 properties:ledger_height:1 , Envelope: 81 bytes, Signature: 81 bytes is found invalid: PKIID wasn't found
+[33m2024-01-22 23:51:32.174 +07 0015 WARN[0m [gossip.gossip#p10] [33;1mhandleMessage[0m -> Message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942290669446415 seq_num:1705942290669669024 PKI-id:3132372e302e302e313a3430383131 channel MAC:c455540d06d7cbb74266362c188fd710c30c779e8455468b48fadf4207d7cdc6 properties:ledger_height:1 , Envelope: 81 bytes, Signature: 81 bytes isn't valid
+[33m2024-01-22 23:51:32.174 +07 0016 WARN[0m [gossip.gossip#p10] [33;1mvalidateMsg[0m -> StateInfo message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942290669446415 seq_num:1705942290669669024 PKI-id:3132372e302e302e313a3430383131 channel MAC:c455540d06d7cbb74266362c188fd710c30c779e8455468b48fadf4207d7cdc6 properties:ledger_height:1 , Envelope: 81 bytes, Signature: 81 bytes is found invalid: PKIID wasn't found
+[33m2024-01-22 23:51:32.174 +07 0017 WARN[0m [gossip.gossip#p10] [33;1mhandleMessage[0m -> Message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942290669446415 seq_num:1705942290669669024 PKI-id:3132372e302e302e313a3430383131 channel MAC:c455540d06d7cbb74266362c188fd710c30c779e8455468b48fadf4207d7cdc6 properties:ledger_height:1 , Envelope: 81 bytes, Signature: 81 bytes isn't valid
+[33m2024-01-22 23:51:32.176 +07 0018 WARN[0m [gossip.gossip#p9] [33;1mvalidateMsg[0m -> StateInfo message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942290667475545 seq_num:1705942290667740073 PKI-id:3132372e302e302e313a3339393037 channel MAC:272c56c073ab6579fbaffb5cb829482a6564d591fea9eb022cc147f64f558356 properties:ledger_height:1 , Envelope: 81 bytes, Signature: 81 bytes is found invalid: PKIID wasn't found
+[33m2024-01-22 23:51:32.176 +07 0019 WARN[0m [gossip.gossip#p9] [33;1mhandleMessage[0m -> Message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942290667475545 seq_num:1705942290667740073 PKI-id:3132372e302e302e313a3339393037 channel MAC:272c56c073ab6579fbaffb5cb829482a6564d591fea9eb022cc147f64f558356 properties:ledger_height:1 , Envelope: 81 bytes, Signature: 81 bytes isn't valid
+[33m2024-01-22 23:51:32.177 +07 001a WARN[0m [gossip.gossip#p9] [33;1mvalidateMsg[0m -> StateInfo message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942290667475545 seq_num:1705942290667740073 PKI-id:3132372e302e302e313a3339393037 channel MAC:272c56c073ab6579fbaffb5cb829482a6564d591fea9eb022cc147f64f558356 properties:ledger_height:1 , Envelope: 81 bytes, Signature: 81 bytes is found invalid: PKIID wasn't found
+[33m2024-01-22 23:51:32.178 +07 001b WARN[0m [gossip.gossip#p9] [33;1mhandleMessage[0m -> Message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942290667475545 seq_num:1705942290667740073 PKI-id:3132372e302e302e313a3339393037 channel MAC:272c56c073ab6579fbaffb5cb829482a6564d591fea9eb022cc147f64f558356 properties:ledger_height:1 , Envelope: 81 bytes, Signature: 81 bytes isn't valid
+[33m2024-01-22 23:51:32.180 +07 001c WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:45913, PKIid:3132372e302e302e313a3435393133 isn't responsive: rpc error: code = Unavailable desc = transport is closing
+[33m2024-01-22 23:51:32.180 +07 001d WARN[0m [gossip.discovery#127.0.0.1:42491] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3435393133]
+[33m2024-01-22 23:51:32.180 +07 001e WARN[0m [gossip.discovery#127.0.0.1:42491] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:45913, InternalEndpoint: 127.0.0.1:45913, PKI-ID: 3132372e302e302e313a3435393133, Metadata: 
+[33m2024-01-22 23:51:32.180 +07 001f WARN[0m [gossip.discovery#127.0.0.1:42491] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:51:32.181 +07 0020 WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:39907, PKIid:3132372e302e302e313a3339393037 isn't responsive: rpc error: code = Unavailable desc = transport is closing
+[33m2024-01-22 23:51:32.181 +07 0021 WARN[0m [gossip.discovery#127.0.0.1:33329] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3339393037]
+[33m2024-01-22 23:51:32.181 +07 0022 WARN[0m [gossip.discovery#127.0.0.1:33329] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:39907, InternalEndpoint: 127.0.0.1:39907, PKI-ID: 3132372e302e302e313a3339393037, Metadata: 
+[33m2024-01-22 23:51:32.181 +07 0023 WARN[0m [gossip.discovery#127.0.0.1:33329] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:51:32.715 +07 0024 WARN[0m [gossip.gossip#p10] [33;1mvalidateMsg[0m -> StateInfo message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942290668299376 seq_num:1705942290668486107 PKI-id:3132372e302e302e313a3338393031 channel MAC:f1a74cb0218fa5f49773eee825db5d6a3a22c29513476d6299a42f97b1d86b67 properties:ledger_height:1 , Envelope: 81 bytes, Signature: 81 bytes is found invalid: PKIID wasn't found
+[33m2024-01-22 23:51:32.715 +07 0025 WARN[0m [gossip.gossip#p10] [33;1mhandleMessage[0m -> Message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942290668299376 seq_num:1705942290668486107 PKI-id:3132372e302e302e313a3338393031 channel MAC:f1a74cb0218fa5f49773eee825db5d6a3a22c29513476d6299a42f97b1d86b67 properties:ledger_height:1 , Envelope: 81 bytes, Signature: 81 bytes isn't valid
+[33m2024-01-22 23:51:32.721 +07 0026 WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:42491, PKIid:3132372e302e302e313a3432343931 isn't responsive: rpc error: code = Unavailable desc = transport is closing
+[33m2024-01-22 23:51:32.721 +07 0027 WARN[0m [gossip.discovery#127.0.0.1:40811] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3432343931]
+[33m2024-01-22 23:51:32.721 +07 0028 WARN[0m [gossip.discovery#127.0.0.1:40811] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:42491, InternalEndpoint: 127.0.0.1:42491, PKI-ID: 3132372e302e302e313a3432343931, Metadata: 
+[33m2024-01-22 23:51:32.721 +07 0029 WARN[0m [gossip.discovery#127.0.0.1:40811] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:51:32.722 +07 002a WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:33329, PKIid:3132372e302e302e313a3333333239 isn't responsive: rpc error: code = Unavailable desc = transport is closing
+[33m2024-01-22 23:51:32.722 +07 002b WARN[0m [gossip.discovery#127.0.0.1:40811] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3333333239]
+[33m2024-01-22 23:51:32.722 +07 002d WARN[0m [gossip.discovery#127.0.0.1:40811] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:33329, InternalEndpoint: 127.0.0.1:33329, PKI-ID: 3132372e302e302e313a3333333239, Metadata: 
+[33m2024-01-22 23:51:32.722 +07 002c WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:41723, PKIid:3132372e302e302e313a3431373233 isn't responsive: rpc error: code = Unavailable desc = transport is closing
+[33m2024-01-22 23:51:32.722 +07 002e WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:41723, PKIid:3132372e302e302e313a3431373233 isn't responsive: rpc error: code = Unavailable desc = transport is closing
+[33m2024-01-22 23:51:32.722 +07 002f WARN[0m [gossip.discovery#127.0.0.1:39907] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3431373233]
+[33m2024-01-22 23:51:32.722 +07 0030 WARN[0m [gossip.discovery#127.0.0.1:40811] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:51:32.722 +07 0031 WARN[0m [gossip.discovery#127.0.0.1:39907] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:41723, InternalEndpoint: 127.0.0.1:41723, PKI-ID: 3132372e302e302e313a3431373233, Metadata: 
+[33m2024-01-22 23:51:32.722 +07 0032 WARN[0m [gossip.discovery#127.0.0.1:39907] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:51:32.722 +07 0033 WARN[0m [gossip.discovery#127.0.0.1:40811] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3431373233]
+[33m2024-01-22 23:51:32.722 +07 0034 WARN[0m [gossip.discovery#127.0.0.1:40811] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:41723, InternalEndpoint: 127.0.0.1:41723, PKI-ID: 3132372e302e302e313a3431373233, Metadata: 
+[33m2024-01-22 23:51:32.722 +07 0035 WARN[0m [gossip.discovery#127.0.0.1:40811] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:51:32.723 +07 0036 WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:39907, PKIid:3132372e302e302e313a3339393037 isn't responsive: rpc error: code = Unavailable desc = transport is closing
+[33m2024-01-22 23:51:33.668 +07 0037 WARN[0m [gossip.gossip#p12] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:33.668 +07 0038 WARN[0m [gossip.discovery#127.0.0.1:39907] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:39317, InternalEndpoint: 127.0.0.1:39317, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:33.668 +07 0039 WARN[0m [gossip.gossip#p12] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:33.668 +07 003a WARN[0m [gossip.gossip#p8] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:33.668 +07 003b WARN[0m [gossip.discovery#127.0.0.1:42491] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:33497, InternalEndpoint: 127.0.0.1:33497, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:33.668 +07 003c WARN[0m [gossip.gossip#p7] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:33.668 +07 003d WARN[0m [gossip.gossip#p10] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:33.668 +07 003f WARN[0m [gossip.gossip#p7] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:33.668 +07 0040 WARN[0m [gossip.discovery#127.0.0.1:33329] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:33497, InternalEndpoint: 127.0.0.1:33497, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:33.668 +07 003e WARN[0m [gossip.gossip#p3] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:33.668 +07 0042 WARN[0m [gossip.gossip#p8] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:33.668 +07 0041 WARN[0m [gossip.gossip#p3] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:33.668 +07 0043 WARN[0m [gossip.gossip#p6] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:33.668 +07 0044 WARN[0m [gossip.discovery#127.0.0.1:45913] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:33497, InternalEndpoint: 127.0.0.1:33497, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:33.668 +07 0045 WARN[0m [gossip.discovery#127.0.0.1:39907] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:33497, InternalEndpoint: 127.0.0.1:33497, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:33.668 +07 0046 WARN[0m [gossip.gossip#p6] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:33.668 +07 0047 WARN[0m [gossip.gossip#p10] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:33.668 +07 0048 WARN[0m [gossip.gossip#p9] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:33.668 +07 0049 WARN[0m [gossip.discovery#127.0.0.1:33329] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:39317, InternalEndpoint: 127.0.0.1:39317, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:33.668 +07 004a WARN[0m [gossip.discovery#127.0.0.1:38901] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:33497, InternalEndpoint: 127.0.0.1:33497, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:33.668 +07 004b WARN[0m [gossip.discovery#127.0.0.1:46079] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:39317, InternalEndpoint: 127.0.0.1:39317, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:33.669 +07 004c WARN[0m [gossip.discovery#127.0.0.1:45913] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:39317, InternalEndpoint: 127.0.0.1:39317, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:33.669 +07 004d WARN[0m [gossip.gossip#p4] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:33.669 +07 004e WARN[0m [gossip.discovery#127.0.0.1:39067] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:39317, InternalEndpoint: 127.0.0.1:39317, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:33.669 +07 004f WARN[0m [gossip.discovery#127.0.0.1:46079] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:33497, InternalEndpoint: 127.0.0.1:33497, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:33.669 +07 0050 WARN[0m [gossip.gossip#p9] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:33.669 +07 0051 WARN[0m [gossip.gossip#p11] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:33.670 +07 0052 WARN[0m [gossip.discovery#127.0.0.1:42491] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:39317, InternalEndpoint: 127.0.0.1:39317, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:33.670 +07 0053 WARN[0m [gossip.discovery#127.0.0.1:41723] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:33497, InternalEndpoint: 127.0.0.1:33497, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:33.670 +07 0054 WARN[0m [gossip.gossip#p0] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:33.670 +07 0055 WARN[0m [gossip.discovery#127.0.0.1:33565] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:39317, InternalEndpoint: 127.0.0.1:39317, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:33.669 +07 0056 WARN[0m [gossip.gossip#p4] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:33.670 +07 0057 WARN[0m [gossip.discovery#127.0.0.1:39067] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:33497, InternalEndpoint: 127.0.0.1:33497, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:33.670 +07 0058 WARN[0m [gossip.discovery#127.0.0.1:35929] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:33497, InternalEndpoint: 127.0.0.1:33497, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:33.671 +07 0059 WARN[0m [gossip.discovery#127.0.0.1:38901] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:39317, InternalEndpoint: 127.0.0.1:39317, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:33.668 +07 005a WARN[0m [gossip.discovery#127.0.0.1:33565] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:33497, InternalEndpoint: 127.0.0.1:33497, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:33.671 +07 005b WARN[0m [gossip.gossip#p11] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:33.671 +07 005c WARN[0m [gossip.discovery#127.0.0.1:41723] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:39317, InternalEndpoint: 127.0.0.1:39317, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:33.671 +07 005d WARN[0m [gossip.gossip#p0] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:33.671 +07 005e WARN[0m [gossip.discovery#127.0.0.1:35929] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:39317, InternalEndpoint: 127.0.0.1:39317, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:33.671 +07 005f WARN[0m [gossip.gossip#p5] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:33.672 +07 0060 WARN[0m [gossip.discovery#127.0.0.1:40811] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:33497, InternalEndpoint: 127.0.0.1:33497, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:33.672 +07 0061 WARN[0m [gossip.gossip#p5] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:33.672 +07 0062 WARN[0m [gossip.discovery#127.0.0.1:40811] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:39317, InternalEndpoint: 127.0.0.1:39317, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:37.669 +07 0063 WARN[0m [gossip.gossip#p6] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:37.669 +07 0064 WARN[0m [gossip.discovery#127.0.0.1:38901] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:33497, InternalEndpoint: 127.0.0.1:33497, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:37.670 +07 0065 WARN[0m [gossip.gossip#p3] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:37.670 +07 0066 WARN[0m [gossip.discovery#127.0.0.1:46079] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:33497, InternalEndpoint: 127.0.0.1:33497, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:37.671 +07 0067 WARN[0m [gossip.gossip#p8] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:37.671 +07 0068 WARN[0m [gossip.discovery#127.0.0.1:42491] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:39317, InternalEndpoint: 127.0.0.1:39317, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:37.671 +07 0069 WARN[0m [gossip.gossip#p6] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:37.671 +07 006a WARN[0m [gossip.gossip#p12] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:37.671 +07 006b WARN[0m [gossip.gossip#p9] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:37.671 +07 006c WARN[0m [gossip.gossip#p7] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:37.671 +07 006e WARN[0m [gossip.discovery#127.0.0.1:38901] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:39317, InternalEndpoint: 127.0.0.1:39317, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:37.671 +07 006d WARN[0m [gossip.gossip#p3] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:37.671 +07 006f WARN[0m [gossip.discovery#127.0.0.1:39907] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:39317, InternalEndpoint: 127.0.0.1:39317, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:37.671 +07 0071 WARN[0m [gossip.discovery#127.0.0.1:33565] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:39317, InternalEndpoint: 127.0.0.1:39317, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:37.671 +07 0072 WARN[0m [gossip.discovery#127.0.0.1:45913] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:39317, InternalEndpoint: 127.0.0.1:39317, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:37.671 +07 0070 WARN[0m [gossip.discovery#127.0.0.1:46079] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:39317, InternalEndpoint: 127.0.0.1:39317, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:37.671 +07 0073 WARN[0m [gossip.gossip#p11] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:37.671 +07 0074 WARN[0m [gossip.discovery#127.0.0.1:41723] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:33497, InternalEndpoint: 127.0.0.1:33497, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:37.671 +07 0075 WARN[0m [gossip.gossip#p10] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:37.671 +07 0076 WARN[0m [gossip.discovery#127.0.0.1:33329] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:39317, InternalEndpoint: 127.0.0.1:39317, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:37.672 +07 0077 WARN[0m [gossip.gossip#p8] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:37.672 +07 0078 WARN[0m [gossip.gossip#p0] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:37.672 +07 0079 WARN[0m [gossip.discovery#127.0.0.1:42491] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:33497, InternalEndpoint: 127.0.0.1:33497, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:37.672 +07 007c WARN[0m [gossip.gossip#p5] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:37.672 +07 007e WARN[0m [gossip.discovery#127.0.0.1:40811] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:33497, InternalEndpoint: 127.0.0.1:33497, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:37.672 +07 007f WARN[0m [gossip.gossip#p10] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:37.673 +07 0082 WARN[0m [gossip.discovery#127.0.0.1:33329] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:33497, InternalEndpoint: 127.0.0.1:33497, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:37.672 +07 007b WARN[0m [gossip.gossip#p11] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:37.673 +07 0083 WARN[0m [gossip.discovery#127.0.0.1:41723] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:39317, InternalEndpoint: 127.0.0.1:39317, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:37.672 +07 007a WARN[0m [gossip.discovery#127.0.0.1:35929] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:39317, InternalEndpoint: 127.0.0.1:39317, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:37.673 +07 0080 WARN[0m [gossip.gossip#p5] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:37.673 +07 0084 WARN[0m [gossip.discovery#127.0.0.1:40811] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:39317, InternalEndpoint: 127.0.0.1:39317, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:37.673 +07 0081 WARN[0m [gossip.gossip#p9] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:37.673 +07 0086 WARN[0m [gossip.discovery#127.0.0.1:33565] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:33497, InternalEndpoint: 127.0.0.1:33497, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:37.673 +07 0085 WARN[0m [gossip.gossip#p7] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:37.673 +07 0088 WARN[0m [gossip.gossip#p12] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:37.674 +07 0089 WARN[0m [gossip.discovery#127.0.0.1:39907] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:33497, InternalEndpoint: 127.0.0.1:33497, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:37.673 +07 0087 WARN[0m [gossip.discovery#127.0.0.1:45913] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:33497, InternalEndpoint: 127.0.0.1:33497, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:37.672 +07 007d WARN[0m [gossip.gossip#p0] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:37.674 +07 008a WARN[0m [gossip.discovery#127.0.0.1:35929] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:33497, InternalEndpoint: 127.0.0.1:33497, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:37.676 +07 008b WARN[0m [gossip.gossip#p4] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:37.676 +07 008c WARN[0m [gossip.discovery#127.0.0.1:39067] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:33497, InternalEndpoint: 127.0.0.1:33497, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+[33m2024-01-22 23:51:37.676 +07 008d WARN[0m [gossip.gossip#p4] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:37.676 +07 008e WARN[0m [gossip.discovery#127.0.0.1:39067] [33;1mfunc1[0m -> Could not connect to Endpoint: 127.0.0.1:39317, InternalEndpoint: 127.0.0.1:39317, PKI-ID: <nil>, Metadata:  : context deadline exceeded
+<<<TestConnectToAnchorPeers>>>
+[33m2024-01-22 23:51:41.670 +07 008f WARN[0m [gossip.gossip#p6] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:41.670 +07 0090 WARN[0m [gossip.gossip#p3] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:41.671 +07 0091 WARN[0m [gossip.gossip#p12] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:41.671 +07 0092 WARN[0m [gossip.gossip#p6] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:41.671 +07 0093 WARN[0m [gossip.gossip#p9] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:41.672 +07 0094 WARN[0m [gossip.gossip#p3] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:41.672 +07 0095 WARN[0m [gossip.gossip#p7] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:41.672 +07 0096 WARN[0m [gossip.gossip#p11] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:41.672 +07 0097 WARN[0m [gossip.gossip#p10] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:41.673 +07 0098 WARN[0m [gossip.gossip#p8] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:41.673 +07 0099 WARN[0m [gossip.gossip#p8] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:41.673 +07 009a WARN[0m [gossip.gossip#p10] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:41.674 +07 009b WARN[0m [gossip.gossip#p9] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:41.674 +07 009d WARN[0m [gossip.gossip#p5] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:41.674 +07 009c WARN[0m [gossip.gossip#p0] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:41.674 +07 009e WARN[0m [gossip.gossip#p11] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:41.674 +07 009f WARN[0m [gossip.gossip#p12] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:41.674 +07 00a0 WARN[0m [gossip.gossip#p7] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:41.674 +07 00a1 WARN[0m [gossip.gossip#p0] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:41.676 +07 00a2 WARN[0m [gossip.gossip#p5] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:41.677 +07 00a3 WARN[0m [gossip.gossip#p4] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:39317 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:41.678 +07 00a4 WARN[0m [gossip.gossip#p4] [33;1mfunc1[0m -> Deep probe of 127.0.0.1:33497 for channel A failed: context deadline exceeded
+[33m2024-01-22 23:51:42.504 +07 00a5 WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:39017, PKIid:3132372e302e302e313a3339303137 isn't responsive: EOF
+[33m2024-01-22 23:51:42.504 +07 00a6 WARN[0m [gossip.discovery#127.0.0.1:36395] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3339303137]
+[33m2024-01-22 23:51:42.504 +07 00a7 WARN[0m [gossip.discovery#127.0.0.1:36395] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:39017, InternalEndpoint: 127.0.0.1:39017, PKI-ID: 3132372e302e302e313a3339303137, Metadata: 
+[33m2024-01-22 23:51:42.504 +07 00a8 WARN[0m [gossip.discovery#127.0.0.1:36395] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:51:42.980 +07 00a9 WARN[0m [gossip.gossip#p5] [33;1mvalidateMsg[0m -> StateInfo message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942301476571682 seq_num:1705942301476604504 PKI-id:3132372e302e302e313a3434303939 channel MAC:9e048028df8d920173fa77a7852843eeb6b0af72c113b3954013c2dd6c64d62a properties:ledger_height:1 , Envelope: 81 bytes, Signature: 81 bytes is found invalid: PKIID wasn't found
+[33m2024-01-22 23:51:42.980 +07 00aa WARN[0m [gossip.gossip#p5] [33;1mhandleMessage[0m -> Message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942301476571682 seq_num:1705942301476604504 PKI-id:3132372e302e302e313a3434303939 channel MAC:9e048028df8d920173fa77a7852843eeb6b0af72c113b3954013c2dd6c64d62a properties:ledger_height:1 , Envelope: 81 bytes, Signature: 81 bytes isn't valid
+[33m2024-01-22 23:51:42.980 +07 00ab WARN[0m [gossip.gossip#p5] [33;1mvalidateMsg[0m -> StateInfo message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942301477111178 seq_num:1705942301477168425 PKI-id:3132372e302e302e313a3432323235 channel MAC:e2aba67ff47cbcb648f9e2c7074450665687f65b8c4f1a9c862d50a4fc70ed39 properties:ledger_height:1 , Envelope: 81 bytes, Signature: 81 bytes is found invalid: PKIID wasn't found
+[33m2024-01-22 23:51:42.980 +07 00ac WARN[0m [gossip.gossip#p5] [33;1mhandleMessage[0m -> Message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942301477111178 seq_num:1705942301477168425 PKI-id:3132372e302e302e313a3432323235 channel MAC:e2aba67ff47cbcb648f9e2c7074450665687f65b8c4f1a9c862d50a4fc70ed39 properties:ledger_height:1 , Envelope: 81 bytes, Signature: 81 bytes isn't valid
+[33m2024-01-22 23:51:42.981 +07 00ad WARN[0m [gossip.gossip#p5] [33;1mvalidateMsg[0m -> StateInfo message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942301477111178 seq_num:1705942301477168425 PKI-id:3132372e302e302e313a3432323235 channel MAC:e2aba67ff47cbcb648f9e2c7074450665687f65b8c4f1a9c862d50a4fc70ed39 properties:ledger_height:1 , Envelope: 81 bytes, Signature: 81 bytes is found invalid: PKIID wasn't found
+[33m2024-01-22 23:51:42.981 +07 00ae WARN[0m [gossip.gossip#p5] [33;1mhandleMessage[0m -> Message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942301477111178 seq_num:1705942301477168425 PKI-id:3132372e302e302e313a3432323235 channel MAC:e2aba67ff47cbcb648f9e2c7074450665687f65b8c4f1a9c862d50a4fc70ed39 properties:ledger_height:1 , Envelope: 81 bytes, Signature: 81 bytes isn't valid
+[33m2024-01-22 23:51:43.479 +07 00af WARN[0m [gossip.gossip#p5] [33;1mvalidateMsg[0m -> StateInfo message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942301476571682 seq_num:1705942301476604504 PKI-id:3132372e302e302e313a3434303939 channel MAC:9e048028df8d920173fa77a7852843eeb6b0af72c113b3954013c2dd6c64d62a properties:ledger_height:1 , Envelope: 81 bytes, Signature: 81 bytes is found invalid: PKIID wasn't found
+[33m2024-01-22 23:51:43.479 +07 00b0 WARN[0m [gossip.gossip#p5] [33;1mhandleMessage[0m -> Message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942301476571682 seq_num:1705942301476604504 PKI-id:3132372e302e302e313a3434303939 channel MAC:9e048028df8d920173fa77a7852843eeb6b0af72c113b3954013c2dd6c64d62a properties:ledger_height:1 , Envelope: 81 bytes, Signature: 81 bytes isn't valid
+Metadata updated
+<<<TestMembership>>>
+[33m2024-01-22 23:52:16.888 +07 00b1 WARN[0m [gossip.gossip#p2] [33;1mvalidateMsg[0m -> StateInfo message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335904630311 seq_num:1705942335904699180 PKI-id:3132372e302e302e313a3434313933 channel MAC:5578c762d73c6b71d707fba9991a6a7997e8ad1b54c52f62483ecbd365e1ae0f properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes is found invalid: PKIID wasn't found
+[33m2024-01-22 23:52:16.889 +07 00b2 WARN[0m [gossip.gossip#p2] [33;1mhandleMessage[0m -> Message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335904630311 seq_num:1705942335904699180 PKI-id:3132372e302e302e313a3434313933 channel MAC:5578c762d73c6b71d707fba9991a6a7997e8ad1b54c52f62483ecbd365e1ae0f properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes isn't valid
+[33m2024-01-22 23:52:16.889 +07 00b3 WARN[0m [gossip.gossip#p6] [33;1mvalidateMsg[0m -> StateInfo message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335904630311 seq_num:1705942335904699180 PKI-id:3132372e302e302e313a3434313933 channel MAC:5578c762d73c6b71d707fba9991a6a7997e8ad1b54c52f62483ecbd365e1ae0f properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes is found invalid: PKIID wasn't found
+[33m2024-01-22 23:52:16.889 +07 00b4 WARN[0m [gossip.gossip#p6] [33;1mhandleMessage[0m -> Message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335904630311 seq_num:1705942335904699180 PKI-id:3132372e302e302e313a3434313933 channel MAC:5578c762d73c6b71d707fba9991a6a7997e8ad1b54c52f62483ecbd365e1ae0f properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes isn't valid
+[33m2024-01-22 23:52:16.891 +07 00b5 WARN[0m [gossip.gossip#p1] [33;1mvalidateMsg[0m -> StateInfo message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335904868950 seq_num:1705942335904931127 PKI-id:3132372e302e302e313a3336333639 channel MAC:9513b96452fa089a233677f349eef48c1a2f19772a887a939f3e1a7b8bf157ca properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes is found invalid: PKIID wasn't found
+[33m2024-01-22 23:52:16.891 +07 00b6 WARN[0m [gossip.gossip#p1] [33;1mhandleMessage[0m -> Message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335904868950 seq_num:1705942335904931127 PKI-id:3132372e302e302e313a3336333639 channel MAC:9513b96452fa089a233677f349eef48c1a2f19772a887a939f3e1a7b8bf157ca properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes isn't valid
+[33m2024-01-22 23:52:16.895 +07 00b7 WARN[0m [gossip.gossip#p3] [33;1mvalidateMsg[0m -> StateInfo message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335895837179 seq_num:1705942335895887524 PKI-id:3132372e302e302e313a3336373837 channel MAC:a1a68bb8df14879a091a2cedd9769de0304bfac3b2a796dfe3bfe7c33235dc7a properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes is found invalid: PKIID wasn't found
+[33m2024-01-22 23:52:16.895 +07 00b8 WARN[0m [gossip.gossip#p3] [33;1mhandleMessage[0m -> Message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335895837179 seq_num:1705942335895887524 PKI-id:3132372e302e302e313a3336373837 channel MAC:a1a68bb8df14879a091a2cedd9769de0304bfac3b2a796dfe3bfe7c33235dc7a properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes isn't valid
+[33m2024-01-22 23:52:16.895 +07 00b9 WARN[0m [gossip.gossip#p2] [33;1mvalidateMsg[0m -> StateInfo message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335895837179 seq_num:1705942335895887524 PKI-id:3132372e302e302e313a3336373837 channel MAC:a1a68bb8df14879a091a2cedd9769de0304bfac3b2a796dfe3bfe7c33235dc7a properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes is found invalid: PKIID wasn't found
+[33m2024-01-22 23:52:16.895 +07 00ba WARN[0m [gossip.gossip#p2] [33;1mhandleMessage[0m -> Message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335895837179 seq_num:1705942335895887524 PKI-id:3132372e302e302e313a3336373837 channel MAC:a1a68bb8df14879a091a2cedd9769de0304bfac3b2a796dfe3bfe7c33235dc7a properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes isn't valid
+[33m2024-01-22 23:52:16.895 +07 00bb WARN[0m [gossip.gossip#p3] [33;1mvalidateMsg[0m -> StateInfo message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335903005862 seq_num:1705942335903061658 PKI-id:3132372e302e302e313a3431363831 channel MAC:f405addabdb25317d2aa6c6230e8d143fc5af509944fe7103e1037c9791d2249 properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes is found invalid: PKIID wasn't found
+[33m2024-01-22 23:52:16.895 +07 00bc WARN[0m [gossip.gossip#p1] [33;1mvalidateMsg[0m -> StateInfo message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335904868950 seq_num:1705942335904931127 PKI-id:3132372e302e302e313a3336333639 channel MAC:9513b96452fa089a233677f349eef48c1a2f19772a887a939f3e1a7b8bf157ca properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes is found invalid: PKIID wasn't found
+[33m2024-01-22 23:52:16.895 +07 00bd WARN[0m [gossip.gossip#p3] [33;1mhandleMessage[0m -> Message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335903005862 seq_num:1705942335903061658 PKI-id:3132372e302e302e313a3431363831 channel MAC:f405addabdb25317d2aa6c6230e8d143fc5af509944fe7103e1037c9791d2249 properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes isn't valid
+[33m2024-01-22 23:52:16.895 +07 00be WARN[0m [gossip.gossip#p1] [33;1mhandleMessage[0m -> Message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335904868950 seq_num:1705942335904931127 PKI-id:3132372e302e302e313a3336333639 channel MAC:9513b96452fa089a233677f349eef48c1a2f19772a887a939f3e1a7b8bf157ca properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes isn't valid
+[33m2024-01-22 23:52:16.895 +07 00bf WARN[0m [gossip.gossip#p2] [33;1mvalidateMsg[0m -> StateInfo message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335904630311 seq_num:1705942335904699180 PKI-id:3132372e302e302e313a3434313933 channel MAC:5578c762d73c6b71d707fba9991a6a7997e8ad1b54c52f62483ecbd365e1ae0f properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes is found invalid: PKIID wasn't found
+[33m2024-01-22 23:52:16.895 +07 00c0 WARN[0m [gossip.gossip#p1] [33;1mvalidateMsg[0m -> StateInfo message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335900286434 seq_num:1705942335900349703 PKI-id:3132372e302e302e313a3431353139 channel MAC:6c2867f31129dfd30cf43b55973baeef7902728832dd96be81c644c4693bf25a properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes is found invalid: PKIID wasn't found
+[33m2024-01-22 23:52:16.895 +07 00c1 WARN[0m [gossip.gossip#p2] [33;1mhandleMessage[0m -> Message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335904630311 seq_num:1705942335904699180 PKI-id:3132372e302e302e313a3434313933 channel MAC:5578c762d73c6b71d707fba9991a6a7997e8ad1b54c52f62483ecbd365e1ae0f properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes isn't valid
+[33m2024-01-22 23:52:16.895 +07 00c2 WARN[0m [gossip.gossip#p1] [33;1mhandleMessage[0m -> Message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335900286434 seq_num:1705942335900349703 PKI-id:3132372e302e302e313a3431353139 channel MAC:6c2867f31129dfd30cf43b55973baeef7902728832dd96be81c644c4693bf25a properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes isn't valid
+[33m2024-01-22 23:52:16.895 +07 00c3 WARN[0m [gossip.gossip#p1] [33;1mvalidateMsg[0m -> StateInfo message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335904868950 seq_num:1705942335904931127 PKI-id:3132372e302e302e313a3336333639 channel MAC:9513b96452fa089a233677f349eef48c1a2f19772a887a939f3e1a7b8bf157ca properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes is found invalid: PKIID wasn't found
+[33m2024-01-22 23:52:16.896 +07 00c4 WARN[0m [gossip.gossip#p1] [33;1mhandleMessage[0m -> Message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335904868950 seq_num:1705942335904931127 PKI-id:3132372e302e302e313a3336333639 channel MAC:9513b96452fa089a233677f349eef48c1a2f19772a887a939f3e1a7b8bf157ca properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes isn't valid
+[33m2024-01-22 23:52:16.896 +07 00c5 WARN[0m [gossip.gossip#p1] [33;1mvalidateMsg[0m -> StateInfo message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335900286434 seq_num:1705942335900349703 PKI-id:3132372e302e302e313a3431353139 channel MAC:6c2867f31129dfd30cf43b55973baeef7902728832dd96be81c644c4693bf25a properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes is found invalid: PKIID wasn't found
+[33m2024-01-22 23:52:16.896 +07 00c6 WARN[0m [gossip.gossip#p1] [33;1mhandleMessage[0m -> Message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335900286434 seq_num:1705942335900349703 PKI-id:3132372e302e302e313a3431353139 channel MAC:6c2867f31129dfd30cf43b55973baeef7902728832dd96be81c644c4693bf25a properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes isn't valid
+[33m2024-01-22 23:52:16.896 +07 00c7 WARN[0m [gossip.gossip#p1] [33;1mvalidateMsg[0m -> StateInfo message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335903005862 seq_num:1705942335903061658 PKI-id:3132372e302e302e313a3431363831 channel MAC:f405addabdb25317d2aa6c6230e8d143fc5af509944fe7103e1037c9791d2249 properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes is found invalid: PKIID wasn't found
+[33m2024-01-22 23:52:16.896 +07 00c8 WARN[0m [gossip.gossip#p1] [33;1mhandleMessage[0m -> Message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335903005862 seq_num:1705942335903061658 PKI-id:3132372e302e302e313a3431363831 channel MAC:f405addabdb25317d2aa6c6230e8d143fc5af509944fe7103e1037c9791d2249 properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes isn't valid
+[33m2024-01-22 23:52:16.896 +07 00c9 WARN[0m [gossip.gossip#p1] [33;1mvalidateMsg[0m -> StateInfo message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335900286434 seq_num:1705942335900349703 PKI-id:3132372e302e302e313a3431353139 channel MAC:6c2867f31129dfd30cf43b55973baeef7902728832dd96be81c644c4693bf25a properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes is found invalid: PKIID wasn't found
+[33m2024-01-22 23:52:16.896 +07 00ca WARN[0m [gossip.gossip#p1] [33;1mhandleMessage[0m -> Message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335900286434 seq_num:1705942335900349703 PKI-id:3132372e302e302e313a3431353139 channel MAC:6c2867f31129dfd30cf43b55973baeef7902728832dd96be81c644c4693bf25a properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes isn't valid
+[33m2024-01-22 23:52:16.899 +07 00cb WARN[0m [gossip.gossip#p2] [33;1mvalidateMsg[0m -> StateInfo message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335895837179 seq_num:1705942335895887524 PKI-id:3132372e302e302e313a3336373837 channel MAC:a1a68bb8df14879a091a2cedd9769de0304bfac3b2a796dfe3bfe7c33235dc7a properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes is found invalid: PKIID wasn't found
+[33m2024-01-22 23:52:16.899 +07 00cd WARN[0m [gossip.gossip#p2] [33;1mhandleMessage[0m -> Message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335895837179 seq_num:1705942335895887524 PKI-id:3132372e302e302e313a3336373837 channel MAC:a1a68bb8df14879a091a2cedd9769de0304bfac3b2a796dfe3bfe7c33235dc7a properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes isn't valid
+[33m2024-01-22 23:52:16.899 +07 00cc WARN[0m [gossip.gossip#p1] [33;1mvalidateMsg[0m -> StateInfo message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335903005862 seq_num:1705942335903061658 PKI-id:3132372e302e302e313a3431363831 channel MAC:f405addabdb25317d2aa6c6230e8d143fc5af509944fe7103e1037c9791d2249 properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes is found invalid: PKIID wasn't found
+[33m2024-01-22 23:52:16.899 +07 00ce WARN[0m [gossip.gossip#p1] [33;1mhandleMessage[0m -> Message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335903005862 seq_num:1705942335903061658 PKI-id:3132372e302e302e313a3431363831 channel MAC:f405addabdb25317d2aa6c6230e8d143fc5af509944fe7103e1037c9791d2249 properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes isn't valid
+[33m2024-01-22 23:52:16.899 +07 00cf WARN[0m [gossip.gossip#p3] [33;1mvalidateMsg[0m -> StateInfo message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335895837179 seq_num:1705942335895887524 PKI-id:3132372e302e302e313a3336373837 channel MAC:a1a68bb8df14879a091a2cedd9769de0304bfac3b2a796dfe3bfe7c33235dc7a properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes is found invalid: PKIID wasn't found
+[33m2024-01-22 23:52:16.899 +07 00d0 WARN[0m [gossip.gossip#p3] [33;1mhandleMessage[0m -> Message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335895837179 seq_num:1705942335895887524 PKI-id:3132372e302e302e313a3336373837 channel MAC:a1a68bb8df14879a091a2cedd9769de0304bfac3b2a796dfe3bfe7c33235dc7a properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes isn't valid
+[33m2024-01-22 23:52:16.899 +07 00d1 WARN[0m [gossip.gossip#p3] [33;1mvalidateMsg[0m -> StateInfo message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335903005862 seq_num:1705942335903061658 PKI-id:3132372e302e302e313a3431363831 channel MAC:f405addabdb25317d2aa6c6230e8d143fc5af509944fe7103e1037c9791d2249 properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes is found invalid: PKIID wasn't found
+[33m2024-01-22 23:52:16.900 +07 00d2 WARN[0m [gossip.gossip#p3] [33;1mhandleMessage[0m -> Message GossipMessage: Channel: , nonce: 0, tag: CHAN_OR_ORG state_info_message: Timestamp:inc_num:1705942335903005862 seq_num:1705942335903061658 PKI-id:3132372e302e302e313a3431363831 channel MAC:f405addabdb25317d2aa6c6230e8d143fc5af509944fe7103e1037c9791d2249 properties:ledger_height:1 chaincodes:<name:"exampleCC" version:"1.2" > , Envelope: 99 bytes, Signature: 99 bytes isn't valid
+<<<TestDissemination>>>
+[33m2024-01-22 23:52:29.426 +07 00d3 WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:42703, PKIid:3132372e302e302e313a3432373033 isn't responsive: rpc error: code = Unavailable desc = transport is closing
+[33m2024-01-22 23:52:29.426 +07 00d4 WARN[0m [gossip.discovery#127.0.0.1:45067] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3432373033]
+[33m2024-01-22 23:52:29.426 +07 00d5 WARN[0m [gossip.discovery#127.0.0.1:45067] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:42703, InternalEndpoint: 127.0.0.1:42703, PKI-ID: 3132372e302e302e313a3432373033, Metadata: 
+[33m2024-01-22 23:52:29.426 +07 00d6 WARN[0m [gossip.discovery#127.0.0.1:45067] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:52:29.427 +07 00d7 WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:33177, PKIid:3132372e302e302e313a3333313737 isn't responsive: rpc error: code = Unavailable desc = transport is closing
+[33m2024-01-22 23:52:29.427 +07 00d8 WARN[0m [gossip.discovery#127.0.0.1:35089] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3333313737]
+[33m2024-01-22 23:52:29.427 +07 00d9 WARN[0m [gossip.discovery#127.0.0.1:35089] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:33177, InternalEndpoint: 127.0.0.1:33177, PKI-ID: 3132372e302e302e313a3333313737, Metadata: 
+[33m2024-01-22 23:52:29.427 +07 00da WARN[0m [gossip.discovery#127.0.0.1:35089] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:52:45.961 +07 00db WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:35089, PKIid:3132372e302e302e313a3335303839 isn't responsive: rpc error: code = Unavailable desc = transport is closing
+[33m2024-01-22 23:52:45.961 +07 00dc WARN[0m [gossip.discovery#127.0.0.1:33335] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3335303839]
+[33m2024-01-22 23:52:45.961 +07 00dd WARN[0m [gossip.discovery#127.0.0.1:33335] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:35089, InternalEndpoint: 127.0.0.1:35089, PKI-ID: 3132372e302e302e313a3335303839, Metadata: 
+[33m2024-01-22 23:52:45.961 +07 00de WARN[0m [gossip.discovery#127.0.0.1:33335] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:52:45.962 +07 00df WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:45303, PKIid:3132372e302e302e313a3435333033 isn't responsive: rpc error: code = Unavailable desc = transport is closing
+[33m2024-01-22 23:52:45.962 +07 00e0 WARN[0m [gossip.discovery#127.0.0.1:39643] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3435333033]
+[33m2024-01-22 23:52:45.962 +07 00e1 WARN[0m [gossip.discovery#127.0.0.1:39643] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:45303, InternalEndpoint: 127.0.0.1:45303, PKI-ID: 3132372e302e302e313a3435333033, Metadata: 
+[33m2024-01-22 23:52:45.962 +07 00e2 WARN[0m [gossip.discovery#127.0.0.1:39643] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:52:46.456 +07 00e3 WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:33425, PKIid:3132372e302e302e313a3333343235 isn't responsive: rpc error: code = Canceled desc = context canceled
+[33m2024-01-22 23:52:46.456 +07 00e4 WARN[0m [gossip.discovery#127.0.0.1:33177] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3333343235]
+[33m2024-01-22 23:52:46.456 +07 00e5 WARN[0m [gossip.discovery#127.0.0.1:33177] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:33425, InternalEndpoint: 127.0.0.1:33425, PKI-ID: 3132372e302e302e313a3333343235, Metadata: 
+[33m2024-01-22 23:52:46.456 +07 00e6 WARN[0m [gossip.discovery#127.0.0.1:33177] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:52:46.457 +07 00e7 WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:35197, PKIid:3132372e302e302e313a3335313937 isn't responsive: rpc error: code = Unavailable desc = transport is closing
+[33m2024-01-22 23:52:46.458 +07 00e8 WARN[0m [gossip.discovery#127.0.0.1:40687] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3335313937]
+[33m2024-01-22 23:52:46.458 +07 00e9 WARN[0m [gossip.discovery#127.0.0.1:40687] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:35197, InternalEndpoint: 127.0.0.1:35197, PKI-ID: 3132372e302e302e313a3335313937, Metadata: 
+[33m2024-01-22 23:52:46.458 +07 00ea WARN[0m [gossip.discovery#127.0.0.1:40687] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:52:46.465 +07 00eb WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:40687, PKIid:3132372e302e302e313a3430363837 isn't responsive: rpc error: code = Unavailable desc = transport is closing
+[33m2024-01-22 23:52:46.466 +07 00ec WARN[0m [gossip.discovery#127.0.0.1:33425] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3430363837]
+[33m2024-01-22 23:52:46.466 +07 00ed WARN[0m [gossip.discovery#127.0.0.1:33425] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:40687, InternalEndpoint: 127.0.0.1:40687, PKI-ID: 3132372e302e302e313a3430363837, Metadata: 
+[33m2024-01-22 23:52:46.466 +07 00ee WARN[0m [gossip.discovery#127.0.0.1:33425] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:52:46.953 +07 00ef WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:35089, PKIid:3132372e302e302e313a3335303839 isn't responsive: rpc error: code = Unavailable desc = transport is closing
+[33m2024-01-22 23:52:46.953 +07 00f0 WARN[0m [gossip.discovery#127.0.0.1:33335] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3335303839]
+[33m2024-01-22 23:52:46.953 +07 00f1 WARN[0m [gossip.discovery#127.0.0.1:33335] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:35089, InternalEndpoint: 127.0.0.1:35089, PKI-ID: 3132372e302e302e313a3335303839, Metadata: 
+[33m2024-01-22 23:52:46.953 +07 00f2 WARN[0m [gossip.discovery#127.0.0.1:33335] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:52:49.950 +07 00f3 WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 isn't responsive: EOF
+[33m2024-01-22 23:52:49.952 +07 00f4 WARN[0m [gossip.discovery#127.0.0.1:39643] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3434333231]
+[33m2024-01-22 23:52:49.952 +07 00f5 WARN[0m [gossip.discovery#127.0.0.1:39643] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:44321, InternalEndpoint: 127.0.0.1:44321, PKI-ID: 3132372e302e302e313a3434333231, Metadata: 436f6e6e6563746f72
+[33m2024-01-22 23:52:49.952 +07 00f6 WARN[0m [gossip.discovery#127.0.0.1:39643] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:52:49.953 +07 00f7 WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 isn't responsive: EOF
+[33m2024-01-22 23:52:49.953 +07 00f8 WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 isn't responsive: EOF
+[33m2024-01-22 23:52:49.953 +07 00f9 WARN[0m [gossip.discovery#127.0.0.1:35089] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3434333231]
+[33m2024-01-22 23:52:49.953 +07 00fa WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 isn't responsive: EOF
+[33m2024-01-22 23:52:49.954 +07 00fc WARN[0m [gossip.discovery#127.0.0.1:40013] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3434333231]
+[33m2024-01-22 23:52:49.954 +07 00fd WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 isn't responsive: EOF
+[33m2024-01-22 23:52:49.955 +07 00ff WARN[0m [gossip.discovery#127.0.0.1:42703] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3434333231]
+[33m2024-01-22 23:52:49.955 +07 0100 WARN[0m [gossip.discovery#127.0.0.1:42703] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:44321, InternalEndpoint: 127.0.0.1:44321, PKI-ID: 3132372e302e302e313a3434333231, Metadata: 436f6e6e6563746f72
+[33m2024-01-22 23:52:49.955 +07 0101 WARN[0m [gossip.discovery#127.0.0.1:42703] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:52:49.954 +07 00fe WARN[0m [gossip.discovery#127.0.0.1:40013] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:44321, InternalEndpoint: 127.0.0.1:44321, PKI-ID: 3132372e302e302e313a3434333231, Metadata: 436f6e6e6563746f72
+[33m2024-01-22 23:52:49.955 +07 0102 WARN[0m [gossip.discovery#127.0.0.1:40013] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:52:49.953 +07 00fb WARN[0m [gossip.discovery#127.0.0.1:35089] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:44321, InternalEndpoint: 127.0.0.1:44321, PKI-ID: 3132372e302e302e313a3434333231, Metadata: 436f6e6e6563746f72
+[33m2024-01-22 23:52:49.955 +07 0103 WARN[0m [gossip.discovery#127.0.0.1:35089] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:52:49.955 +07 0104 WARN[0m [gossip.discovery#127.0.0.1:45067] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3434333231]
+[33m2024-01-22 23:52:49.955 +07 0106 WARN[0m [gossip.discovery#127.0.0.1:45067] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:44321, InternalEndpoint: 127.0.0.1:44321, PKI-ID: 3132372e302e302e313a3434333231, Metadata: 436f6e6e6563746f72
+[33m2024-01-22 23:52:49.955 +07 0107 WARN[0m [gossip.discovery#127.0.0.1:45067] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:52:49.955 +07 0105 WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 isn't responsive: EOF
+[33m2024-01-22 23:52:49.955 +07 0108 WARN[0m [gossip.discovery#127.0.0.1:33177] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3434333231]
+[33m2024-01-22 23:52:49.956 +07 0109 WARN[0m [gossip.discovery#127.0.0.1:33177] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:44321, InternalEndpoint: 127.0.0.1:44321, PKI-ID: 3132372e302e302e313a3434333231, Metadata: 436f6e6e6563746f72
+[33m2024-01-22 23:52:49.956 +07 010b WARN[0m [gossip.discovery#127.0.0.1:33177] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:52:49.956 +07 010a WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 isn't responsive: EOF
+[33m2024-01-22 23:52:49.956 +07 010c WARN[0m [gossip.discovery#127.0.0.1:45303] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3434333231]
+[33m2024-01-22 23:52:49.956 +07 010d WARN[0m [gossip.discovery#127.0.0.1:45303] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:44321, InternalEndpoint: 127.0.0.1:44321, PKI-ID: 3132372e302e302e313a3434333231, Metadata: 436f6e6e6563746f72
+[33m2024-01-22 23:52:49.957 +07 010e WARN[0m [gossip.discovery#127.0.0.1:45303] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:52:49.957 +07 010f WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 isn't responsive: EOF
+[33m2024-01-22 23:52:49.958 +07 0110 WARN[0m [gossip.discovery#127.0.0.1:38635] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3434333231]
+[33m2024-01-22 23:52:49.958 +07 0111 WARN[0m [gossip.discovery#127.0.0.1:38635] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:44321, InternalEndpoint: 127.0.0.1:44321, PKI-ID: 3132372e302e302e313a3434333231, Metadata: 436f6e6e6563746f72
+[33m2024-01-22 23:52:49.958 +07 0112 WARN[0m [gossip.discovery#127.0.0.1:38635] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:52:49.958 +07 0113 WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 isn't responsive: EOF
+[33m2024-01-22 23:52:49.958 +07 0114 WARN[0m [gossip.discovery#127.0.0.1:33425] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3434333231]
+[33m2024-01-22 23:52:49.958 +07 0115 WARN[0m [gossip.discovery#127.0.0.1:33425] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:44321, InternalEndpoint: 127.0.0.1:44321, PKI-ID: 3132372e302e302e313a3434333231, Metadata: 436f6e6e6563746f72
+[33m2024-01-22 23:52:49.958 +07 0116 WARN[0m [gossip.discovery#127.0.0.1:33425] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:52:49.959 +07 0117 WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 isn't responsive: EOF
+[33m2024-01-22 23:52:49.959 +07 0118 WARN[0m [gossip.discovery#127.0.0.1:40687] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3434333231]
+[33m2024-01-22 23:52:49.959 +07 0119 WARN[0m [gossip.discovery#127.0.0.1:40687] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:44321, InternalEndpoint: 127.0.0.1:44321, PKI-ID: 3132372e302e302e313a3434333231, Metadata: 436f6e6e6563746f72
+[33m2024-01-22 23:52:49.959 +07 011a WARN[0m [gossip.discovery#127.0.0.1:40687] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:52:50.454 +07 011b WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 isn't responsive: EOF
+[33m2024-01-22 23:52:50.454 +07 011c WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 isn't responsive: EOF
+[33m2024-01-22 23:52:50.455 +07 011d WARN[0m [gossip.discovery#127.0.0.1:33335] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3434333231]
+[33m2024-01-22 23:52:50.455 +07 011e WARN[0m [gossip.discovery#127.0.0.1:33335] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:44321, InternalEndpoint: 127.0.0.1:44321, PKI-ID: 3132372e302e302e313a3434333231, Metadata: 436f6e6e6563746f72
+[33m2024-01-22 23:52:50.456 +07 0120 WARN[0m [gossip.discovery#127.0.0.1:33335] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:52:50.455 +07 011f WARN[0m [gossip.discovery#127.0.0.1:32943] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3434333231]
+[33m2024-01-22 23:52:50.456 +07 0121 WARN[0m [gossip.discovery#127.0.0.1:32943] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:44321, InternalEndpoint: 127.0.0.1:44321, PKI-ID: 3132372e302e302e313a3434333231, Metadata: 436f6e6e6563746f72
+[33m2024-01-22 23:52:50.456 +07 0122 WARN[0m [gossip.discovery#127.0.0.1:32943] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:52:52.946 +07 0123 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:52:52.946 +07 0124 WARN[0m [gossip.discovery#127.0.0.1:40189] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3434333231]
+[33m2024-01-22 23:52:52.946 +07 0125 WARN[0m [gossip.discovery#127.0.0.1:40189] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:44321, InternalEndpoint: 127.0.0.1:44321, PKI-ID: 3132372e302e302e313a3434333231, Metadata: 436f6e6e6563746f72
+[33m2024-01-22 23:52:52.946 +07 0126 WARN[0m [gossip.discovery#127.0.0.1:40189] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:52:52.951 +07 0127 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:52:52.952 +07 0128 WARN[0m [gossip.discovery#127.0.0.1:35197] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3434333231]
+[33m2024-01-22 23:52:52.952 +07 0129 WARN[0m [gossip.discovery#127.0.0.1:35197] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:44321, InternalEndpoint: 127.0.0.1:44321, PKI-ID: 3132372e302e302e313a3434333231, Metadata: 436f6e6e6563746f72
+[33m2024-01-22 23:52:52.952 +07 012a WARN[0m [gossip.discovery#127.0.0.1:35197] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:52:52.954 +07 012b WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:52:52.954 +07 012c WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:52:52.956 +07 012d WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:52:52.959 +07 012e WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:52:53.448 +07 012f WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:52:53.448 +07 0130 WARN[0m [gossip.discovery#127.0.0.1:37971] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3434333231]
+[33m2024-01-22 23:52:53.448 +07 0131 WARN[0m [gossip.discovery#127.0.0.1:37971] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:44321, InternalEndpoint: 127.0.0.1:44321, PKI-ID: 3132372e302e302e313a3434333231, Metadata: 436f6e6e6563746f72
+[33m2024-01-22 23:52:53.448 +07 0132 WARN[0m [gossip.discovery#127.0.0.1:37971] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:52:53.452 +07 0133 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:52:53.452 +07 0134 WARN[0m [gossip.discovery#127.0.0.1:45067] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3434333231]
+[33m2024-01-22 23:52:53.453 +07 0135 WARN[0m [gossip.discovery#127.0.0.1:45067] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:44321, InternalEndpoint: 127.0.0.1:44321, PKI-ID: 3132372e302e302e313a3434333231, Metadata: 436f6e6e6563746f72
+[33m2024-01-22 23:52:53.453 +07 0136 WARN[0m [gossip.discovery#127.0.0.1:45067] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:52:53.455 +07 0137 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:52:53.455 +07 0138 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:52:53.954 +07 0139 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:52:53.954 +07 013a WARN[0m [gossip.discovery#127.0.0.1:45303] [33;1mexpireDeadMembers[0m -> Entering [3132372e302e302e313a3434333231]
+[33m2024-01-22 23:52:53.954 +07 013b WARN[0m [gossip.discovery#127.0.0.1:45303] [33;1mexpireDeadMembers[0m -> Closing connection to Endpoint: 1.2.3.4:44321, InternalEndpoint: 127.0.0.1:44321, PKI-ID: 3132372e302e302e313a3434333231, Metadata: 436f6e6e6563746f72
+[33m2024-01-22 23:52:53.954 +07 013c WARN[0m [gossip.discovery#127.0.0.1:45303] [33;1mexpireDeadMembers[0m -> Exiting
+[33m2024-01-22 23:52:55.947 +07 013d WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:52:55.952 +07 013e WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:52:55.962 +07 013f WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:52:56.450 +07 0140 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:52:56.454 +07 0141 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:52:56.456 +07 0142 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:52:56.456 +07 0143 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:52:56.956 +07 0144 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:52:58.948 +07 0145 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:52:58.954 +07 0146 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:52:59.451 +07 0147 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:52:59.454 +07 0148 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:52:59.456 +07 0149 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:52:59.956 +07 014a WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:53:01.949 +07 014b WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:53:01.955 +07 014c WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:53:02.452 +07 014d WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:53:02.455 +07 014e WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:53:02.456 +07 014f WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:53:02.956 +07 0150 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:53:04.950 +07 0151 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:53:04.956 +07 0152 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:53:05.453 +07 0153 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:53:05.455 +07 0154 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:53:05.957 +07 0155 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:53:07.951 +07 0156 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:53:07.957 +07 0157 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:53:08.454 +07 0158 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:53:08.456 +07 0159 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:53:08.959 +07 015a WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:53:10.951 +07 015b WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:53:10.957 +07 015c WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:53:11.454 +07 015d WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:53:11.456 +07 015e WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:53:11.959 +07 015f WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:53:13.958 +07 0160 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:53:14.455 +07 0161 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:53:14.457 +07 0162 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+[33m2024-01-22 23:53:14.959 +07 0163 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: context deadline exceeded
+<<<TestMembershipConvergence>>>
+[33m2024-01-22 23:53:15.345 +07 0164 WARN[0m [gossip.comm] [33;1mfunc1[0m -> 127.0.0.1:40625, PKIid:3132372e302e302e313a3430363235 isn't responsive: rpc error: code = Unavailable desc = transport is closing
+[33m2024-01-22 23:53:16.959 +07 0165 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: conn store is closing
+[33m2024-01-22 23:53:17.456 +07 0166 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: conn store is closing
+[33m2024-01-22 23:53:17.456 +07 0167 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: conn store is closing
+[33m2024-01-22 23:53:17.457 +07 0168 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: conn store is closing
+[33m2024-01-22 23:53:17.458 +07 0169 WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: conn store is closing
+[33m2024-01-22 23:53:17.960 +07 016a WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: conn store is closing
+[33m2024-01-22 23:53:17.960 +07 016b WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: conn store is closing
+[33m2024-01-22 23:53:17.960 +07 016c WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: conn store is closing
+[33m2024-01-22 23:53:17.960 +07 016d WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: conn store is closing
+[33m2024-01-22 23:53:17.960 +07 016e WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: conn store is closing
+[33m2024-01-22 23:53:17.960 +07 016f WARN[0m [gossip.comm] [33;1msendToEndpoint[0m -> Failed obtaining connection for 127.0.0.1:44321, PKIid:3132372e302e302e313a3434333231 reason: conn store is closing
+signal: interrupt
+FAIL	github.com/hyperledger/fabric/gossip/gossip	1574.884s
+
+real	28m46.603s
+user	0m32.491s
+sys	0m8.181s
+make: *** [Makefile:158: unit-test] Error 1

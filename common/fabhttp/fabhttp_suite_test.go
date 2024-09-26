@@ -8,11 +8,12 @@ package fabhttp_test
 
 import (
 	"crypto/tls"
-	"crypto/x509"
 	"io/ioutil"
 	"net/http"
 	"path/filepath"
 	"testing"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	"github.com/hyperledger/fabric/common/crypto/tlsgen"
 	. "github.com/onsi/ginkgo/v2"
@@ -55,7 +56,7 @@ func newHTTPClient(tlsDir string, withClientCert bool, tlsOpts ...func(config *t
 	clientCertPool.AppendCertsFromPEM(caCert)
 
 	tlsClientConfig := &tls.Config{
-		RootCAs: clientCertPool,
+		RootCAs: clientCertPool.ToStd(),
 	}
 	if withClientCert {
 		clientCert, err := tls.LoadX509KeyPair(

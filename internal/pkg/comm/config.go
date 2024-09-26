@@ -9,8 +9,11 @@ package comm
 import (
 	"context"
 	"crypto/tls"
-	"crypto/x509"
 	"time"
+
+	stdx509 "crypto/x509"
+
+	"github.com/hyperledger/fabric/pkg/cryptox/x509"
 
 	"github.com/hyperledger/fabric/common/flogging"
 	"github.com/hyperledger/fabric/common/metrics"
@@ -159,7 +162,7 @@ type SecureOptions struct {
 	// VerifyCertificate, if not nil, is called after normal
 	// certificate verification by either a TLS client or server.
 	// If it returns a non-nil error, the handshake is aborted and that error results.
-	VerifyCertificate func(rawCerts [][]byte, verifiedChains [][]*x509.Certificate) error
+	VerifyCertificate func(rawCerts [][]byte, verifiedChains [][]*stdx509.Certificate) error
 	// PEM-encoded X509 public key to be used for TLS communication
 	Certificate []byte
 	// PEM-encoded private key to be used for TLS communication
@@ -196,7 +199,7 @@ func (so SecureOptions) TLSConfig() (*tls.Config, error) {
 		VerifyPeerCertificate: so.VerifyCertificate,
 	}
 	if len(so.ServerRootCAs) > 0 {
-		tlsConfig.RootCAs = x509.NewCertPool()
+		tlsConfig.RootCAs = x509.NewCertPool().ToStd()
 		for _, certBytes := range so.ServerRootCAs {
 			if !tlsConfig.RootCAs.AppendCertsFromPEM(certBytes) {
 				return nil, errors.New("error adding root certificate")
